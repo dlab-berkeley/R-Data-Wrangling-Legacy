@@ -1,17 +1,17 @@
-% R Bootcamp, Module 5: Useful Stuff
+% Data Wrangling and Manipulation
 % August 2016, UC Berkeley
-% Rochelle Terman (rterman@gmail.com) and Chris Krogslund 
+% Rochelle Terman (rterman@gmail.com) 
 
 
 ```{r chunksetup, include=FALSE} 
 # include any code here you don't want to show up in the document,
 # e.g. package and dataset loading
+setwd("~/Dropbox/berkeley/Git-Repos/r-data-wrang")
 library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(lmtest)
 library(sandwich)
-if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
 ```
 
 # What exactly is "useful stuff" in R?
@@ -56,7 +56,7 @@ For most applied researchers, "useful stuff" that can be done in R boils down to
 For this unit, we'll be working with the "Gapminder" dataset, which is excerpt of the data available at Gapminder.org. For each of 142 countries, the data  provides values for life expectancy, GDP per capita, and population, every five years, from 1952 to 2007.
 
 ```{r}
-gapminder <- read.csv("../data/gapminder-FiveYearData.csv", stringsAsFactors = TRUE)
+gapminder <- read.csv("data/gapminder-FiveYearData.csv", stringsAsFactors = TRUE)
 head(gapminder)
 ```
 
@@ -281,6 +281,16 @@ gapminder_with_extra_vars <- gapminder %>%
 head(gapminder_with_extra_vars)
 ```
 
+### Challenges: dplyr
+
+1. Use dplyr to create a data frame containing the median `lifeExp` for each continent
+
+2. Use dplyr to add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
+
+3. Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)
+
+**hint**: You might have to `ungoup()` before you `arrange()`.
+
 # Tidying Data
 
 Even before we conduct analysis or calculations, we need to put our data into the correct format. The goal here is to rearrange a messy dataset into one that is **tidy**
@@ -362,7 +372,7 @@ library(tidyr)
 Until now, we’ve been using the nicely formatted original gapminder dataset. This dataset is not quite wide and not quite long -- it's something in the middle, but 'real' data (i.e. our own research data) will never be so well organized. Here let's start with the wide format version of the gapminder dataset.
 
 ```{r}
-gap_wide <- read.csv("../data/gapminder_wide.csv", stringsAsFactors = FALSE)
+gap_wide <- read.csv("data/gapminder_wide.csv", stringsAsFactors = FALSE)
 head(gap_wide)
 ```
 
@@ -438,7 +448,7 @@ head(gap_medium)
 All we need is some quick fixes to make this dataset identical to the original `gapminder` dataset:
 
 ```{r}
-gapminder <- read.csv("../data/gapminder-FiveYearData.csv")
+gapminder <- read.csv("data/gapminder-FiveYearData.csv")
 head(gap_medium)
 head(gapminder)
 
@@ -456,136 +466,10 @@ head(gap_medium)
 
 `dplyr` and `tidyr` have many more functions to help you wrangle and manipulate your data. See the  [Data Wrangling Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for more.
 
-# Describing Relationships & Causal Inference
 
-- Once we've carried out group-wise operations and perhaps reshaped it, we may also like to attempt describing the relationships in the data or conducting some causal inference
+### Challenges: tidyr
 
-- This often requires doing the following:
-1. Estimating Regressions
-2. Carrying out Regression Diagnostics
+1. Subset the results from challenge #3 (above) to select only the `country`, `year`, and `gdpPercap_diff` columns. Use `tidyr` put it in wide format so that countries are rows and years are columns. 
 
-# Inference/Regression
-
-- Running regressions in R is extremely simple, very straightforwd (though doing things with standard errors requires a little extra work)
-
-- Most basic, catch-all regression function in R is *glm*
-
-- *glm* fits a generalized linear model with your choice of family/link function (gaussian, logit, poisson, etc.)
-
-- *lm* is just a standard linear regression (equivalent to glm with family = gaussian(link = "identity"))
-
-- The basic glm call looks something like this:
-
-```{r eval=FALSE}
-glm(formula = y~x1+x2+x3+..., family = familyname(link = "linkname"), data = )
-```
-
-- There are a bunch of families and links to use (help(family) for a full list), but some essentials are **binomial(link = "logit")**, **gaussian(link = "identity")**, and **poisson(link = "log")**
-
-- Example: suppose we want to regress the life expectency on the GDP per capita and the population, as well as the continent and year.  The glm call would be something like this:
-
-```{r}
-# Regress tip percent on total bill and party size
-reg <- glm(formula = lifeExp ~ gdpPercap + pop + continent + year, 
-                family = gaussian, data = gapminder)
-```
-
-- When we store this regression in an object, we get access to several items of interest
-
-```{r}
-# View objects contained in the regression output
-objects(reg)
-# Examine regression coefficients
-reg$coefficients
-# Examine regression DoF
-reg$df.residual
-# Examine regression fit (AIC)
-reg$aic
-```
-
-- R has a helpful summary method for regression objects
-```{r}
-summary(reg)
-```
-
-- Can also extract useful things from the summary object
-
-```{r}
-# Store summary method results
-sum.reg <- summary(reg)
-# View summary method results objects
-objects(sum.reg)
-# View table of coefficients
-sum.reg$coefficients
-```
-
-- Note that, in our results, R has broken up our variables into their different factor levels (as it will do whenever your regressors have factor levels)
-
-- If your data aren't factorized, you can tell glm to factorize a variable (i.e. create dummy variables on the fly) by writing
-
-```{r, eval=FALSE}
-glm(formula = y~x1+x2+factor(x3), family = family(link = "link"), data = )
-```
-
-- There are also some useful shortcuts for regressing on interaction terms:
-
-**x1:x2** interacts all terms in x1 with all terms in x2
-```{r}
-summary(glm(formula = lifeExp ~ gdpPercap + pop + continent:factor(year), 
-                family = gaussian, data = gapminder))
-```
-
-**x1*x2** produces the cross of x1 and x2, or x1+x2+x1:x2
-```{r}
-summary(glm(formula = lifeExp ~ gdpPercap + pop + continent*factor(year), 
-                family = gaussian, data = gapminder))
-```
-
-# Inferences/Regression Diagnostics
-
-- The package *lmtest* has most of what you'll need to run basic regression diagnostics.
-
-- Breusch-Pagan Test for Heteroscedasticity 
-```{r}
-bptest(reg)
-```
-
-- Breusch-Godfrey Test for Higher-order Serial Correlation 
-```{r}
-bgtest(reg)
-```
-
-- Durbin-Watson Test for Autocorrelation of Disturbances
-```{r}
-dwtest(reg)
-```
-
-- Can also estimate heteroscedasticity/autocorrelation consistent standard errors via *coeftest* and the *sandwich* package
-```{r}
-coeftest(x = reg, vcov. = vcovHC)
-```
-
-# Breakout and overnight homework
-
-### dplyr
-
-1. Use dplyr to create a data frame containing the median `lifeExp` for each continent
-
-2. Use dplyr to add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
-
-3. Use dplyr to: add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year. Arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)
-
-**hint**: You might have to `ungoup()` before you `arrange()`.
-
-### tidyr
-
-4. Subset the results from question #3 to select only the `country`, `year`, and `gdpPercap_diff` columns. Use tidyr put it in wide format so that countries are rows and years are columns. 
-
-### regressions
-
-5. Fit two linear regression models from the gapminder data, where the outcome is `gdpPercap` and the explanatory variables are `pop`, `lifeExp`, and `year`. In one model, treat `year` as a numeric variable. In the other, factorize the `year` variable. How do you interpret each model?
-
-6. Fix a logit model where the outcome is whether `gdpPercap_diff` is positive or negative -- that is, whether an observation is in the upper half or lower half of the continent's wealth in a given year. The explanatory variables should be `country`, `lifeExp`, and `pop`. 
-
-
+2. Now turn the dataframe above back into the long format with three columns: `country`, `year`, and `gdpPercap_diff`.
 
