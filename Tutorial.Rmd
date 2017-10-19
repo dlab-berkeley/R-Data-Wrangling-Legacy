@@ -1,51 +1,25 @@
 % Data Wrangling and Manipulation
-% August 2016, UC Berkeley
-% Rochelle Terman (rterman@gmail.com) 
+% August 2016, UC Berkeley % updated October 2017
+% Rochelle Terman (rterman@gmail.com) % Josh Quan (joshua.quan@berkeley.edu)
 
 
 ```{r chunksetup, include=FALSE} 
 # include any code here you don't want to show up in the document,
 # e.g. package and dataset loading
-setwd("~/Dropbox/berkeley/Git-Repos/r-data-wrang")
 library(dplyr)
 library(tidyr)
 library(ggplot2)
-library(lmtest)
-library(sandwich)
 ```
 
 # What exactly is "useful stuff" in R?
 
 (Credits: Some of these materials in this module were adapted from [Software Carpentry](http://swcarpentry.github.io/r-novice-gapminder/))
 
-For some, it might just be basic calculations
 
-```{r}
-63.24 * pi # Multiply 63.24 by pi
-exp(x = 4.39) # Raise e to the power of 4.39
-log(x = 1.7) # Take the log of 1.7
-tan(x = 58) # Compute the tangent of 58
-```
-
-For others, it might be large or complex mathematical operations
-
-```{r}
-# Take one million samples from the standard normal distribution
-data.sample <- rnorm(n = 1000000, mean = 0, sd = 1) 
-
-# Build a 1000 x 1000 matrix from the sample data
-big.matrix <- matrix(data = data.sample, ncol = 1000) 
-
-dim(x = big.matrix) # Confirm that "big.matrix" is 1000 x 1000
-big.matrix.inverse <- solve(a = big.matrix) # Compute the inverse of "big.matrix"
-system.time(expr = solve(a = big.matrix)) # Compute time required to invert "big.matrix"
-```
 
 # Useful Stuff: Applied Research Edition
 
 > It is often said that 80% of data analysis is spent on the process of cleaning and preparing the data. (Dasu and Johnson, 2003)
-
-For most applied researchers, "useful stuff" that can be done in R boils down to a few core items: 
 
 1. ***Manipulating*** data frames, e.g. filtering, summarizing, and conducting calculations across groups.
 2. ***Tidying*** data into the appropriate format
