@@ -158,6 +158,7 @@ The abstract problem we're encountering here is know as "split-apply-combine":
 
 ![](img/splitapply.png)
 
+
 We want to *split* our data into groups (in this case continents), *apply* some calculations on that group, then  *combine* the results together afterwards. 
 
 Module 4 gave some ways to do split-apply-combine type stuff using the `apply` family of functions, but those too are error prone and messy.
