@@ -1,0 +1,352 @@
+---
+title: 
+output:
+  revealjs::revealjs_presentation:
+    theme: serif
+    transition: fade
+    highlight: tango
+    center: true
+width: 1200
+
+---
+
+## R Data Wrangling and Manipulation
+
+UC Berkeley Library and D-Lab
+
+Fall 2017
+
+
+----
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+----
+
+
+## dplyr/tidyr
+
+> It is often said that 80% of data analysis is spent on the process of cleaning and preparing the data. (Dasu and Johnson, 2003)
+
+1. ***Manipulating*** data frames, e.g. filtering, summarizing, and conducting calculations across groups.
+2. ***Tidying*** data into the appropriate format. Reshaping for analysis
+3. Attempting to ***describe relationships*** or conduct ***causal inference*** 
+
+
+----
+
+## Gapminder Dataset
+
+Provides values for life expectancy, GDP per capita, and population, every five years, from 1952 to 2007.
+
+```{r}
+gapminder <- read.csv("data/gapminder-FiveYearData.csv", stringsAsFactors = TRUE)
+head(gapminder)
+```
+
+----
+
+## Dataframe manipulation Base R 
+
+We can use base R functions to calculate summary statistics across groups of observaitons:
+
+```{r}
+mean(gapminder[gapminder$continent == "Africa", "gdpPercap"])
+mean(gapminder[gapminder$continent == "Americas", "gdpPercap"])
+mean(gapminder[gapminder$continent == "Asia", "gdpPercap"])
+```
+
+See how this might get tedious?
+
+----
+
+
+
+## Dataframe manipulation dplyr
+
+<small>Luckily, the [`dplyr`](https://cran.r-project.org/web/packages/dplyr/dplyr.pdf) package provides a number of very useful functions for manipulating dataframes. These functions will save you time by reducing repetition. </small>
+
+```{r,eval=FALSE}
+install.packages('dplyr')
+```
+
+<small>Here we're going to cover 6 of the most commonly used functions as well as using pipes (`%>%`) to combine them.
+
+1. `select()`
+2. `filter()`
+3. `group_by()`
+4. `summarize()`
+5. `mutate()`
+6. `arrange()`
+
+</small>
+
+<small>Now let's load the package:</small>
+
+```{r,message=FALSE}
+library(dplyr)
+```
+
+----
+
+## dplyr- select()
+
+<small>Imagine that we just received the gapminder dataset, but are only interested in a few variables in it. We could use the **select()** function to keep only the variables we select.</small>
+
+```{r}
+year_country_gdp <- select(gapminder, year, country, gdpPercap)
+head(year_country_gdp)
+```
+
+---
+
+## dplyr- select()
+
+```{r fig.height = 4, fig.width = 6, fig.align = "center"}
+year_country_gdp <- select(gapminder, year, country, gdpPercap)
+head(year_country_gdp)
+```
+
+----
+
+## dplyr- select()
+
+![](img/dplyr-fig1.png)
+
+
+---
+## dplyr- select()
+
+```{r }
+year_country_gdp <- select(gapminder, year, country, gdpPercap)
+head(year_country_gdp)
+```
+
+```{r}
+year_country_gdp <- gapminder[,c("year", "country", "gdpPercap")]
+head(year_country_gdp)
+```
+
+---
+
+## dplyr %>% 
+
+The **pipe** operator is one of dplyr's greatest strengths. It allows you combine several functions in a chain. 
+
+```{r}
+year_country_gdp <- gapminder %>% select(year,country,gdpPercap)
+```
+
+is equivalent to: 
+
+```{r }
+year_country_gdp <- select(gapminder, year, country, gdpPercap)
+```
+
+----
+
+## dplyr - filter()
+
+Now let's say we're only interested in African countries. We can combine **select** and **filter** to select only the observations where `continent` is `Africa`.
+
+```{r}
+year_country_gdp_euro <- gapminder %>%
+    filter(continent == "Africa") %>%
+    select(year,country,gdpPercap)
+```
+
+----
+
+## dplyr/Calculations Across Groups
+
+<small>A common task you'll encounter when working with data is running calculations on different groups within the data. For instance, what if we wanted to calculated the mean GDP per capita for each continent?
+In base R, you would have to run the **mean()** function for each subset of data:</small>
+
+```{r}
+mean(gapminder$gdpPercap[gapminder$continent == "Africa"])
+mean(gapminder$gdpPercap[gapminder$continent == "Americas"])
+mean(gapminder$gdpPercap[gapminder$continent == "Asia"])
+mean(gapminder$gdpPercap[gapminder$continent == "Europe"])
+mean(gapminder$gdpPercap[gapminder$continent == "Oceania"])
+```
+
+## dplyr/Calculations Across Groups
+```{r}
+gapminder$mean.continent.GDP <- NA
+
+gapminder$mean.continent.GDP[gapminder$continent == "Africa"] <- mean(gapminder$gdpPercap[gapminder$continent == "Africa"])
+
+gapminder$mean.continent.GDP[gapminder$continent == "Americas"] <- mean(gapminder$gdpPercap[gapminder$continent == "Americas"])
+
+gapminder$mean.continent.GDP[gapminder$continent == "Asia"] <- mean(gapminder$gdpPercap[gapminder$continent == "Asia"])
+
+gapminder$mean.continent.GDP[gapminder$continent == "Europe"] <- mean(gapminder$gdpPercap[gapminder$continent == "Europe"])
+
+gapminder$mean.continent.GDP[gapminder$continent == "Oceania"] <- mean(gapminder$gdpPercap[gapminder$continent == "Oceania"])
+```
+
+----
+
+## split-apply-combine
+
+![](img/splitapply.png)
+
+
+----
+
+## dplyr- group_by()
+
+
+![](img/dplyr-fig2.png)
+
+## dplyr - summarize()
+
+```{r}
+gdp_bycontinents <- gapminder %>%
+    group_by(continent) %>%
+    summarize(mean_gdpPercap = mean(gdpPercap))
+head(gdp_bycontinents)
+```
+
+---
+
+## dplyr - summarize()
+
+![](img/dplyr-fig3.png)
+
+
+
+## dplyr - summarize()
+
+group_by() multiple variables
+
+```{r}
+gdp_bycontinents_byyear <- gapminder %>%
+    group_by(continent, year) %>%
+    summarize(mean_gdpPercap = mean(gdpPercap))
+head(gdp_bycontinents_byyear)
+```
+
+## dplyr - summarize()
+
+group_by() multiple variables and defining multiple variable with summarize()
+
+```{r}
+gdp_pop_bycontinents_byyear <- gapminder %>%
+    group_by(continent, year) %>%
+    summarize(mean_gdpPercap = mean(gdpPercap),
+              sd_gdpPercap = sd(gdpPercap),
+              mean_pop = mean(pop),
+              sd_pop = sd(pop))
+head(gdp_pop_bycontinents_byyear)
+```
+
+## dplyr- mutate()
+
+What if we wanted to add these values to our original data frame instead of creating a new object? 
+
+```{r}
+gapminder_with_extra_vars <- gapminder %>%
+    group_by(continent, year) %>%
+    mutate(mean_gdpPercap = mean(gdpPercap),
+              sd_gdpPercap = sd(gdpPercap),
+              mean_pop = mean(pop),
+              sd_pop = sd(pop))
+head(gapminder_with_extra_vars)
+```
+
+----
+
+
+## dplyr- mutate()
+
+We can use also use **mutate()** to create new variables prior to (or even after) summarizing information.
+
+```{r}
+gdp_pop_bycontinents_byyear <- gapminder %>%
+    mutate(gdp_billion = gdpPercap*pop/10^9) %>%
+    group_by(continent, year) %>%
+    summarize(mean_gdpPercap = mean(gdpPercap),
+              sd_gdpPercap = sd(gdpPercap),
+              mean_pop = mean(pop),
+              sd_pop = sd(pop),
+              mean_gdp_billion = mean(gdp_billion),
+              sd_gdp_billion = sd(gdp_billion))
+head(gdp_pop_bycontinents_byyear)
+```
+
+----
+
+## dplyr - arrange()
+
+```{r}
+gapminder_with_extra_vars <- gapminder %>%
+    group_by(continent, year) %>%
+    mutate(mean_gdpPercap = mean(gdpPercap),
+              sd_gdpPercap = sd(gdpPercap),
+              mean_pop = mean(pop),
+              sd_pop = sd(pop)) %>%
+    arrange(desc(year), continent)
+head(gapminder_with_extra_vars)
+```
+
+----
+
+### Your turn
+
+1. Use dplyr to create a data frame containing the median `lifeExp` for each continent
+
+2. Use dplyr to add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
+
+3. Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)
+
+## Tidying Data
+
+Even before we conduct analysis or calculations, we need to put our data into the correct format. The goal here is to rearrange a messy dataset into one that is **tidy**
+
+The two most important properties of tidy data are:
+
+1) Each column is a variable.
+2) Each row is an observation.
+
+## Tidying Data
+
+> "Happy families are all alike; every unhappy family is unhappy in its own way." - Leo Tolstoy
+
+> "Tidy datasets are all alike but every messy dataset is messy in its own way." – Hadley Wickham
+
+
+----
+
+## Tidying Data
+
+```{r, include=FALSE}
+wide <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory"),
+  time1 = c(67, 80, 64),
+  time2 = c(56, 90, 50),
+  time3 = c(70, 67, 101)
+)
+```
+```{r}
+wide
+```
+
+```{r, include=FALSE}
+long <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory"),
+  time = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
+  heartrate = c(67, 80, 64, 56, 90, 50, 70, 67, 10)
+)
+```
+```{r}
+long
+```
+
+Which one of these do you think is the *tidy* format?

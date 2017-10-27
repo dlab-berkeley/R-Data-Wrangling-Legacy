@@ -11,13 +11,7 @@ library(tidyr)
 library(ggplot2)
 ```
 
-# What exactly is "useful stuff" in R?
-
-(Credits: Some of these materials in this module were adapted from [Software Carpentry](http://swcarpentry.github.io/r-novice-gapminder/))
-
-
-
-# Useful Stuff: Applied Research Edition
+# Dplyr/TidyR
 
 > It is often said that 80% of data analysis is spent on the process of cleaning and preparing the data. (Dasu and Johnson, 2003)
 
@@ -27,7 +21,7 @@ library(ggplot2)
 
 # Dataframe Manipulation/Example Dataset
 
-For this unit, we'll be working with the "Gapminder" dataset, which is excerpt of the data available at Gapminder.org. For each of 142 countries, the data  provides values for life expectancy, GDP per capita, and population, every five years, from 1952 to 2007.
+For this unit, we'll be working with the "Gapminder" dataset, which is excerpt of the data available at Gapminder.org. For each of 142 countries, the data provides values for life expectancy, GDP per capita, and population, every five years, from 1952 to 2007.
 
 ```{r}
 gapminder <- read.csv("data/gapminder-FiveYearData.csv", stringsAsFactors = TRUE)

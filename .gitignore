@@ -34,3 +34,4 @@ vignettes/*.pdf
 
 # Local
 .DS_Store
+.Rproj.user
