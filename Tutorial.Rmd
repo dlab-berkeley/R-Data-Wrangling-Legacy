@@ -128,7 +128,9 @@ To clarify, both the `select` and `filter` functions subsets the data frame. The
  
 # Challenge 1
 
-Create a new dataframe object called `africa_asia` that is filtered by "Africa" and "Asia". Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
+Create a new dataframe object called `africa_asia_lifeExp` that is filtered by "Africa" and "Asia" and has a lifeExp less than 60*. Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
+
+*<small>hint: use both the |, & boolean operator </small>
 
 ```{r}
 

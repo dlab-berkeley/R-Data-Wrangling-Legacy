@@ -177,9 +177,9 @@ Logicals
 
 ## Your Turn
 
-Create a new object called `africa_asia` that is filtered by "Africa" and "Asia"*. Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
+Create a new dataframe object called `africa_asia_lifeExp` that is filtered by "Africa" and "Asia" and has a lifeExp less than 60*. Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
 
-*<small>hint: use the & boolean operator </small>
+*<small>hint: use both the |, & boolean operator </small>
 
 ```{r}
 
