@@ -155,7 +155,7 @@ year_country_gdp <- select(gapminder, year, country, gdpPercap)
 Now let's say we're only interested in African countries. We can combine **select** and **filter** to select only the observations where `continent` is `Africa`.
 
 ```{r}
-year_country_gdp_euro <- gapminder %>%
+year_country_gdp_africa <- gapminder %>%
     filter(continent == "Africa") %>%
     select(year,country,gdpPercap)
 ```
