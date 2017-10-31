@@ -1,5 +1,5 @@
 ---
-title: 
+title: R Wrangling
 output:
   revealjs::revealjs_presentation:
     theme: serif
@@ -54,7 +54,7 @@ head(gapminder)
 
 ## Dataframe manipulation Base R 
 
-We can use base R functions to calculate summary statistics across groups of observaitons:
+We can use base R functions to calculate summary statistics across groups of observations:
 
 ```{r}
 mean(gapminder[gapminder$continent == "Africa", "gdpPercap"])
@@ -62,7 +62,6 @@ mean(gapminder[gapminder$continent == "Americas", "gdpPercap"])
 mean(gapminder[gapminder$continent == "Asia", "gdpPercap"])
 ```
 
-See how this might get tedious?
 
 ----
 
@@ -163,6 +162,32 @@ year_country_gdp_euro <- gapminder %>%
 
 ----
 
+## dplyr - filter()
+
+Logicals
+
+| <  | less than                | !=                     | not equal to      |
+|----|--------------------------|------------------------|-------------------|
+| >  | greater than             | %in%                   | group membership  |
+| == | equal to                 | is.na                  | is NA             |
+| <= | less than or equal to    | !is.na                 | is not NA         |
+| >= | greater than or equal to | &, |, !, xor, any, all | Boolean Operators |
+
+----
+
+## Your Turn
+
+Create a new object called `africa_asia` that is filtered by "Africa" and "Asia"*. Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
+
+*<small>hint: use the & boolean operator </small>
+
+```{r}
+
+```
+
+
+----
+
 ## dplyr/Calculations Across Groups
 
 <small>A common task you'll encounter when working with data is running calculations on different groups within the data. For instance, what if we wanted to calculated the mean GDP per capita for each continent?
@@ -175,8 +200,12 @@ mean(gapminder$gdpPercap[gapminder$continent == "Asia"])
 mean(gapminder$gdpPercap[gapminder$continent == "Europe"])
 mean(gapminder$gdpPercap[gapminder$continent == "Oceania"])
 ```
+----
 
 ## dplyr/Calculations Across Groups
+
+Assigning to data frames:
+
 ```{r}
 gapminder$mean.continent.GDP <- NA
 
@@ -246,6 +275,22 @@ gdp_pop_bycontinents_byyear <- gapminder %>%
               sd_pop = sd(pop))
 head(gdp_pop_bycontinents_byyear)
 ```
+----
+
+
+## Exercise 2
+
+1. Use dplyr to create a data frame containing the median `lifeExp` for each continent
+
+
+```{r}
+
+
+
+
+```
+
+----
 
 ## dplyr- mutate()
 
@@ -300,11 +345,24 @@ head(gapminder_with_extra_vars)
 
 ### Your turn
 
-1. Use dplyr to create a data frame containing the median `lifeExp` for each continent
+1. Use dplyr to add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
 
-2. Use dplyr to add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
 
-3. Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)
+```{r}
+
+
+
+```
+
+2. Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)
+
+```{r}
+
+
+
+```
+
+
 
 ## Tidying Data
 
@@ -350,3 +408,173 @@ long
 ```
 
 Which one of these do you think is the *tidy* format?
+
+
+
+-----
+
+
+This data frame is somewhere in between the purely 'long' and 'wide' formats. We have 3 "ID variables" (`continent`, `country`, `year`) and 3 "Observation variables" (`pop`, `lifeExp`, `gdpPercap`).
+
+```{r}
+head(gapminder)
+```
+
+
+----
+
+
+## Tidying Data/tidyr
+
+```{r}
+
+library(tidyr)
+```
+
+```{r}
+gap_wide <- read.csv("data/gapminder_wide.csv", stringsAsFactors = FALSE)
+head(gap_wide)
+```
+
+
+----
+
+## gather()
+
+```{r}
+gap_long <- gap_wide %>%
+    gather(obstype_year, obs_values, 3:38)
+head(gap_long)
+```
+
+We put 3 arguments into the `gather()` function: 
+
+1. the name of the new column for the new ID variable (`obstype_year`)
+
+2. the name for the new amalgamated observation variable (`obs_value`)
+
+3. the indices of the old observation variables (`3:38`, signalling columns 3 through 38) that we want to gather into one variable. Notice that we don't want to melt down columns 1 and 2, as these are considered "ID" variables.
+
+
+
+----
+
+
+## gather()
+
+We can also select observation variables using:
+
+* variable indices
+* variable names (without quotes)
+* `x:z` to select all variables between x and z
+* `-y` to *exclude* y
+* `starts_with(x, ignore.case = TRUE)`: all names that starts with `x`
+* `ends_with(x, ignore.case = TRUE)`: all names that ends with `x`
+* `contains(x, ignore.case = TRUE)`: all names that contain `x`
+
+
+----
+
+
+## gather()
+
+
+The same thing with the `starts_with` function 
+
+```{r}
+# with the starts_with() function
+gap_long <- gap_wide %>%
+    gather(obstype_year, obs_values, starts_with('pop'),
+           starts_with('lifeExp'), starts_with('gdpPercap'))
+head(gap_long)
+
+```
+
+----
+
+
+## gather()
+
+the `-` operator:
+ 
+```{r}
+gap_long <- gap_wide %>% 
+  gather(obstype_year, obs_values, -continent, -country)
+head(gap_long)
+```
+
+----
+
+## separate()
+
+
+in our long dataset, `obstype_year` actually contains 2 pieces of information, the observation type (`pop`, `lifeExp`, or `gdpPercap`) and the `year`.
+
+We can use the `separate()` function to split the character strings into multiple variables:
+
+```{r}
+gap_long_sep <- gap_long %>% 
+  separate(obstype_year, into = c('obs_type','year'), sep = "_") %>% 
+  mutate(year = as.integer(year))
+head(gap_long_sep)
+```
+
+
+----
+
+
+## spread()
+
+The opposite of `gather()` is `spread()`. It spreads our observation variables back out to make a wider table. We can use this function to spread our `gap_long()` to the original "medium" format.
+
+```{r}
+gap_medium <- gap_long_sep %>% 
+  spread(obs_type, obs_values)
+head(gap_medium)
+```
+
+----
+
+
+All we need is some quick fixes to make this dataset identical to the original `gapminder` dataset:
+
+```{r}
+gapminder <- read.csv("data/gapminder-FiveYearData.csv")
+head(gapminder)
+```
+
+
+----
+
+
+```{r}
+
+# rearrange columns
+gap_medium <- gap_medium[,names(gapminder)]
+head(gap_medium)
+
+# arrange by country, continent, and year
+gap_medium <- gap_medium %>% 
+  arrange(country,continent,year)
+head(gap_medium)
+```
+
+
+----
+
+
+## Extra Resources
+
+`dplyr` and `tidyr` have many more functions to help you wrangle and manipulate your data. See the  [Data Wrangling Cheat Sheet](https://www.rstudio.com/resources/cheatsheets/) for more.
+
+
+----
+
+### Challenge 4
+
+1. Subset the results from challenge 3 to select only the `country`, `year`, and `gdpPercap_diff` columns. Use `tidyr` put it in wide format so that countries are rows and years are columns. 
+
+2. Now turn the dataframe above back into the long format with three columns: `country`, `year`, and `gdpPercap_diff`.
+
+
+

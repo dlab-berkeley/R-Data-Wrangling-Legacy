@@ -11,7 +11,7 @@ library(tidyr)
 library(ggplot2)
 ```
 
-# Dplyr/TidyR
+# dplyr/tidyr
 
 > It is often said that 80% of data analysis is spent on the process of cleaning and preparing the data. (Dasu and Johnson, 2003)
 
@@ -113,6 +113,28 @@ As with last time, first we pass the gapminder dataframe to the `filter()` funct
 To clarify, both the `select` and `filter` functions subsets the data frame. The difference is that `select` extracts certain columns, while `filter` extracts certain rows.
 
  **Note:** The order of operations is very important in this case. If we used 'select' first, filter would not be able to find the variable `continent` since we would have removed it in the previous step.
+ 
+ You can extend filter() with logical conditions:
+ 
+ Logicals
+
+| <  | less than                | !=                     | not equal to      |
+|----|--------------------------|------------------------|-------------------|
+| >  | greater than             | %in%                   | group membership  |
+| == | equal to                 | is.na                  | is NA             |
+| <= | less than or equal to    | !is.na                 | is not NA         |
+| >= | greater than or equal to | &, |, !, xor, any, all | Boolean Operators |
+
+ 
+# Challenge 1
+
+Create a new dataframe object called `africa_asia` that is filtered by "Africa" and "Asia". Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
+
+```{r}
+
+```
+ 
+ 
 
 # Dataframe Manipulation/dplyr/Calculations Across Groups
 
@@ -206,6 +228,21 @@ gdp_pop_bycontinents_byyear <- gapminder %>%
 head(gdp_pop_bycontinents_byyear)
 ```
 
+# Exercise 2
+
+1. Use dplyr to create a data frame containing the median `lifeExp` for each continent
+
+
+```{r}
+
+
+
+
+```
+
+
+
+
 # Dataframe Manipulation/dplyr/mutate
 
 What if we wanted to add these values to our original data frame instead of creating a new object? For this, we can use the `mutate()` function, which is similar to `summarize()` except it creates new variables to the same dataframe that you pass into it.
@@ -250,15 +287,13 @@ gapminder_with_extra_vars <- gapminder %>%
 head(gapminder_with_extra_vars)
 ```
 
-### Challenges: dplyr
+### Challenge 3
 
-1. Use dplyr to create a data frame containing the median `lifeExp` for each continent
+1. Add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
 
-2. Use dplyr to add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
+2. Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)
 
-3. Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)
 
-**hint**: You might have to `ungoup()` before you `arrange()`.
 
 # Tidying Data
 
@@ -356,7 +391,7 @@ head(gap_long)
 
 Notice that we put 3 arguments into the `gather()` function: 
 
-1. the name the new column for the new ID variable (`obstype_year`), 
+1. the name of the new column for the new ID variable (`obstype_year`), 
 2. the name for the new amalgamated observation variable (`obs_value`), 
 3. the indices of the old observation variables (`3:38`, signalling columns 3 through 38) that we want to gather into one variable. Notice that we don't want to melt down columns 1 and 2, as these are considered "ID" variables.
 
