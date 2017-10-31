@@ -171,7 +171,7 @@ Logicals
 | >  | greater than             | %in%                   | group membership  |
 | == | equal to                 | is.na                  | is NA             |
 | <= | less than or equal to    | !is.na                 | is not NA         |
-| >= | greater than or equal to | &, |, !, xor, any, all | Boolean Operators |
+| >= | greater than or equal to | & &#124; ! xor any all | Boolean Operators |
 
 ----
 
