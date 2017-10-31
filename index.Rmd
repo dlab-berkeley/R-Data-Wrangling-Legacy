@@ -247,7 +247,7 @@ head(gdp_bycontinents)
 
 ## dplyr - summarize()
 
-![](img/dplyr-fig3.png){width=70% }
+![](img/dplyr-fig3.png){width=50% }
 
 
 
