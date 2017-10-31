@@ -188,9 +188,9 @@ Create a new object called `africa_asia` that is filtered by "Africa" and "Asia"
 
 ----
 
-## dplyr/Calculations Across Groups
+## dplyr/calculations across groups
 
-<small>A common task you'll encounter when working with data is running calculations on different groups within the data. For instance, what if we wanted to calculated the mean GDP per capita for each continent?
+<small>A common task you'll encounter when working with data is running calculations on different groups within the data. What if we wanted to calculate the mean GDP per capita for each continent?
 In base R, you would have to run the **mean()** function for each subset of data:</small>
 
 ```{r}
@@ -247,7 +247,7 @@ head(gdp_bycontinents)
 
 ## dplyr - summarize()
 
-![](img/dplyr-fig3.png)
+![](img/dplyr-fig3.png){width=70% }
 
 
 
