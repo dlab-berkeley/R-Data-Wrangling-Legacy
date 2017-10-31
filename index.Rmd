@@ -446,6 +446,8 @@ gap_long <- gap_wide %>%
     gather(obstype_year, obs_values, 3:38)
 head(gap_long)
 ```
+<small>
+
 
 We put 3 arguments into the `gather()` function: 
 
@@ -456,6 +458,8 @@ We put 3 arguments into the `gather()` function:
 3. the indices of the old observation variables (`3:38`, signalling columns 3 through 38) that we want to gather into one variable. Notice that we don't want to melt down columns 1 and 2, as these are considered "ID" variables.
 
 
+
+</small>
 
 ----
 
