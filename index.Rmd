@@ -447,8 +447,6 @@ gap_long <- gap_wide %>%
 head(gap_long)
 ```
 <small>
-
-
 We put 3 arguments into the `gather()` function: 
 
 1. the name of the new column for the new ID variable (`obstype_year`)
