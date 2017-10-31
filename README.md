@@ -28,10 +28,6 @@ Install R by downloading and running [this .pkg file from CRAN](http://cran.r-pr
 
 You can download the [binary files](http://cran.r-project.org/index.html) for your distribution from CRAN. Or you can use your package manager (e.g. for Debian/Ubuntu run `sudo apt-get install r-base` and for Fedora run `sudo yum install R`). Also, please install the [RStudio IDE](http://www.rstudio.com/ide/download/desktop).
 
-### Materials
-
-Download and unpack the zip-file of the materials by clicking on this link: https://github.com/rochelleterman/r-graphics/archive/master.zip
-
 ### Testing your installation
 
 Find the Tutorial.Rmd file in the directory you just downloaded and open it in RStudio. If all goes well, RStudio should launch and you should see the tutorial.
