@@ -459,8 +459,12 @@ head(gap_medium)
 head(gapminder)
 
 # rearrange columns
-gap_medium <- gapminder %>%  select(country:gdpPercap)
+ap_medium <- gap_medium %>%  select(country, year, pop, continent, lifeExp, gdpPercap)
 head(gap_medium)
+
+#
+#gap_medium <- gap_medium[,names(gapminder)]
+#head(gap_medium)
 
 # arrange by country, continent, and year
 gap_medium <- gap_medium %>% 
