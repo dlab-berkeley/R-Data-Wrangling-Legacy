@@ -280,7 +280,7 @@ head(gdp_pop_bycontinents_byyear)
 
 ## Exercise 2
 
-1. Use dplyr to create a data frame containing the median `lifeExp` for each continent
+1. Create a data frame containing the median `lifeExp` for each country
 
 
 ```{r}
