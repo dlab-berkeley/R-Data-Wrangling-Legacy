@@ -467,7 +467,7 @@ We put 3 arguments into the `gather()` function:
 We can also select observation variables using:
 
 * variable indices
-* variable names (without quotes)
+* variable names
 * `x:z` to select all variables between x and z
 * `-y` to *exclude* y
 * `starts_with(x, ignore.case = TRUE)`: all names that starts with `x`
