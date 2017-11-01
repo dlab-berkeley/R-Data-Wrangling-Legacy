@@ -1,224 +1,40 @@
-% R Data Wrangling and Manipulation, Solutions
-% August 2016, UC Berkeley
-% Chris Paciorek
+## Exercise 1
+##Create a new object called africa_asia that is filtered by “Africa” and “Asia”*. Select all variables except for gdpPercap. 
+##Use the pipe operator to chain the functions together.
 
+africa_asia_lifeExp <- gapminder %>% 
+  filter(continent == "Africa"& lifeExp < 60 | continent == "Asia" & lifeExp <60) %>%
+  select(-gdpPercap)
+  
+## Exercise 2
 
-```{r, basics5}
-setwd("~/Dropbox/berkeley/Git-Repos/r-data-wrang")
-require(dplyr)
-require(tidyr)
-gapminder <- read.csv("data/gapminder-FiveYearData.csv", stringsAsFactors = TRUE)
+#Use dplyr to create a data frame containing the median lifeExp for each country
 
-## 1 ##
-gap_median_lifeExp <- gapminder %>%
-    group_by(continent) %>%
-    summarize(med_lifeExp = median(lifeExp))
+median_country_lifeExp <- gapminder %>% group_by(country) %>% 
+  summarize(median_lifeExp = median(lifeExp))
 
-## 2 ## 
-gapminder_pop_continent <- gapminder %>%
-    group_by(continent, year) %>%
-    mutate(continent_pop = sum(pop))
+## Exercise 3
 
-## 3 ##
-gap_rel_gdp <- gapminder %>%
-    group_by(continent, year) %>%
-    mutate(gdpPercap_diff = gdpPercap - mean(gdpPercap)) %>%
-    ungroup() %>%
-    arrange(desc(gdpPercap_diff))
+#Use dplyr to add a column to the gapminder dataset that contains the 
+#total population of the continent of each observation in a given year.
 
-## 4 ##
-gap_wider <- gap_rel_gdp %>% 
-  select(country, year, gdpPercap_diff) %>% 
-  spread(year, gdpPercap_diff)
+gapminder <- gapminder %>% group_by(continent, year) %>% 
+  mutate(continent_pop = sum(pop))
 
-# 5
-gap_super_long <- gap_wider %>% 
-  gather(year, gdpPercap_diff, 2:length(names(gap_wider)))
+gapminder <- gapminder %>%  group_by(continent, year) %>% 
+  mutate(mean_continent_gdp = mean(gdpPercap)) %>% 
+  mutate(gdpPercap_diff = gdpPercap - mean_continent_gdp) %>% 
+  arrange(desc(gdpPercap_diff))
+  
+  ## Exercise 4
+  
+#Subset the results from the last exercise to select only the country, year, and gdpPercap_diff columns. 
+#Use tidyr put it in wide format # so that countries are rows and years are columns. You might need to use  ungroup() before the select() function.
+#Then turn the dataframe above back into the long format with three columns: country, year, and gdpPercap_diff.
+  
+gapminder_wide <- gapminder %>% ungroup() %>% select(country, year, gdpPercap_diff) %>% 
+   spread(year, gdpPercap_diff)
 
-```
-
-# Module 6: Programming
-
-```{r, basics6}
-## 1 ##
-threshZero <- function(x) {
-   x[x < 0] <- 0
-   return(x)
-}
-```
-
-```{r, using_the_ideas6}
-## 2 ##
-thresh <- function(x, threshold = 0, below = TRUE) {
-    if(below) {
-       x[ x < threshold ] <- threshold
-    } else {
-       x[ x > threshold ] <- threshold
-    }
-    return(x)
-}
-
-## 3 ##
-thresh <- function(x, threshold = 0, below = TRUE) {
-    if(!is.numeric(x) || is.list(x)) stop("'x' must be a numeric vector")
-    if(below) {
-       x[ x < threshold ] <- threshold
-    } else {
-       x[ x > threshold ] <- threshold
-    }
-    return(x)
-}
-
-## 4 ##
-colSort <- function(data, col1, col2) {
-    ord <- order(data[, col1], data[, col2], decreasing=TRUE)
-    sorted <- data[ord, ]
-    invisible(sorted)
-}
-```
-
-```{r, advanced6}
-## 5 ##
-colSort <- function(data, ...) {
-    ord <- order(..., decreasing=TRUE)
-    sorted <- data[ord, ]
-    invisible(sorted)
-}
-
-## 6 ##
-colSort <- function(data, ..., cols = NULL, decreasing = FALSE) {
-   if(is.null(cols)) {
-      ord <- order(..., decreasing = decreasing)
-   } else {
-     if((!is.numeric(cols) && !is.character(cols)) || is.list(cols))
-        stop("'cols' must be a numeric or character vector")
-     if(is.numeric(cols) && max(cols) > ncol(data) ||
-        is.character(cols) && any(!cols %in% names(data)))
-           stop("'cols' refers to non-existent column")
-      ord <- do.call(order, data[ , cols])
-   }
-   sorted <- data[ord, ]
-   invisible(sorted)
-}
-
-## 7 ##
-funGenerator <- function(x) {
-   x <- 10
-   g <- function(y) {
-      return(x + y)
-   }
-   return(g)
-}
-
-x <- 2
-f <- funGenerator()
-f(1)
-
-ls(environment(f))
-environment(f)$x
-```
-
-# 7) Module 7: Core tools
-
-```{r, basics7}
-## 1 ##
-popMean <- 5
-x <- rpois(100, popMean)
-mean(x) - popMean
-
-## 2 ##
-qchisq(0.95, 1)
-
-## 3 ##
-1 - pnorm(5)  # pnorm(5, upper.tail = TRUE)
-1 - pt(5, df = 1)
-```
-
-```{r, using_the_ideas7}
-## 4 ##
-nBoot <- 500
-vals <- rep(0, nBoot)
-
-for(i in seq_len(nBoot)) { 
-      smp <- sample(seq_len(nrow(air)), replace = TRUE) 
-      vals[i] <- mean(air$DepDelay[smp], na.rm = TRUE)
-}
-hist(vals)
-se <- sd(vals)
-n <- sum(!is.na(air$DepDelay))
-se_norm <- sd(air$DepDelay, na.rm = TRUE) / sqrt(n)
-
-## 5 ##
-DestSubset <- c('LAX','SEA','PHX','DEN','MSP','JFK','ATL','DFW','IAH', 'ORD') 
-airSmall <- subset(air, Dest %in% DestSubset)
-airSmall$DepDelayCens <- censor(airSmall$DepDelay, 180)
-airSmall$SchedDepCont <- airSmall$CRSDepTime %/% 100 + (airSmall$CRSDepTime %% 100) / 60
-mod_LAX <- gam(DepDelayCens ~ s(Month, k = 10) + s(SchedDepCont, k = 10), 
-         data = airSmall, subset = airSmall$Dest == "LAX")
-par(mfrow = c(1, 2))
-plot(mod_LAX)
-```
-
-```{r, advanced7}
-## 6 ## 
-nFolds <- 10
-n <- nrow(air)
-fold_size <- rep(round(n / nFolds), nFolds)
-fold_size[nFolds] <- n - (nFolds - 1)*fold_size[1]
-
-fold <- rep(1:nFolds, times = fold_size)
-table(fold)
-set.seed(0)
-air$Fold <- sample(fold, replace = TRUE)
-
-## 7 ##
-n <- 100
-nReps <- 10000
-data <- matrix(rpois(n*nReps, 3), ncol = nReps)
-mns <- colMeans(data)
-par(mfrow = c(1, 2))
-hist(mns)
-qqnorm(mns)
-```
-
-# Module 8: Graphics
-
-```{r, basics8}
-sub <- air[sample(1:nrow(air), 10000, replace = FALSE), ]
-
-## 1 ##
-sub$DepDelay[sub$DepDelay < 0] <- 0
-sub$DepDelay[sub$DepDelay >= 60] <- 60 
-
-ggplot(data = sub, aes(x = DepDelay)) + geom_histogram()
-
-## 2 ##
-ggplot(data = sub, aes(x = DepDelay, y = ArrDelay)) + geom_point() 
-
-## 3 ##
-pdf('delays.pdf')
-ggplot(data = sub, aes(x = DepDelay, y = ArrDelay)) + geom_point() + 
-  ggtitle("Arrival vs. Departure Delay") + xlab(label = "Departure delay (minutes)") +
-  ylab(label = "Arrival delay (minutes)")
-dev.off()
-
-## 4 ##
-ggplot(data = sub, aes(x = factor(DayOfWeek), y = DepDelay)) + geom_boxplot()
-```
-
-```{r, using_the_ideas8}
-## 5 ##
-DestSubset <- c('LAX','SEA','PHX','DEN','MSP','JFK','ATL','DFW','IAH', 'ORD')
-ggplot(data = sub[sub$Dest %in% DestSubset, ], aes(x = factor(DayOfWeek), y = DepDelay)) + geom_boxplot() + facet_wrap(~Dest, nrow = 2, ncol = 5)
-
-## 6 ##
-ggplot(data = sub[sub$Dest %in% c('IAH', 'ORD'), ], aes(x = CRSDepTime, y = ArrDelay, color = Dest)) + geom_point() + scale_x_continuous(limits = c(600, 2400)) + scale_y_continuous(limits = c(-10, 120))
-```
-
-```{r, advanced8}
-## 7 ##
-DestSubset <- c('LAX','SEA','PHX','DEN','MSP','JFK','ATL','DFW','IAH', 'ORD')
-ggplot(data = sub[sub$Dest %in% DestSubset, ], aes(x = CRSDepTime, y = DepDelay)) + geom_point(alpha = 0.3) + geom_smooth(method = "loess", color = 'red', se = FALSE) + scale_x_continuous(limits = c(600, 2400)) + facet_wrap(~Dest, nrow = 2) + theme_bw()
-```
+gapminder_long <- gapminder_wide %>% gather(year, gdpPercap_diff, `1952`: `2007`)
 
 
