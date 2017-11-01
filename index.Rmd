@@ -574,7 +574,7 @@ head(gap_medium)
 
 ### Your Turn
 
-1. Subset the results from challenge 3 to select only the `country`, `year`, and `gdpPercap_diff` columns. Use `tidyr` put it in wide format so that countries are rows and years are columns. 
+1. Subset the results from the last exercise to select only the `country`, `year`, and `gdpPercap_diff` columns. Use `tidyr` put it in wide format so that countries are rows and years are columns. 
 
 2. Now turn the dataframe above back into the long format with three columns: `country`, `year`, and `gdpPercap_diff`.
 
