@@ -33,7 +33,7 @@ gapminder <- gapminder_gdpPercap_diff %>%  group_by(continent, year) %>%
 #Use tidyr put it in wide format # so that countries are rows and years are columns. You might need to use  ungroup() before the select() function.
 #Then turn the dataframe above back into the long format with three columns: country, year, and gdpPercap_diff.
   
-gapminder_wide <- gapminder %>% ungroup() %>% select(country, year, gdpPercap_diff) %>% 
+gapminder_wide <- gapminder_gdpPercap_diff %>% ungroup() %>% select(country, year, gdpPercap_diff) %>% 
    spread(year, gdpPercap_diff)
 
 gapminder_long <- gapminder_wide %>% gather(year, gdpPercap_diff, `1952`: `2007`)
