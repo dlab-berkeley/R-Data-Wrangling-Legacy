@@ -14,8 +14,7 @@ width: 1200
 
 UC Berkeley Library and D-Lab
 
-Fall 2017
-
+Spring 2018
 
 ----
 
