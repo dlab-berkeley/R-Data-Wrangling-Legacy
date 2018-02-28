@@ -21,7 +21,7 @@ median_country_lifeExp <- gapminder %>% group_by(country) %>%
 gapminder <- gapminder %>% group_by(continent, year) %>% 
   mutate(continent_pop = sum(pop))
   
-gapminder <- gapminder %>%  group_by(continent, year) %>% 
+gapminder_gdpPercap_diff <- gapminder %>%  group_by(continent, year) %>% 
    mutate(mean_continent_gdp = mean(gdpPercap),
           gdpPercap_diff = gdpPercap - mean_continent_gdp) %>% 
   arrange(desc(gdpPercap_diff))
