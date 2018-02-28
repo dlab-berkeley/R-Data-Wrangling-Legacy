@@ -381,6 +381,7 @@ The two most important properties of tidy data are:
 
 1) Each column is a variable.
 2) Each row is an observation.
+3) Each value is in its own cell.
 
 ## Tidying Data
 
