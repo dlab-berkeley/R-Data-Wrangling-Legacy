@@ -24,6 +24,10 @@ Spring 2018
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+
+# OR...tidyverse
+
+library(tidyverse)
 ```
 
 ----
