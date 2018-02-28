@@ -76,6 +76,8 @@ mean(gapminder[gapminder$continent == "Asia", "gdpPercap"])
 
 ```{r,eval=FALSE}
 install.packages('dplyr')
+
+#or install.packages('tidyverse')
 ```
 
 <small>Here we're going to cover 6 of the most commonly used functions as well as using pipes (`%>%`) to combine them.
@@ -93,6 +95,8 @@ install.packages('dplyr')
 
 ```{r,message=FALSE}
 library(dplyr)
+
+#or library(tidyverse)
 ```
 
 ----
