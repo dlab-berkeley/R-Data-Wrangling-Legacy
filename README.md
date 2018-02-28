@@ -2,9 +2,9 @@
 
 It is often said that 80% of data analysis is spent on the process of cleaning and preparing the data. This workshop will introduce tools (notably dplyr and tidyr) that makes data wrangling and manipulation much easier. Participants will learn how to use these packages to subset and reshape data sets, do calculations across groups of data, clean data, and other useful stuff.
 
-**Prior knowledge**: Previous experience with (basic) R is assumed. 
+**Prior knowledge**: Previous experience with (basic) R is helpful but not necessary. 
 
-**Offered**: [UC Berkeley D-Lab](http://dlab.berkeley.edu/training/data-wrangling-and-manipulation-r-4), November 1, 2017
+**Offered**: [UC Berkeley D-Lab](http://dlab.berkeley.edu/training/data-wrangling-and-manipulation-r-5), March 28, 2018
 
 ## Setup
 
