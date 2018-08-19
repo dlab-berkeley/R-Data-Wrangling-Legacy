@@ -34,4 +34,4 @@ Find the Tutorial.Rmd file in the directory you just downloaded and open it in R
 
 Software Carpentry maintains a list of common issues that occur during installation may be useful for our class here: [Configuration Problems and Solutions wiki page.](https://github.com/swcarpentry/workshop-template/wiki/Configuration-Problems-and-Solutions)
 
-Credit: Thanks to [Software Carpentry](http://software-carpentry.org/workshops/) for providing installation guidelines.
+Credit: Thanks to [Software Carpentry](http://software-carpentry.org/workshops/) for providing installation guidelines and to Chris Paciorek, Rochelle Terman, and the [R-bootcamp](http://dlab.berkeley.edu/training/r-bootcamp-2018) for sharing these materials. 
