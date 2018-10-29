@@ -4,7 +4,7 @@ It is often said that 80% of data analysis is spent on the process of cleaning a
 
 **Prior knowledge**: Previous experience with (basic) R is helpful but not necessary. 
 
-**Offered**: [UC Berkeley D-Lab](http://dlab.berkeley.edu/training/data-wrangling-and-manipulation-r-5), March 28, 2018
+**Offered**: [UC Berkeley D-Lab](http://dlab.berkeley.edu/training/data-wrangling-and-manipulation-r-6), October 30, 2018
 
 ## Setup
 
