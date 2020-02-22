@@ -8,6 +8,8 @@ output:
   html_document:
     toc: true
     toc_float: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -106,7 +108,7 @@ Above, we used what's called 'normal' grammar, but the strengths of `dplyr` lie 
 year_country_gdp <- gapminder %>% select(year,country,gdpPercap)
 ```
 
-Let's walk through it step by step. First we summon the gapminder dataframe and pass it on, using the pipe symbol `%>%`, to the next step, which is the `select()` function. In this case we don't specify which data object we use in the `select()` function since in gets that from the previous pipe. 
+Let's walk through it step by step. First we summon the gapminder dataframe and pass it on, using the pipe symbol `%>%`, to the next step, which is the `select()` function. In this case we don't specify which data object we use in the `select()` function, since it gets that from the previous pipe. 
 
 **Fun Fact**: There is a good chance you have encountered pipes before in the shell. In R, a pipe symbol is `%>%` while in the shell it is `|.` But the concept is the same!
 
@@ -122,29 +124,34 @@ year_country_gdp_africa <- gapminder %>%
 
 As with last time, first we pass the gapminder dataframe to the `filter()` function, then we pass the filtered version of the gapminder dataframe to the `select()` function.
 
-To clarify, both the `select` and `filter` functions subsets the data frame. The difference is that `select` extracts certain columns, while `filter` extracts certain rows.
+To clarify, both the `select` and `filter` functions subset the data frame. The difference is that `select` extracts certain columns, while `filter` extracts certain rows.
 
  **Note:** The order of operations is very important in this case. If we used 'select' first, filter would not be able to find the variable `continent` since we would have removed it in the previous step.
  
  You can extend filter() with logical conditions:
  
- Logicals
-
-| <  | less than                | !=                     | not equal to      |
-|----|--------------------------|------------------------|-------------------|
-| >  | greater than             | %in%                   | group membership  |
-| == | equal to                 | is.na                  | is NA             |
-| <= | less than or equal to    | !is.na                 | is not NA         |
-| >= | greater than or equal to | &, |, !, xor, any, all | Boolean Operators |
-
+| Symbol                 | Meaning                  |
+|------------------------|--------------------------|
+| <                      | less than                |
+| >                      | greater than             |
+| ==                     | equal to                 |
+| <=                     | less than or equal to    |
+| >=                     | greater than or equal to |
+| !=                     | not equal to             |
+| %in%                   | group membership         |
+|is.na                   | is NA                    |
+| !is.na                 | is not NA                |
+|&, \|, !, xor, any, all | Boolean operators        |
  
-# Challenge 1
+# Exercise 1
 
-Create a new dataframe object called `africa_asia_lifeExp` that is filtered by "Africa" and "Asia" and has a lifeExp less than 60*. Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
+Create a new dataframe object called `africa_asia_lifeExp` that is filtered by "Africa" and "Asia" and has a lifeExp less than 60. Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
 
 *<small>hint: use both the |, & boolean operator </small>
 
-```{r}
+
+```{r, include=F}
+#YOUR CODE HERE
 
 ```
  
@@ -191,9 +198,9 @@ The abstract problem we're encountering here is know as "split-apply-combine":
 
 We want to *split* our data into groups (in this case continents), *apply* some calculations on that group, then  *combine* the results together afterwards. 
 
-Module 4 gave some ways to do split-apply-combine type stuff using the `apply` family of functions, but those too are error prone and messy.
+Module 4 gave some ways to do stuff like this using the `apply` family of functions, but those, too are error prone and messy.
 
-Luckily, `dplyr` offers a much cleaner, straight-forward solution to this problem. 
+Luckily, `dplyr` offers a much cleaner, more straightforward solution to this problem. 
 
 ```{r}
 # remove this column -- there's a better way!
@@ -247,8 +254,8 @@ head(gdp_pop_bycontinents_byyear)
 1. Use dplyr to create a data frame containing the median `lifeExp` for each country
 
 
-```{r}
-
+```{r, include=F}
+#YOUR CODE HERE
 
 
 
@@ -301,12 +308,21 @@ gapminder_with_extra_vars <- gapminder %>%
 head(gapminder_with_extra_vars)
 ```
 
-# Challenge 3
+# Exercise 3
 
-1. Add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
+Add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
 
-2. Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)
+```{r, include=F}
+#YOUR CODE HERE
+```
 
+# Exercise 4
+
+Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)
+
+```{r, include=F}
+#YOUR CODE HERE
+```
 
 
 # Tidying Data
@@ -326,7 +342,7 @@ For more on the concept of *tidy* data, read Hadley Wickham's paper [here](http:
 
 > "Tidy datasets are all alike but every messy dataset is messy in its own way." – Hadley Wickham
 
-Tabular datasets can be arranged in many ways. For instance, consider the data below. Each data set displays information on heart rate observed in individuals across 3 different time periods. But the data are organized differently in each table.
+Tabular datasets can be arranged in many ways. For instance, consider the data below. Both data sets display information on heart rate observed in individuals across 3 different time periods. But the data are organized differently in each table.
 
 ```{r}
 wide <- data.frame(
@@ -347,15 +363,15 @@ long
 
 **Question**: Which one of these do you think is the *tidy* format?
 
-**Answer**: The first dataframe (the "wide" one) would not be considered *tidy* because values (i.e., heartrate) are spread across multiple columns.
+**Answer**: The first dataframe (the "wide" one) would not be considered *tidy* because values for a given variable (i.e. heartrate) are spread across multiple columns.
 
-We often refer to these different structurs as "long" vs. "wide" formats. In the "long" format, you usually have 1 column for the observed variable and the other columns are ID variables. 
+We often refer to these two opposite structures as "long" vs. "wide" formats. In the "long" format, you usually have 1 column for the observed variable(s) and the other columns are ID variables. 
 
 For the "wide" format each row is often a site/subject/patient and you have multiple observation variables containing the same type of data. These can be either repeated observations over time, or observation of multiple variables (or a mix of both). In the above case, we had the same kind of data (heart rate) entered across 3 different columns, corresponding to three different time periods.
 
 ![](img/tidyr-fig1.png)
 
-You may find data input may be simpler or some other applications may prefer the "wide" format. However, many of R’s functions have been designed assuming you have "long" format data. 
+You may find that wide format makes data input simpler, or may be preferred by some other applications. However, many of R’s functions have been designed assuming you have "long" format data. 
 
 # Gapminder
 
@@ -367,11 +383,11 @@ head(gapminder)
 
 **Question**: Is this data frame **wide** or **long**?
 
-**Answer**: This data frame is somewhere in between the purely 'long' and 'wide' formats. We have 3 "ID variables" (`continent`, `country`, `year`) and 3 "Observation variables" (`pop`, `lifeExp`, `gdpPercap`). 
+**Answer**: This data frame is somewhere in between the purely 'long' and 'wide' formats. We have 3 "ID variables" (`continent`, `country`, `year`) and 3 "Observation variables" (`pop`, `lifeExp`, `gdpPercap`).
 
-Despite not having ALL observations in 1 column, this intermediate format makes sense given that all 3 observation variables have different units. As we have seen, many of the functions in R are often vector based, and you usually do not want to do mathematical operations on values with different units.
+Instead, it's *tidy*, because each variable is its own column. This wide-long-intermediate, tidy format makes sense given that all 3 observation variables have different units. As we have seen, many of the functions in R are often vector based, and you usually do not want to do mathematical operations on values with different units.
 
-On the other hand, there are some instances in which a purely long or wide format is ideal (e.g. plotting). Likewise, sometimes you'll get data on your desk that is poorly organized, and you'll need to **reshape** it.
+On the other hand, there are some instances in which a purely long or wide format is ideal (e.g. plotting). Likewise, sometimes you'll get data on your desk that is poorly organized, and you'll need to reshape it.
 
 # tidyr
 
@@ -387,14 +403,14 @@ library(tidyr)
 
 # gather()
 
-Until now, we’ve been using the nicely formatted original gapminder dataset. This dataset is not quite wide and not quite long -- it's something in the middle, but 'real' data (i.e. our own research data) will never be so well organized. Here let's start with the wide format version of the gapminder dataset.
+Until now, we’ve been using the nicely formatted, original gapminder dataset. This dataset is not quite wide and not quite long -- it's something in the middle, but 'real' data (i.e. our own research data) will never be so well organized. Here let's start with the wide format version of the gapminder dataset.
 
 ```{r}
 gap_wide <- read.csv("data/gapminder_wide.csv", stringsAsFactors = FALSE)
 head(gap_wide)
 ```
 
-The first step towards getting our nice intermediate data format is to first convert from the wide to the long format. 
+The first step towards getting our nice, *tidy*, intermediate data format is to first convert from the wide to the long format. 
 The function `gather()` will 'gather' the observation variables into a single variable. This is sometimes called "melting" your data, because it melts the table from wide to long. Those data will be melted into two variables: one for the variable names, and the other for the variable values. 
 
 ```{r}
@@ -428,8 +444,8 @@ For instance, here we do the same thing with (1) the `starts_with` function, and
 ```{r}
 # with the starts_with() function
 gap_long <- gap_wide %>%
-    gather(obstype_year, obs_values, starts_with('pop'),
-           starts_with('lifeExp'), starts_with('gdpPercap'))
+    gather(obstype_year, obs_values, starts_with('gdpPercap'),
+           starts_with('lifeExp'), starts_with('pop'))
 head(gap_long)
 
 # with the - operator
@@ -438,7 +454,7 @@ gap_long <- gap_wide %>%
 head(gap_long)
 ```
 
-However you choose to do it, notice that the output collapses all of the measure variables into two columns: one containing new ID variable, the other containing the observation value for that row. 
+However you choose to do it, notice that the output collapses all of the measure variables into two columns: one containing the new ID variable, the other containing the observation value for that row. 
 
 # separate()
 
@@ -448,18 +464,18 @@ We can use the `separate()` function to split the character strings into multipl
 
 ```{r}
 gap_long_sep <- gap_long %>% 
-  separate(obstype_year, into = c('obs_type','year'), sep = "_") %>% 
+  separate(obstype_year, into = c('obstype','year'), sep = "_") %>% 
   mutate(year = as.integer(year))
 head(gap_long_sep)
 ```
 
 # spread()
 
-The opposite of `gather()` is `spread()`. It spreads our observation variables back out to make a wider table. We can use this function to spread our `gap_long()` to the original "medium" format.
+Then, the opposite of `gather()` is `spread()`. It spreads our observation variables back out to make a wider table. We can use this function to spread our `gap_long()` to the original "medium" format.
 
 ```{r}
 gap_medium <- gap_long_sep %>% 
-  spread(obs_type, obs_values)
+  spread(obstype, obs_values)
 head(gap_medium)
 ```
 
@@ -473,6 +489,7 @@ head(gapminder)
 # rearrange columns
 gap_medium <- gap_medium %>%  select(country, year, pop, continent, lifeExp, gdpPercap)
 head(gap_medium)
+head(gapminder)
 
 #
 #gap_medium <- gap_medium[,names(gapminder)]
@@ -482,6 +499,7 @@ head(gap_medium)
 gap_medium <- gap_medium %>% 
   arrange(country,continent,year)
 head(gap_medium)
+head(gapminder)
 ```
 
 # Extra Resources
@@ -489,9 +507,13 @@ head(gap_medium)
 `dplyr` and `tidyr` have many more functions to help you wrangle and manipulate your data. See the  [Data Wrangling Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for more.
 
 
-# Challenge 4
+# Exercise 5
 
-1. Subset the results from challenge #3 (above) to select only the `country`, `year`, and `gdpPercap_diff` columns. Use `tidyr` put it in wide format so that countries are rows and years are columns. 
+1. Ungroup the results from Exercise 4, above (i.e. use the `ungroup` function), the subset them to select only the `country`, `year`, and `gdpPercap_diff` columns. Use `tidyr` put it in wide format so that countries are rows and years are columns. 
 
 2. Now turn the dataframe above back into the long format with three columns: `country`, `year`, and `gdpPercap_diff`.
 
+```{r, include=F}
+#YOUR CODE HERE
+
+```

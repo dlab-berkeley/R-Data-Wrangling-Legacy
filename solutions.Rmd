@@ -1,10 +1,13 @@
 ## Exercise 1
-##Create a new object called africa_asia that is filtered by “Africa” and “Asia”*. Select all variables except for gdpPercap. 
-##Use the pipe operator to chain the functions together.
+
+#Create a new object called africa_asia that is filtered by “Africa” and “Asia”*. Select all variables except for gdpPercap. 
+#Use the pipe operator to chain the functions together.
 
 africa_asia_lifeExp <- gapminder %>% 
   filter(continent == "Africa"& lifeExp < 60 | continent == "Asia" & lifeExp <60) %>%
   select(-gdpPercap)
+  
+  
   
 ## Exercise 2
 
@@ -12,6 +15,8 @@ africa_asia_lifeExp <- gapminder %>%
 
 median_country_lifeExp <- gapminder %>% group_by(country) %>% 
   summarize(median_lifeExp = median(lifeExp))
+
+
 
 ## Exercise 3
 
@@ -21,13 +26,22 @@ median_country_lifeExp <- gapminder %>% group_by(country) %>%
 gapminder <- gapminder %>% group_by(continent, year) %>% 
   mutate(continent_pop = sum(pop))
   
+
+  
+## Exercise 4
+
+#Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between 
+#the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year,
+#(b) arrange the dataframe by the column you just created, in descending order (so that 
+#the relatively richest country/years are listed first)
 gapminder_gdpPercap_diff <- gapminder %>%  group_by(continent, year) %>% 
    mutate(mean_continent_gdp = mean(gdpPercap),
           gdpPercap_diff = gdpPercap - mean_continent_gdp) %>% 
   arrange(desc(gdpPercap_diff))
   
   
-  ## Exercise 4
+  
+## Exercise  5
   
 #Subset the results from the last exercise to select only the country, year, and gdpPercap_diff columns. 
 #Use tidyr put it in wide format # so that countries are rows and years are columns. You might need to use  ungroup() before the select() function.
