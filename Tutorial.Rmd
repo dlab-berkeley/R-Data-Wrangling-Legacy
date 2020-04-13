@@ -105,7 +105,8 @@ But, as we will see, `dplyr` makes for much more readible, efficient code becaus
 Above, we used what's called 'normal' grammar, but the strengths of `dplyr` lie in combining several functions using *pipes*. Since the pipes grammar is unlike anything we've seen in R before, let's repeat what we've done above using pipes.
 
 ```{r}
-year_country_gdp <- gapminder %>% select(year,country,gdpPercap)
+year_country_gdp <- gapminder %>%
+  select(year,country,gdpPercap)
 ```
 
 Let's walk through it step by step. First we summon the gapminder dataframe and pass it on, using the pipe symbol `%>%`, to the next step, which is the `select()` function. In this case we don't specify which data object we use in the `select()` function, since it gets that from the previous pipe. 
@@ -120,6 +121,7 @@ Now let's say we're only interested in African countries. We can combine `select
 year_country_gdp_africa <- gapminder %>%
     filter(continent == "Africa") %>%
     select(year,country,gdpPercap)
+head(year_country_gdp_africa)
 ```
 
 As with last time, first we pass the gapminder dataframe to the `filter()` function, then we pass the filtered version of the gapminder dataframe to the `select()` function.
@@ -198,8 +200,6 @@ The abstract problem we're encountering here is know as "split-apply-combine":
 
 We want to *split* our data into groups (in this case continents), *apply* some calculations on that group, then  *combine* the results together afterwards. 
 
-Module 4 gave some ways to do stuff like this using the `apply` family of functions, but those, too are error prone and messy.
-
 Luckily, `dplyr` offers a much cleaner, more straightforward solution to this problem. 
 
 ```{r}
@@ -223,7 +223,7 @@ The above was a bit uneventful because `group_by()` is much more exciting in con
 gdp_bycontinents <- gapminder %>%
     group_by(continent) %>%
     summarize(mean_gdpPercap = mean(gdpPercap))
-head(gdp_bycontinents)
+gdp_bycontinents
 ```
 
 ![](img/dplyr-fig3.png)
