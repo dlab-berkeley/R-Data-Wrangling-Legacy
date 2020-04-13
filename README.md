@@ -30,6 +30,13 @@ You can download the [binary files](http://cran.r-project.org/index.html) for yo
 
 ### Testing your installation
 
+**How to download the workshop materials**
+
+* Click the green “Clone or download” button  
+* Click “Download Zip”  
+* Extract the files some place convenient (i.e., Desktop)  
+  * if you are a Git user, simply clone this repository  
+
 Find the Tutorial.Rmd file in the directory you just downloaded and open it in RStudio. If all goes well, RStudio should launch and you should see the tutorial.
 
 Software Carpentry maintains a list of common issues that occur during installation may be useful for our class here: [Configuration Problems and Solutions wiki page.](https://github.com/swcarpentry/workshop-template/wiki/Configuration-Problems-and-Solutions)
