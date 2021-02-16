@@ -24,6 +24,10 @@ Spring 2018
 # include any code here you don't want to show up in the document,
 # e.g. package and dataset loading
 library(dplyr)
+
+# Suppress summarise info
+options(dplyr.summarise.inform = FALSE)
+
 library(tidyr)
 library(ggplot2)
 
@@ -188,12 +192,12 @@ Logicals
 
 Create a new dataframe object called `africa_asia_lifeExp` that is filtered by "Africa" and "Asia" and has a lifeExp less than 60*. Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
 
-*<small>hint: use both the |, & boolean operator </small>
+*<small>hint: use both the | boolean operator to get "OR" statements</small>
 
 ```{r}
 
-```
 
+```
 
 ----
 
@@ -352,7 +356,7 @@ head(gapminder_with_extra_vars)
 
 ----
 
-### Your turn
+### Your Turn
 
 1. Use dplyr to add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
 
@@ -452,18 +456,22 @@ head(gap_wide)
 ## gather()
 
 ```{r}
-gap_long <- gap_wide %>%
-    gather(obstype_year, obs_values, 3:38)
+gap_long <- gap_wide %>% 
+  pivot_longer(
+    cols = 3:38, 
+    names_to = "obstype_year",
+    values_to = "obs_values"
+  )
 head(gap_long)
 ```
 <small>
-We put 3 arguments into the `gather()` function: 
+We put 3 arguments into the `pivot_longer()` function: 
 
-1. the name of the new column for the new ID variable (`obstype_year`)
+1. The columns of the old observation variables (here using the column indices 3:38, signalling columns 3 through 38) that we want to gather into one variable. Notice that we don't want to melt down columns 1 and 2, as these are considered "ID" variables. 
 
-2. the name for the new amalgamated observation variable (`obs_value`)
+2. the name of the new column for the new ID variable (`obstype_year`)
 
-3. the indices of the old observation variables (`3:38`, signalling columns 3 through 38) that we want to gather into one variable. Notice that we don't want to melt down columns 1 and 2, as these are considered "ID" variables.
+3. the name for the new amalgamated observation variable (`obs_value`) 
 
 
 
@@ -472,7 +480,7 @@ We put 3 arguments into the `gather()` function:
 ----
 
 
-## gather()
+## pivot_longer()
 
 We can also select observation variables using:
 
@@ -488,7 +496,7 @@ We can also select observation variables using:
 ----
 
 
-## gather()
+## pivot_longer()
 
 
 The same thing with the `starts_with` function 
@@ -496,8 +504,13 @@ The same thing with the `starts_with` function
 ```{r}
 # with the starts_with() function
 gap_long <- gap_wide %>%
-    gather(obstype_year, obs_values, starts_with('pop'),
-           starts_with('lifeExp'), starts_with('gdpPercap'))
+    pivot_longer(
+    cols = c(starts_with('gdpPercap'), 
+             starts_with('lifeExp'),
+             starts_with('pop')),
+    names_to = "obstype_year",
+    values_to = "obs_values"
+  )
 head(gap_long)
 
 ```
@@ -505,13 +518,17 @@ head(gap_long)
 ----
 
 
-## gather()
+## pivot_longer()
 
 the `-` operator:
  
 ```{r}
 gap_long <- gap_wide %>% 
-  gather(obstype_year, obs_values, -continent, -country)
+    pivot_longer(
+    cols = c(-continent, -country),
+    names_to = "obstype_year",
+    values_to = "obs_values"
+  )
 head(gap_long)
 ```
 
@@ -535,13 +552,15 @@ head(gap_long_sep)
 ----
 
 
-## spread()
+## pivot_wider()
 
-The opposite of `gather()` is `spread()`. It spreads our observation variables back out to make a wider table. We can use this function to spread our `gap_long()` to the original "medium" format.
+The opposite of `pivot_longer()` is `pivot_wider()`. It spreads our observation variables back out to make a wider table. We can use this function to spread our `gap_long()` to the original "medium" format.
 
 ```{r}
 gap_medium <- gap_long_sep %>% 
-  spread(obs_type, obs_values)
+  pivot_wider(
+    names_from = "obs_type", 
+    values_from = "obs_values")
 head(gap_medium)
 ```
 
