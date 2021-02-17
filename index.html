@@ -11,41 +11,68 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="index_files/reveal.js-3.3.0.1/css/theme/serif.css" id="theme">
@@ -479,7 +506,9 @@ style.innerHTML = style_script;
 document.getElementsByTagName('head')[0].appendChild(style);
 </script>
 
-    <link href="index_files/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="index_files/header-attrs-2.6/header-attrs.js"></script>
+    <link href="index_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="index_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 </head>
 <body>
   <div class="reveal">
@@ -511,8 +540,8 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section id="gapminder-dataset" class="slide level2">
 <h2>Gapminder Dataset</h2>
 <p>Provides values for life expectancy, GDP per capita, and population, every five years, from 1952 to 2007.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gapminder-FiveYearData.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)
-<span class="kw">head</span>(gapminder)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/gapminder-FiveYearData.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder)</span></code></pre></div>
 <pre><code>##       country year      pop continent lifeExp gdpPercap
 ## 1 Afghanistan 1952  8425333      Asia  28.801  779.4453
 ## 2 Afghanistan 1957  9240934      Asia  30.332  820.8530
@@ -524,19 +553,19 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section id="dataframe-manipulation-base-r" class="slide level2">
 <h2>Dataframe manipulation Base R</h2>
 <p>We can use base R functions to calculate summary statistics across groups of observations:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(gapminder[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Africa&quot;</span>, <span class="st">&quot;gdpPercap&quot;</span>])</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gapminder[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>, <span class="st">&quot;gdpPercap&quot;</span>])</span></code></pre></div>
 <pre><code>## [1] 2193.755</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(gapminder[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Americas&quot;</span>, <span class="st">&quot;gdpPercap&quot;</span>])</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gapminder[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Americas&quot;</span>, <span class="st">&quot;gdpPercap&quot;</span>])</span></code></pre></div>
 <pre><code>## [1] 7136.11</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(gapminder[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Asia&quot;</span>, <span class="st">&quot;gdpPercap&quot;</span>])</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gapminder[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>, <span class="st">&quot;gdpPercap&quot;</span>])</span></code></pre></div>
 <pre><code>## [1] 7902.15</code></pre>
 </section>
 <section id="dataframe-manipulation-dplyr" class="slide level2">
 <h2>Dataframe manipulation dplyr</h2>
 <p><small>Luckily, the <a href="https://cran.r-project.org/web/packages/dplyr/dplyr.pdf"><code>dplyr</code></a> package provides a number of very useful functions for manipulating dataframes. These functions will save you time by reducing repetition. </small></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&#39;dplyr&#39;</span>)
-
-<span class="co">#or install.packages(&#39;tidyverse&#39;)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&#39;dplyr&#39;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#or install.packages(&#39;tidyverse&#39;)</span></span></code></pre></div>
 <p><small>Here we’re going to cover 6 of the most commonly used functions as well as using pipes (<code>%&gt;%</code>) to combine them.</p>
 <ol type="1">
 <li><code>select()</code></li>
@@ -548,15 +577,15 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </ol>
 <p></small></p>
 <p><small>Now let’s load the package:</small></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-
-<span class="co">#or library(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#or library(tidyverse)</span></span></code></pre></div>
 </section>
 <section id="dplyr--select" class="slide level2">
 <h2>dplyr- select()</h2>
 <p><small>Imagine that we just received the gapminder dataset, but are only interested in a few variables in it. We could use the <strong>select()</strong> function to keep only the variables we select.</small></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year_country_gdp &lt;-<span class="st"> </span><span class="kw">select</span>(gapminder, year, country, gdpPercap)
-<span class="kw">head</span>(year_country_gdp)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>year_country_gdp <span class="ot">&lt;-</span> <span class="fu">select</span>(gapminder, year, country, gdpPercap)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(year_country_gdp)</span></code></pre></div>
 <pre><code>##   year     country gdpPercap
 ## 1 1952 Afghanistan  779.4453
 ## 2 1957 Afghanistan  820.8530
@@ -567,8 +596,8 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </section>
 <section id="dplyr--select-1" class="slide level2">
 <h2>dplyr- select()</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year_country_gdp &lt;-<span class="st"> </span><span class="kw">select</span>(gapminder, year, country, gdpPercap)
-<span class="kw">head</span>(year_country_gdp)</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>year_country_gdp <span class="ot">&lt;-</span> <span class="fu">select</span>(gapminder, year, country, gdpPercap)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(year_country_gdp)</span></code></pre></div>
 <pre><code>##   year     country gdpPercap
 ## 1 1952 Afghanistan  779.4453
 ## 2 1957 Afghanistan  820.8530
@@ -579,21 +608,43 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </section>
 <section id="dplyr--select-2" class="slide level2">
 <h2>dplyr- select()</h2>
-<p><img src="img/dplyr-fig1.png" /></p>
+<p><img data-src="img/dplyr-fig1.png" /></p>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>## dplyr- select()</td>
+</tr>
+<tr class="even">
+<td><code>r year_country_gdp &lt;- select(gapminder, year, country, gdpPercap) head(year_country_gdp)</code></td>
+</tr>
+<tr class="odd">
+<td><code>##   year     country gdpPercap ## 1 1952 Afghanistan  779.4453 ## 2 1957 Afghanistan  820.8530 ## 3 1962 Afghanistan  853.1007 ## 4 1967 Afghanistan  836.1971 ## 5 1972 Afghanistan  739.9811 ## 6 1977 Afghanistan  786.1134</code></td>
+</tr>
+<tr class="even">
+<td><code>r year_country_gdp &lt;- gapminder[,c("year", "country", "gdpPercap")] head(year_country_gdp)</code></td>
+</tr>
+<tr class="odd">
+<td><code>##   year     country gdpPercap ## 1 1952 Afghanistan  779.4453 ## 2 1957 Afghanistan  820.8530 ## 3 1962 Afghanistan  853.1007 ## 4 1967 Afghanistan  836.1971 ## 5 1972 Afghanistan  739.9811 ## 6 1977 Afghanistan  786.1134</code></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="dplyr" class="slide level2">
 <h2>dplyr %&gt;%</h2>
 <p>The <strong>pipe</strong> operator is one of dplyr’s greatest strengths. It allows you combine several functions in a chain.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year_country_gdp &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year,country,gdpPercap)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>year_country_gdp <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">select</span>(year,country,gdpPercap)</span></code></pre></div>
 <p>is equivalent to:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year_country_gdp &lt;-<span class="st"> </span><span class="kw">select</span>(gapminder, year, country, gdpPercap)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>year_country_gdp <span class="ot">&lt;-</span> <span class="fu">select</span>(gapminder, year, country, gdpPercap)</span></code></pre></div>
 </section>
 <section id="dplyr---filter" class="slide level2">
 <h2>dplyr - filter()</h2>
 <p>Now let’s say we’re only interested in African countries. We can combine <strong>select</strong> and <strong>filter</strong> to select only the observations where <code>continent</code> is <code>Africa</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year_country_gdp_africa &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(continent <span class="op">==</span><span class="st"> &quot;Africa&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">select</span>(year,country,gdpPercap)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>year_country_gdp_africa <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(year,country,gdpPercap)</span></code></pre></div>
 </section>
 <section id="dplyr---filter-1" class="slide level2">
 <h2>dplyr - filter()</h2>
@@ -638,102 +689,102 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section id="your-turn" class="slide level2">
 <h2>Your Turn</h2>
 <p>Create a new dataframe object called <code>africa_asia_lifeExp</code> that is filtered by “Africa” and “Asia” and has a lifeExp less than 60*. Select all variables except for <code>gdpPercap</code>. Use the pipe operator to chain the functions together.</p>
-<p>*<small>hint: use both the |, &amp; boolean operator </small></p>
+<p>*<small>hint: use both the | boolean operator to get “OR” statements</small></p>
 </section>
 <section id="dplyrcalculations-across-groups" class="slide level2">
 <h2>dplyr/calculations across groups</h2>
 <p><small>A common task you’ll encounter when working with data is running calculations on different groups within the data. What if we wanted to calculate the mean GDP per capita for each continent? In base R, you would have to run the <strong>mean()</strong> function for each subset of data:</small></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Africa&quot;</span>])</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>])</span></code></pre></div>
 <pre><code>## [1] 2193.755</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Americas&quot;</span>])</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Americas&quot;</span>])</span></code></pre></div>
 <pre><code>## [1] 7136.11</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Asia&quot;</span>])</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>])</span></code></pre></div>
 <pre><code>## [1] 7902.15</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Europe&quot;</span>])</code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>])</span></code></pre></div>
 <pre><code>## [1] 14469.48</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Oceania&quot;</span>])</code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Oceania&quot;</span>])</span></code></pre></div>
 <pre><code>## [1] 18621.61</code></pre>
 </section>
 <section id="dplyrcalculations-across-groups-1" class="slide level2">
 <h2>dplyr/Calculations Across Groups</h2>
 <p>Assigning to data frames:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder<span class="op">$</span>mean.continent.GDP &lt;-<span class="st"> </span><span class="ot">NA</span>
-
-gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Africa&quot;</span>] &lt;-<span class="st"> </span><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Africa&quot;</span>])
-
-gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Americas&quot;</span>] &lt;-<span class="st"> </span><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Americas&quot;</span>])
-
-gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Asia&quot;</span>] &lt;-<span class="st"> </span><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Asia&quot;</span>])
-
-gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Europe&quot;</span>] &lt;-<span class="st"> </span><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Europe&quot;</span>])
-
-gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Oceania&quot;</span>] &lt;-<span class="st"> </span><span class="kw">mean</span>(gapminder<span class="op">$</span>gdpPercap[gapminder<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Oceania&quot;</span>])</code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>])</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Americas&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Americas&quot;</span>])</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>])</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>])</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Oceania&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Oceania&quot;</span>])</span></code></pre></div>
 </section>
 <section id="split-apply-combine" class="slide level2">
 <h2>split-apply-combine</h2>
-<p><img src="img/splitapply.png" /></p>
+<p><img data-src="img/splitapply.png" /></p>
 </section>
 <section id="dplyr--group_by" class="slide level2">
 <h2>dplyr- group_by()</h2>
-<p><img src="img/dplyr-fig2.png" /></p>
+<p><img data-src="img/dplyr-fig2.png" /></p>
 </section>
 <section id="dplyr---summarize" class="slide level2">
 <h2>dplyr - summarize()</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gdp_bycontinents &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_gdpPercap =</span> <span class="kw">mean</span>(gdpPercap))
-<span class="kw">head</span>(gdp_bycontinents)</code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>gdp_bycontinents <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_gdpPercap =</span> <span class="fu">mean</span>(gdpPercap))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdp_bycontinents)</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 2
 ##   continent mean_gdpPercap
 ##   &lt;fct&gt;              &lt;dbl&gt;
-## 1 Africa              2194
-## 2 Americas            7136
-## 3 Asia                7902
-## 4 Europe             14469
-## 5 Oceania            18622</code></pre>
+## 1 Africa             2194.
+## 2 Americas           7136.
+## 3 Asia               7902.
+## 4 Europe            14469.
+## 5 Oceania           18622.</code></pre>
 </section>
 <section id="dplyr---summarize-1" class="slide level2">
 <h2>dplyr - summarize()</h2>
-<p><img src="img/dplyr-fig3.png" style="width:50.0%" /></p>
+<p><img data-src="img/dplyr-fig3.png" style="width:50.0%" /></p>
 </section>
 <section id="dplyr---summarize-2" class="slide level2">
 <h2>dplyr - summarize()</h2>
 <p>group_by() multiple variables</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gdp_bycontinents_byyear &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(continent, year) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_gdpPercap =</span> <span class="kw">mean</span>(gdpPercap))
-<span class="kw">head</span>(gdp_bycontinents_byyear)</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>gdp_bycontinents_byyear <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_gdpPercap =</span> <span class="fu">mean</span>(gdpPercap))</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdp_bycontinents_byyear)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ## # Groups:   continent [1]
 ##   continent  year mean_gdpPercap
 ##   &lt;fct&gt;     &lt;int&gt;          &lt;dbl&gt;
-## 1 Africa     1952           1253
-## 2 Africa     1957           1385
-## 3 Africa     1962           1598
-## 4 Africa     1967           2050
-## 5 Africa     1972           2340
-## 6 Africa     1977           2586</code></pre>
+## 1 Africa     1952          1253.
+## 2 Africa     1957          1385.
+## 3 Africa     1962          1598.
+## 4 Africa     1967          2050.
+## 5 Africa     1972          2340.
+## 6 Africa     1977          2586.</code></pre>
 </section>
 <section id="dplyr---summarize-3" class="slide level2">
 <h2>dplyr - summarize()</h2>
 <p>group_by() multiple variables and defining multiple variable with summarize()</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gdp_pop_bycontinents_byyear &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(continent, year) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_gdpPercap =</span> <span class="kw">mean</span>(gdpPercap),
-              <span class="dt">sd_gdpPercap =</span> <span class="kw">sd</span>(gdpPercap),
-              <span class="dt">mean_pop =</span> <span class="kw">mean</span>(pop),
-              <span class="dt">sd_pop =</span> <span class="kw">sd</span>(pop))
-<span class="kw">head</span>(gdp_pop_bycontinents_byyear)</code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gdp_pop_bycontinents_byyear <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_gdpPercap =</span> <span class="fu">mean</span>(gdpPercap),</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd_gdpPercap =</span> <span class="fu">sd</span>(gdpPercap),</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd_pop =</span> <span class="fu">sd</span>(pop))</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdp_pop_bycontinents_byyear)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ## # Groups:   continent [1]
-##   continent  year mean_gdpPercap sd_gdpPercap mean_pop   sd_pop
-##   &lt;fct&gt;     &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Africa     1952           1253          983  4570010  6317450
-## 2 Africa     1957           1385         1135  5093033  7076042
-## 3 Africa     1962           1598         1462  5702247  7957545
-## 4 Africa     1967           2050         2848  6447875  8985505
-## 5 Africa     1972           2340         3287  7305376 10130833
-## 6 Africa     1977           2586         4142  8328097 11585184</code></pre>
+##   continent  year mean_gdpPercap sd_gdpPercap mean_pop    sd_pop
+##   &lt;fct&gt;     &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Africa     1952          1253.         983. 4570010.  6317450.
+## 2 Africa     1957          1385.        1135. 5093033.  7076042.
+## 3 Africa     1962          1598.        1462. 5702247.  7957545.
+## 4 Africa     1967          2050.        2848. 6447875.  8985505.
+## 5 Africa     1972          2340.        3287. 7305376. 10130833.
+## 6 Africa     1977          2586.        4142. 8328097. 11585184.</code></pre>
 </section>
 <section id="exercise-2" class="slide level2">
 <h2>Exercise 2</h2>
@@ -744,77 +795,77 @@ gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$
 <section id="dplyr--mutate" class="slide level2">
 <h2>dplyr- mutate()</h2>
 <p>What if we wanted to add these values to our original data frame instead of creating a new object?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder_with_extra_vars &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(continent, year) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">mean_gdpPercap =</span> <span class="kw">mean</span>(gdpPercap),
-              <span class="dt">sd_gdpPercap =</span> <span class="kw">sd</span>(gdpPercap),
-              <span class="dt">mean_pop =</span> <span class="kw">mean</span>(pop),
-              <span class="dt">sd_pop =</span> <span class="kw">sd</span>(pop))
-<span class="kw">head</span>(gapminder_with_extra_vars)</code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>gapminder_with_extra_vars <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_gdpPercap =</span> <span class="fu">mean</span>(gdpPercap),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd_gdpPercap =</span> <span class="fu">sd</span>(gdpPercap),</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop),</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd_pop =</span> <span class="fu">sd</span>(pop))</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder_with_extra_vars)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 11
 ## # Groups:   continent, year [6]
-##   country      year      pop continent lifeExp gdpPercap mean.continent.G…
-##   &lt;fct&gt;       &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;
-## 1 Afghanistan  1952  8425333 Asia         28.8       779              7902
-## 2 Afghanistan  1957  9240934 Asia         30.3       821              7902
-## 3 Afghanistan  1962 10267083 Asia         32.0       853              7902
-## 4 Afghanistan  1967 11537966 Asia         34.0       836              7902
-## 5 Afghanistan  1972 13079460 Asia         36.1       740              7902
-## 6 Afghanistan  1977 14880372 Asia         38.4       786              7902
-## # ... with 4 more variables: mean_gdpPercap &lt;dbl&gt;, sd_gdpPercap &lt;dbl&gt;,
+##   country  year    pop continent lifeExp gdpPercap mean.continent.…
+##   &lt;fct&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;
+## 1 Afghan…  1952 8.43e6 Asia         28.8      779.            7902.
+## 2 Afghan…  1957 9.24e6 Asia         30.3      821.            7902.
+## 3 Afghan…  1962 1.03e7 Asia         32.0      853.            7902.
+## 4 Afghan…  1967 1.15e7 Asia         34.0      836.            7902.
+## 5 Afghan…  1972 1.31e7 Asia         36.1      740.            7902.
+## 6 Afghan…  1977 1.49e7 Asia         38.4      786.            7902.
+## # … with 4 more variables: mean_gdpPercap &lt;dbl&gt;, sd_gdpPercap &lt;dbl&gt;,
 ## #   mean_pop &lt;dbl&gt;, sd_pop &lt;dbl&gt;</code></pre>
 </section>
 <section id="dplyr--mutate-1" class="slide level2">
 <h2>dplyr- mutate()</h2>
 <p>We can use also use <strong>mutate()</strong> to create new variables prior to (or even after) summarizing information.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gdp_pop_bycontinents_byyear &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">gdp_billion =</span> gdpPercap<span class="op">*</span>pop<span class="op">/</span><span class="dv">10</span><span class="op">^</span><span class="dv">9</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(continent, year) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_gdpPercap =</span> <span class="kw">mean</span>(gdpPercap),
-              <span class="dt">sd_gdpPercap =</span> <span class="kw">sd</span>(gdpPercap),
-              <span class="dt">mean_pop =</span> <span class="kw">mean</span>(pop),
-              <span class="dt">sd_pop =</span> <span class="kw">sd</span>(pop),
-              <span class="dt">mean_gdp_billion =</span> <span class="kw">mean</span>(gdp_billion),
-              <span class="dt">sd_gdp_billion =</span> <span class="kw">sd</span>(gdp_billion))
-<span class="kw">head</span>(gdp_pop_bycontinents_byyear)</code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>gdp_pop_bycontinents_byyear <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">gdp_billion =</span> gdpPercap<span class="sc">*</span>pop<span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_gdpPercap =</span> <span class="fu">mean</span>(gdpPercap),</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd_gdpPercap =</span> <span class="fu">sd</span>(gdpPercap),</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop),</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd_pop =</span> <span class="fu">sd</span>(pop),</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">mean_gdp_billion =</span> <span class="fu">mean</span>(gdp_billion),</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd_gdp_billion =</span> <span class="fu">sd</span>(gdp_billion))</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdp_pop_bycontinents_byyear)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 8
 ## # Groups:   continent [1]
-##   continent  year mean_gdpPercap sd_gdpPercap mean_pop   sd_pop
-##   &lt;fct&gt;     &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Africa     1952           1253          983  4570010  6317450
-## 2 Africa     1957           1385         1135  5093033  7076042
-## 3 Africa     1962           1598         1462  5702247  7957545
-## 4 Africa     1967           2050         2848  6447875  8985505
-## 5 Africa     1972           2340         3287  7305376 10130833
-## 6 Africa     1977           2586         4142  8328097 11585184
-## # ... with 2 more variables: mean_gdp_billion &lt;dbl&gt;, sd_gdp_billion &lt;dbl&gt;</code></pre>
+##   continent  year mean_gdpPercap sd_gdpPercap mean_pop sd_pop mean_gdp_billion
+##   &lt;fct&gt;     &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;            &lt;dbl&gt;
+## 1 Africa     1952          1253.         983. 4570010. 6.32e6             5.99
+## 2 Africa     1957          1385.        1135. 5093033. 7.08e6             7.36
+## 3 Africa     1962          1598.        1462. 5702247. 7.96e6             8.78
+## 4 Africa     1967          2050.        2848. 6447875. 8.99e6            11.4 
+## 5 Africa     1972          2340.        3287. 7305376. 1.01e7            15.1 
+## 6 Africa     1977          2586.        4142. 8328097. 1.16e7            18.7 
+## # … with 1 more variable: sd_gdp_billion &lt;dbl&gt;</code></pre>
 </section>
 <section id="dplyr---arrange" class="slide level2">
 <h2>dplyr - arrange()</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder_with_extra_vars &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(continent, year) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">mean_gdpPercap =</span> <span class="kw">mean</span>(gdpPercap),
-              <span class="dt">sd_gdpPercap =</span> <span class="kw">sd</span>(gdpPercap),
-              <span class="dt">mean_pop =</span> <span class="kw">mean</span>(pop),
-              <span class="dt">sd_pop =</span> <span class="kw">sd</span>(pop)) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">arrange</span>(<span class="kw">desc</span>(year), continent)
-<span class="kw">head</span>(gapminder_with_extra_vars)</code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>gapminder_with_extra_vars <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_gdpPercap =</span> <span class="fu">mean</span>(gdpPercap),</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd_gdpPercap =</span> <span class="fu">sd</span>(gdpPercap),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop),</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd_pop =</span> <span class="fu">sd</span>(pop)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(year), continent)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder_with_extra_vars)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 11
 ## # Groups:   continent, year [1]
-##   country      year      pop continent lifeExp gdpPercap mean.continent.G…
-##   &lt;fct&gt;       &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;
-## 1 Algeria      2007 33333216 Africa       72.3      6223              2194
-## 2 Angola       2007 12420476 Africa       42.7      4797              2194
-## 3 Benin        2007  8078314 Africa       56.7      1441              2194
-## 4 Botswana     2007  1639131 Africa       50.7     12570              2194
-## 5 Burkina Fa…  2007 14326203 Africa       52.3      1217              2194
-## 6 Burundi      2007  8390505 Africa       49.6       430              2194
-## # ... with 4 more variables: mean_gdpPercap &lt;dbl&gt;, sd_gdpPercap &lt;dbl&gt;,
+##   country  year    pop continent lifeExp gdpPercap mean.continent.…
+##   &lt;fct&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;
+## 1 Algeria  2007 3.33e7 Africa       72.3     6223.            2194.
+## 2 Angola   2007 1.24e7 Africa       42.7     4797.            2194.
+## 3 Benin    2007 8.08e6 Africa       56.7     1441.            2194.
+## 4 Botswa…  2007 1.64e6 Africa       50.7    12570.            2194.
+## 5 Burkin…  2007 1.43e7 Africa       52.3     1217.            2194.
+## 6 Burundi  2007 8.39e6 Africa       49.6      430.            2194.
+## # … with 4 more variables: mean_gdpPercap &lt;dbl&gt;, sd_gdpPercap &lt;dbl&gt;,
 ## #   mean_pop &lt;dbl&gt;, sd_pop &lt;dbl&gt;</code></pre>
 </section>
 <section class="slide level2">
 
-<h3 id="your-turn-1">Your turn</h3>
+<h3 id="your-turn-1">Your Turn</h3>
 <ol type="1">
 <li><p>Use dplyr to add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952.</p></li>
 <li><p>Use dplyr to: (a) add a column called <code>gdpPercap_diff</code> that contains the difference between the observation’s <code>gdpPercap</code> and the mean <code>gdpPercap</code> of the continent in that year, (b) arrange the dataframe by the column you just created, in descending order (so that the relatively richest country/years are listed first)</p></li>
@@ -841,12 +892,12 @@ gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$
 </section>
 <section id="tidying-data-2" class="slide level2">
 <h2>Tidying Data</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wide</code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>wide</span></code></pre></div>
 <pre><code>##      name time1 time2 time3
 ## 1  Wilbur    67    56    70
 ## 2 Petunia    80    90    67
 ## 3 Gregory    64    50   101</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">long</code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>long</span></code></pre></div>
 <pre><code>##      name time heartrate
 ## 1  Wilbur    1        67
 ## 2 Petunia    1        80
@@ -862,7 +913,7 @@ gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$
 <section class="slide level2">
 
 <p>This data frame is somewhere in between the purely ‘long’ and ‘wide’ formats. We have 3 “ID variables” (<code>continent</code>, <code>country</code>, <code>year</code>) and 3 “Observation variables” (<code>pop</code>, <code>lifeExp</code>, <code>gdpPercap</code>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(gapminder)</code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder)</span></code></pre></div>
 <pre><code>##       country year      pop continent lifeExp gdpPercap mean.continent.GDP
 ## 1 Afghanistan 1952  8425333      Asia  28.801  779.4453            7902.15
 ## 2 Afghanistan 1957  9240934      Asia  30.332  820.8530            7902.15
@@ -873,9 +924,9 @@ gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$
 </section>
 <section id="tidying-datatidyr" class="slide level2">
 <h2>Tidying Data/tidyr</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap_wide &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gapminder_wide.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-<span class="kw">head</span>(gap_wide)</code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>gap_wide <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/gapminder_wide.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gap_wide)</span></code></pre></div>
 <pre><code>##   continent      country gdpPercap_1952 gdpPercap_1957 gdpPercap_1962
 ## 1    Africa      Algeria      2449.0082      3013.9760      2550.8169
 ## 2    Africa       Angola      3520.6103      3827.9405      4269.2767
@@ -883,78 +934,77 @@ gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$
 ## 4    Africa     Botswana       851.2411       918.2325       983.6540
 ## 5    Africa Burkina Faso       543.2552       617.1835       722.5120
 ## 6    Africa      Burundi       339.2965       379.5646       355.2032
-##   gdpPercap_1967 gdpPercap_1972 gdpPercap_1977 gdpPercap_1982
-## 1      3246.9918      4182.6638      4910.4168      5745.1602
-## 2      5522.7764      5473.2880      3008.6474      2756.9537
-## 3      1035.8314      1085.7969      1029.1613      1277.8976
-## 4      1214.7093      2263.6111      3214.8578      4551.1421
-## 5       794.8266       854.7360       743.3870       807.1986
-## 6       412.9775       464.0995       556.1033       559.6032
-##   gdpPercap_1987 gdpPercap_1992 gdpPercap_1997 gdpPercap_2002
-## 1      5681.3585      5023.2166      4797.2951      5288.0404
-## 2      2430.2083      2627.8457      2277.1409      2773.2873
-## 3      1225.8560      1191.2077      1232.9753      1372.8779
-## 4      6205.8839      7954.1116      8647.1423     11003.6051
-## 5       912.0631       931.7528       946.2950      1037.6452
-## 6       621.8188       631.6999       463.1151       446.4035
-##   gdpPercap_2007 lifeExp_1952 lifeExp_1957 lifeExp_1962 lifeExp_1967
-## 1      6223.3675       43.077       45.685       48.303       51.407
-## 2      4797.2313       30.015       31.999       34.000       35.985
-## 3      1441.2849       38.223       40.358       42.618       44.885
-## 4     12569.8518       47.622       49.618       51.520       53.298
-## 5      1217.0330       31.975       34.906       37.814       40.697
-## 6       430.0707       39.031       40.533       42.045       43.548
-##   lifeExp_1972 lifeExp_1977 lifeExp_1982 lifeExp_1987 lifeExp_1992
-## 1       54.518       58.014       61.368       65.799       67.744
-## 2       37.928       39.483       39.942       39.906       40.647
-## 3       47.014       49.190       50.904       52.337       53.919
-## 4       56.024       59.319       61.484       63.622       62.745
-## 5       43.591       46.137       48.122       49.557       50.260
-## 6       44.057       45.910       47.471       48.211       44.736
-##   lifeExp_1997 lifeExp_2002 lifeExp_2007 pop_1952 pop_1957 pop_1962
-## 1       69.152       70.994       72.301  9279525 10270856 11000948
-## 2       40.963       41.003       42.731  4232095  4561361  4826015
-## 3       54.777       54.406       56.728  1738315  1925173  2151895
-## 4       52.556       46.634       50.728   442308   474639   512764
-## 5       50.324       50.650       52.295  4469979  4713416  4919632
-## 6       45.326       47.360       49.580  2445618  2667518  2961915
-##   pop_1967 pop_1972 pop_1977 pop_1982 pop_1987 pop_1992 pop_1997 pop_2002
-## 1 12760499 14760787 17152804 20033753 23254956 26298373 29072015 31287142
-## 2  5247469  5894858  6162675  7016384  7874230  8735988  9875024 10866106
-## 3  2427334  2761407  3168267  3641603  4243788  4981671  6066080  7026113
-## 4   553541   619351   781472   970347  1151184  1342614  1536536  1630347
-## 5  5127935  5433886  5889574  6634596  7586551  8878303 10352843 12251209
-## 6  3330989  3529983  3834415  4580410  5126023  5809236  6121610  7021078
-##   pop_2007
-## 1 33333216
-## 2 12420476
-## 3  8078314
-## 4  1639131
-## 5 14326203
-## 6  8390505</code></pre>
+##   gdpPercap_1967 gdpPercap_1972 gdpPercap_1977 gdpPercap_1982 gdpPercap_1987
+## 1      3246.9918      4182.6638      4910.4168      5745.1602      5681.3585
+## 2      5522.7764      5473.2880      3008.6474      2756.9537      2430.2083
+## 3      1035.8314      1085.7969      1029.1613      1277.8976      1225.8560
+## 4      1214.7093      2263.6111      3214.8578      4551.1421      6205.8839
+## 5       794.8266       854.7360       743.3870       807.1986       912.0631
+## 6       412.9775       464.0995       556.1033       559.6032       621.8188
+##   gdpPercap_1992 gdpPercap_1997 gdpPercap_2002 gdpPercap_2007 lifeExp_1952
+## 1      5023.2166      4797.2951      5288.0404      6223.3675       43.077
+## 2      2627.8457      2277.1409      2773.2873      4797.2313       30.015
+## 3      1191.2077      1232.9753      1372.8779      1441.2849       38.223
+## 4      7954.1116      8647.1423     11003.6051     12569.8518       47.622
+## 5       931.7528       946.2950      1037.6452      1217.0330       31.975
+## 6       631.6999       463.1151       446.4035       430.0707       39.031
+##   lifeExp_1957 lifeExp_1962 lifeExp_1967 lifeExp_1972 lifeExp_1977 lifeExp_1982
+## 1       45.685       48.303       51.407       54.518       58.014       61.368
+## 2       31.999       34.000       35.985       37.928       39.483       39.942
+## 3       40.358       42.618       44.885       47.014       49.190       50.904
+## 4       49.618       51.520       53.298       56.024       59.319       61.484
+## 5       34.906       37.814       40.697       43.591       46.137       48.122
+## 6       40.533       42.045       43.548       44.057       45.910       47.471
+##   lifeExp_1987 lifeExp_1992 lifeExp_1997 lifeExp_2002 lifeExp_2007 pop_1952
+## 1       65.799       67.744       69.152       70.994       72.301  9279525
+## 2       39.906       40.647       40.963       41.003       42.731  4232095
+## 3       52.337       53.919       54.777       54.406       56.728  1738315
+## 4       63.622       62.745       52.556       46.634       50.728   442308
+## 5       49.557       50.260       50.324       50.650       52.295  4469979
+## 6       48.211       44.736       45.326       47.360       49.580  2445618
+##   pop_1957 pop_1962 pop_1967 pop_1972 pop_1977 pop_1982 pop_1987 pop_1992
+## 1 10270856 11000948 12760499 14760787 17152804 20033753 23254956 26298373
+## 2  4561361  4826015  5247469  5894858  6162675  7016384  7874230  8735988
+## 3  1925173  2151895  2427334  2761407  3168267  3641603  4243788  4981671
+## 4   474639   512764   553541   619351   781472   970347  1151184  1342614
+## 5  4713416  4919632  5127935  5433886  5889574  6634596  7586551  8878303
+## 6  2667518  2961915  3330989  3529983  3834415  4580410  5126023  5809236
+##   pop_1997 pop_2002 pop_2007
+## 1 29072015 31287142 33333216
+## 2  9875024 10866106 12420476
+## 3  6066080  7026113  8078314
+## 4  1536536  1630347  1639131
+## 5 10352843 12251209 14326203
+## 6  6121610  7021078  8390505</code></pre>
 </section>
 <section id="gather" class="slide level2">
 <h2>gather()</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap_long &lt;-<span class="st"> </span>gap_wide <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">gather</span>(obstype_year, obs_values, <span class="dv">3</span><span class="op">:</span><span class="dv">38</span>)
-<span class="kw">head</span>(gap_long)</code></pre></div>
-<pre><code>##   continent      country   obstype_year obs_values
-## 1    Africa      Algeria gdpPercap_1952  2449.0082
-## 2    Africa       Angola gdpPercap_1952  3520.6103
-## 3    Africa        Benin gdpPercap_1952  1062.7522
-## 4    Africa     Botswana gdpPercap_1952   851.2411
-## 5    Africa Burkina Faso gdpPercap_1952   543.2552
-## 6    Africa      Burundi gdpPercap_1952   339.2965</code></pre>
-<p><small> We put 3 arguments into the <code>gather()</code> function:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>gap_long <span class="ot">&lt;-</span> gap_wide <span class="sc">%&gt;%</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">38</span>, </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;obstype_year&quot;</span>,</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;obs_values&quot;</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gap_long)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   continent country obstype_year   obs_values
+##   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;               &lt;dbl&gt;
+## 1 Africa    Algeria gdpPercap_1952      2449.
+## 2 Africa    Algeria gdpPercap_1957      3014.
+## 3 Africa    Algeria gdpPercap_1962      2551.
+## 4 Africa    Algeria gdpPercap_1967      3247.
+## 5 Africa    Algeria gdpPercap_1972      4183.
+## 6 Africa    Algeria gdpPercap_1977      4910.</code></pre>
+<p><small> We put 3 arguments into the <code>pivot_longer()</code> function:</p>
 <ol type="1">
+<li><p>The columns of the old observation variables (here using the column indices 3:38, signalling columns 3 through 38) that we want to gather into one variable. Notice that we don’t want to melt down columns 1 and 2, as these are considered “ID” variables.</p></li>
 <li><p>the name of the new column for the new ID variable (<code>obstype_year</code>)</p></li>
 <li><p>the name for the new amalgamated observation variable (<code>obs_value</code>)</p></li>
-<li><p>the indices of the old observation variables (<code>3:38</code>, signalling columns 3 through 38) that we want to gather into one variable. Notice that we don’t want to melt down columns 1 and 2, as these are considered “ID” variables.</p></li>
 </ol>
 <p></small></p>
 </section>
-<section id="gather-1" class="slide level2">
-<h2>gather()</h2>
+<section id="pivot_longer" class="slide level2">
+<h2>pivot_longer()</h2>
 <p>We can also select observation variables using:</p>
 <ul>
 <li>variable indices</li>
@@ -966,71 +1016,90 @@ gapminder<span class="op">$</span>mean.continent.GDP[gapminder<span class="op">$
 <li><code>contains(x, ignore.case = TRUE)</code>: all names that contain <code>x</code></li>
 </ul>
 </section>
-<section id="gather-2" class="slide level2">
-<h2>gather()</h2>
+<section id="pivot_longer-1" class="slide level2">
+<h2>pivot_longer()</h2>
 <p>The same thing with the <code>starts_with</code> function</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># with the starts_with() function</span>
-gap_long &lt;-<span class="st"> </span>gap_wide <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">gather</span>(obstype_year, obs_values, <span class="kw">starts_with</span>(<span class="st">&#39;pop&#39;</span>),
-           <span class="kw">starts_with</span>(<span class="st">&#39;lifeExp&#39;</span>), <span class="kw">starts_with</span>(<span class="st">&#39;gdpPercap&#39;</span>))
-<span class="kw">head</span>(gap_long)</code></pre></div>
-<pre><code>##   continent      country obstype_year obs_values
-## 1    Africa      Algeria     pop_1952    9279525
-## 2    Africa       Angola     pop_1952    4232095
-## 3    Africa        Benin     pop_1952    1738315
-## 4    Africa     Botswana     pop_1952     442308
-## 5    Africa Burkina Faso     pop_1952    4469979
-## 6    Africa      Burundi     pop_1952    2445618</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with the starts_with() function</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>gap_long <span class="ot">&lt;-</span> gap_wide <span class="sc">%&gt;%</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="fu">starts_with</span>(<span class="st">&#39;gdpPercap&#39;</span>), </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">starts_with</span>(<span class="st">&#39;lifeExp&#39;</span>),</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">starts_with</span>(<span class="st">&#39;pop&#39;</span>)),</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;obstype_year&quot;</span>,</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;obs_values&quot;</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gap_long)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   continent country obstype_year   obs_values
+##   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;               &lt;dbl&gt;
+## 1 Africa    Algeria gdpPercap_1952      2449.
+## 2 Africa    Algeria gdpPercap_1957      3014.
+## 3 Africa    Algeria gdpPercap_1962      2551.
+## 4 Africa    Algeria gdpPercap_1967      3247.
+## 5 Africa    Algeria gdpPercap_1972      4183.
+## 6 Africa    Algeria gdpPercap_1977      4910.</code></pre>
 </section>
-<section id="gather-3" class="slide level2">
-<h2>gather()</h2>
+<section id="pivot_longer-2" class="slide level2">
+<h2>pivot_longer()</h2>
 <p>the <code>-</code> operator:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap_long &lt;-<span class="st"> </span>gap_wide <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">gather</span>(obstype_year, obs_values, <span class="op">-</span>continent, <span class="op">-</span>country)
-<span class="kw">head</span>(gap_long)</code></pre></div>
-<pre><code>##   continent      country   obstype_year obs_values
-## 1    Africa      Algeria gdpPercap_1952  2449.0082
-## 2    Africa       Angola gdpPercap_1952  3520.6103
-## 3    Africa        Benin gdpPercap_1952  1062.7522
-## 4    Africa     Botswana gdpPercap_1952   851.2411
-## 5    Africa Burkina Faso gdpPercap_1952   543.2552
-## 6    Africa      Burundi gdpPercap_1952   339.2965</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>gap_long <span class="ot">&lt;-</span> gap_wide <span class="sc">%&gt;%</span> </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>continent, <span class="sc">-</span>country),</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;obstype_year&quot;</span>,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;obs_values&quot;</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gap_long)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   continent country obstype_year   obs_values
+##   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;               &lt;dbl&gt;
+## 1 Africa    Algeria gdpPercap_1952      2449.
+## 2 Africa    Algeria gdpPercap_1957      3014.
+## 3 Africa    Algeria gdpPercap_1962      2551.
+## 4 Africa    Algeria gdpPercap_1967      3247.
+## 5 Africa    Algeria gdpPercap_1972      4183.
+## 6 Africa    Algeria gdpPercap_1977      4910.</code></pre>
 </section>
 <section id="separate" class="slide level2">
 <h2>separate()</h2>
 <p>in our long dataset, <code>obstype_year</code> actually contains 2 pieces of information, the observation type (<code>pop</code>, <code>lifeExp</code>, or <code>gdpPercap</code>) and the <code>year</code>.</p>
 <p>We can use the <code>separate()</code> function to split the character strings into multiple variables:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap_long_sep &lt;-<span class="st"> </span>gap_long <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">separate</span>(obstype_year, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&#39;obs_type&#39;</span>,<span class="st">&#39;year&#39;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">as.integer</span>(year))
-<span class="kw">head</span>(gap_long_sep)</code></pre></div>
-<pre><code>##   continent      country  obs_type year obs_values
-## 1    Africa      Algeria gdpPercap 1952  2449.0082
-## 2    Africa       Angola gdpPercap 1952  3520.6103
-## 3    Africa        Benin gdpPercap 1952  1062.7522
-## 4    Africa     Botswana gdpPercap 1952   851.2411
-## 5    Africa Burkina Faso gdpPercap 1952   543.2552
-## 6    Africa      Burundi gdpPercap 1952   339.2965</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>gap_long_sep <span class="ot">&lt;-</span> gap_long <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(obstype_year, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&#39;obs_type&#39;</span>,<span class="st">&#39;year&#39;</span>), <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.integer</span>(year))</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gap_long_sep)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##   continent country obs_type   year obs_values
+##   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;
+## 1 Africa    Algeria gdpPercap  1952      2449.
+## 2 Africa    Algeria gdpPercap  1957      3014.
+## 3 Africa    Algeria gdpPercap  1962      2551.
+## 4 Africa    Algeria gdpPercap  1967      3247.
+## 5 Africa    Algeria gdpPercap  1972      4183.
+## 6 Africa    Algeria gdpPercap  1977      4910.</code></pre>
 </section>
-<section id="spread" class="slide level2">
-<h2>spread()</h2>
-<p>The opposite of <code>gather()</code> is <code>spread()</code>. It spreads our observation variables back out to make a wider table. We can use this function to spread our <code>gap_long()</code> to the original “medium” format.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap_medium &lt;-<span class="st"> </span>gap_long_sep <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">spread</span>(obs_type, obs_values)
-<span class="kw">head</span>(gap_medium)</code></pre></div>
-<pre><code>##   continent country year gdpPercap lifeExp      pop
-## 1    Africa Algeria 1952  2449.008  43.077  9279525
-## 2    Africa Algeria 1957  3013.976  45.685 10270856
-## 3    Africa Algeria 1962  2550.817  48.303 11000948
-## 4    Africa Algeria 1967  3246.992  51.407 12760499
-## 5    Africa Algeria 1972  4182.664  54.518 14760787
-## 6    Africa Algeria 1977  4910.417  58.014 17152804</code></pre>
+<section id="pivot_wider" class="slide level2">
+<h2>pivot_wider()</h2>
+<p>The opposite of <code>pivot_longer()</code> is <code>pivot_wider()</code>. It spreads our observation variables back out to make a wider table. We can use this function to spread our <code>gap_long()</code> to the original “medium” format.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>gap_medium <span class="ot">&lt;-</span> gap_long_sep <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">&quot;obs_type&quot;</span>, </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="st">&quot;obs_values&quot;</span>)</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gap_medium)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   continent country  year gdpPercap lifeExp      pop
+##   &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Africa    Algeria  1952     2449.    43.1  9279525
+## 2 Africa    Algeria  1957     3014.    45.7 10270856
+## 3 Africa    Algeria  1962     2551.    48.3 11000948
+## 4 Africa    Algeria  1967     3247.    51.4 12760499
+## 5 Africa    Algeria  1972     4183.    54.5 14760787
+## 6 Africa    Algeria  1977     4910.    58.0 17152804</code></pre>
 </section>
 <section class="slide level2">
 
 <p>All we need is some quick fixes to make this dataset identical to the original <code>gapminder</code> dataset:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gapminder-FiveYearData.csv&quot;</span>)
-<span class="kw">head</span>(gapminder)</code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/gapminder-FiveYearData.csv&quot;</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder)</span></code></pre></div>
 <pre><code>##       country year      pop continent lifeExp gdpPercap
 ## 1 Afghanistan 1952  8425333      Asia  28.801  779.4453
 ## 2 Afghanistan 1957  9240934      Asia  30.332  820.8530
@@ -1041,27 +1110,31 @@ gap_long &lt;-<span class="st"> </span>gap_wide <span class="op">%&gt;%</span>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># rearrange columns</span>
-gap_medium &lt;-<span class="st"> </span>gap_medium <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">select</span>(country, year, pop, continent, lifeExp, gdpPercap)
-<span class="kw">head</span>(gap_medium)</code></pre></div>
-<pre><code>##   country year      pop continent lifeExp gdpPercap
-## 1 Algeria 1952  9279525    Africa  43.077  2449.008
-## 2 Algeria 1957 10270856    Africa  45.685  3013.976
-## 3 Algeria 1962 11000948    Africa  48.303  2550.817
-## 4 Algeria 1967 12760499    Africa  51.407  3246.992
-## 5 Algeria 1972 14760787    Africa  54.518  4182.664
-## 6 Algeria 1977 17152804    Africa  58.014  4910.417</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># arrange by country, continent, and year</span>
-gap_medium &lt;-<span class="st"> </span>gap_medium <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">arrange</span>(country,continent,year)
-<span class="kw">head</span>(gap_medium)</code></pre></div>
-<pre><code>##       country year      pop continent lifeExp gdpPercap
-## 1 Afghanistan 1952  8425333      Asia  28.801  779.4453
-## 2 Afghanistan 1957  9240934      Asia  30.332  820.8530
-## 3 Afghanistan 1962 10267083      Asia  31.997  853.1007
-## 4 Afghanistan 1967 11537966      Asia  34.020  836.1971
-## 5 Afghanistan 1972 13079460      Asia  36.088  739.9811
-## 6 Afghanistan 1977 14880372      Asia  38.438  786.1134</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rearrange columns</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>gap_medium <span class="ot">&lt;-</span> gap_medium <span class="sc">%&gt;%</span>  <span class="fu">select</span>(country, year, pop, continent, lifeExp, gdpPercap)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gap_medium)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   country  year      pop continent lifeExp gdpPercap
+##   &lt;chr&gt;   &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Algeria  1952  9279525 Africa       43.1     2449.
+## 2 Algeria  1957 10270856 Africa       45.7     3014.
+## 3 Algeria  1962 11000948 Africa       48.3     2551.
+## 4 Algeria  1967 12760499 Africa       51.4     3247.
+## 5 Algeria  1972 14760787 Africa       54.5     4183.
+## 6 Algeria  1977 17152804 Africa       58.0     4910.</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># arrange by country, continent, and year</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>gap_medium <span class="ot">&lt;-</span> gap_medium <span class="sc">%&gt;%</span> </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(country,continent,year)</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gap_medium)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   country      year      pop continent lifeExp gdpPercap
+##   &lt;chr&gt;       &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Afghanistan  1952  8425333 Asia         28.8      779.
+## 2 Afghanistan  1957  9240934 Asia         30.3      821.
+## 3 Afghanistan  1962 10267083 Asia         32.0      853.
+## 4 Afghanistan  1967 11537966 Asia         34.0      836.
+## 5 Afghanistan  1972 13079460 Asia         36.1      740.
+## 6 Afghanistan  1977 14880372 Asia         38.4      786.</code></pre>
 </section>
 <section id="extra-resources" class="slide level2">
 <h2>Extra Resources</h2>

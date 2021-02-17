@@ -401,7 +401,7 @@ Thankfully, the `tidyr` package will help you efficiently transform your data re
 library(tidyr)
 ```
 
-# gather()
+# pivot_longer()
 
 Until now, we’ve been using the nicely formatted, original gapminder dataset. This dataset is not quite wide and not quite long -- it's something in the middle, but 'real' data (i.e. our own research data) will never be so well organized. Here let's start with the wide format version of the gapminder dataset.
 
@@ -411,19 +411,41 @@ head(gap_wide)
 ```
 
 The first step towards getting our nice, *tidy*, intermediate data format is to first convert from the wide to the long format. 
-The function `gather()` will 'gather' the observation variables into a single variable. This is sometimes called "melting" your data, because it melts the table from wide to long. Those data will be melted into two variables: one for the variable names, and the other for the variable values. 
+
+The function `pivot_longer` will "gather" the observation variables into a single variable. This is sometimes called "melting" your data, because it melts the table from wide to long. Those data will be melted into two variables: one for the variable names and the other for the variable for the variable values. 
 
 ```{r}
-gap_long <- gap_wide %>%
-    gather(obstype_year, obs_values, 3:38)
+gap_long <- gap_wide %>% 
+  pivot_longer(
+    cols = 3:38, 
+    names_to = "obstype_year",
+    values_to = "obs_values"
+  )
 head(gap_long)
 ```
 
-Notice that we put 3 arguments into the `gather()` function: 
 
-1. the name of the new column for the new ID variable (`obstype_year`), 
-2. the name for the new amalgamated observation variable (`obs_value`), 
-3. the indices of the old observation variables (`3:38`, signalling columns 3 through 38) that we want to gather into one variable. Notice that we don't want to melt down columns 1 and 2, as these are considered "ID" variables.
+Notice that we put 3 arguments into the `pivot_longer` function: 
+
+1. The column indices of the old observation variables (`3:38`, signalling columns 3 through 38) that we want to gather into one variable. Notice that we don't want to melt down columns 1 and 2, as these are considered "ID" variables. 
+
+We can also type in column names explicitly. To show this, let's return to our toy dataset `wide`. 
+
+```{r}
+makeLong <- wide %>% 
+  pivot_longer(
+    cols = c("time1", "time2", "time3"),
+    names_to = "time",
+    values_to = "heartrate"
+  )
+head(makeLong)
+```
+
+For data frames with lots of columns, using indices like our first example reduces the amount we have to type. 
+
+2. the name of the new column for the new ID variable (`obstype_year`), 
+3. the name for the new amalgamated observation variable (`obs_value`) 
+
 
 #select()
 
@@ -444,13 +466,22 @@ For instance, here we do the same thing with (1) the `starts_with` function, and
 ```{r}
 # with the starts_with() function
 gap_long <- gap_wide %>%
-    gather(obstype_year, obs_values, starts_with('gdpPercap'),
-           starts_with('lifeExp'), starts_with('pop'))
+    pivot_longer(
+    cols = c(starts_with('gdpPercap'), 
+             starts_with('lifeExp'),
+             starts_with('pop')),
+    names_to = "obstype_year",
+    values_to = "obs_values"
+  )
 head(gap_long)
 
 # with the - operator
 gap_long <- gap_wide %>% 
-  gather(obstype_year, obs_values, -continent, -country)
+    pivot_longer(
+    cols = c(-continent, -country),
+    names_to = "obstype_year",
+    values_to = "obs_values"
+  )
 head(gap_long)
 ```
 
@@ -464,18 +495,20 @@ We can use the `separate()` function to split the character strings into multipl
 
 ```{r}
 gap_long_sep <- gap_long %>% 
-  separate(obstype_year, into = c('obstype','year'), sep = "_") %>% 
+  separate(obstype_year, into = c('obs_type','year'), sep = "_") %>% 
   mutate(year = as.integer(year))
 head(gap_long_sep)
 ```
 
-# spread()
+# pivot_wider()
 
-Then, the opposite of `gather()` is `spread()`. It spreads our observation variables back out to make a wider table. We can use this function to spread our `gap_long()` to the original "medium" format.
+Then, the opposite of `pivot_longer` is `pivot_wider`. It spreads our observation variables back out to make a wider table. We can use this function to spread our `gap_long()` to the original "medium" format.
 
 ```{r}
 gap_medium <- gap_long_sep %>% 
-  spread(obstype, obs_values)
+  pivot_wider(
+    names_from = obs_type, 
+    values_from = obs_values)
 head(gap_medium)
 ```
 
@@ -487,7 +520,8 @@ head(gap_medium)
 head(gapminder)
 
 # rearrange columns
-gap_medium <- gap_medium %>%  select(country, year, pop, continent, lifeExp, gdpPercap)
+gap_medium <- gap_medium %>%
+  select(country, year, pop, continent, lifeExp, gdpPercap)
 head(gap_medium)
 head(gapminder)
 
