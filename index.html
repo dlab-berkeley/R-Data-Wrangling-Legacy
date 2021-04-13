@@ -506,7 +506,7 @@ style.innerHTML = style_script;
 document.getElementsByTagName('head')[0].appendChild(style);
 </script>
 
-    <script src="index_files/header-attrs-2.6/header-attrs.js"></script>
+    <script src="index_files/header-attrs-2.7/header-attrs.js"></script>
     <link href="index_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
     <link href="index_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 </head>
@@ -708,17 +708,17 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section id="dplyrcalculations-across-groups-1" class="slide level2">
 <h2>dplyr/Calculations Across Groups</h2>
 <p>Assigning to data frames:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean_continent_GDP <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>])</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean_continent_GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Africa&quot;</span>])</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Americas&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Americas&quot;</span>])</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean_continent_GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Americas&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Americas&quot;</span>])</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>])</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean_continent_GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Asia&quot;</span>])</span>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>])</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean_continent_GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Europe&quot;</span>])</span>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean.continent.GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Oceania&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Oceania&quot;</span>])</span></code></pre></div>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>gapminder<span class="sc">$</span>mean_continent_GDP[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Oceania&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(gapminder<span class="sc">$</span>gdpPercap[gapminder<span class="sc">$</span>continent <span class="sc">==</span> <span class="st">&quot;Oceania&quot;</span>])</span></code></pre></div>
 </section>
 <section id="split-apply-combine" class="slide level2">
 <h2>split-apply-combine</h2>
@@ -804,14 +804,14 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder_with_extra_vars)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 11
 ## # Groups:   continent, year [6]
-##   country  year    pop continent lifeExp gdpPercap mean.continent.…
-##   &lt;fct&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;
-## 1 Afghan…  1952 8.43e6 Asia         28.8      779.            7902.
-## 2 Afghan…  1957 9.24e6 Asia         30.3      821.            7902.
-## 3 Afghan…  1962 1.03e7 Asia         32.0      853.            7902.
-## 4 Afghan…  1967 1.15e7 Asia         34.0      836.            7902.
-## 5 Afghan…  1972 1.31e7 Asia         36.1      740.            7902.
-## 6 Afghan…  1977 1.49e7 Asia         38.4      786.            7902.
+##   country      year      pop continent lifeExp gdpPercap mean_continent_GDP
+##   &lt;fct&gt;       &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;              &lt;dbl&gt;
+## 1 Afghanistan  1952  8425333 Asia         28.8      779.              7902.
+## 2 Afghanistan  1957  9240934 Asia         30.3      821.              7902.
+## 3 Afghanistan  1962 10267083 Asia         32.0      853.              7902.
+## 4 Afghanistan  1967 11537966 Asia         34.0      836.              7902.
+## 5 Afghanistan  1972 13079460 Asia         36.1      740.              7902.
+## 6 Afghanistan  1977 14880372 Asia         38.4      786.              7902.
 ## # … with 4 more variables: mean_gdpPercap &lt;dbl&gt;, sd_gdpPercap &lt;dbl&gt;,
 ## #   mean_pop &lt;dbl&gt;, sd_pop &lt;dbl&gt;</code></pre>
 </section>
@@ -830,14 +830,14 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdp_pop_bycontinents_byyear)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 8
 ## # Groups:   continent [1]
-##   continent  year mean_gdpPercap sd_gdpPercap mean_pop sd_pop mean_gdp_billion
-##   &lt;fct&gt;     &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;            &lt;dbl&gt;
-## 1 Africa     1952          1253.         983. 4570010. 6.32e6             5.99
-## 2 Africa     1957          1385.        1135. 5093033. 7.08e6             7.36
-## 3 Africa     1962          1598.        1462. 5702247. 7.96e6             8.78
-## 4 Africa     1967          2050.        2848. 6447875. 8.99e6            11.4 
-## 5 Africa     1972          2340.        3287. 7305376. 1.01e7            15.1 
-## 6 Africa     1977          2586.        4142. 8328097. 1.16e7            18.7 
+##   continent  year mean_gdpPercap sd_gdpPercap mean_pop   sd_pop mean_gdp_billion
+##   &lt;fct&gt;     &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;            &lt;dbl&gt;
+## 1 Africa     1952          1253.         983. 4570010.   6.32e6             5.99
+## 2 Africa     1957          1385.        1135. 5093033.   7.08e6             7.36
+## 3 Africa     1962          1598.        1462. 5702247.   7.96e6             8.78
+## 4 Africa     1967          2050.        2848. 6447875.   8.99e6            11.4 
+## 5 Africa     1972          2340.        3287. 7305376.   1.01e7            15.1 
+## 6 Africa     1977          2586.        4142. 8328097.   1.16e7            18.7 
 ## # … with 1 more variable: sd_gdp_billion &lt;dbl&gt;</code></pre>
 </section>
 <section id="dplyr---arrange" class="slide level2">
@@ -852,14 +852,14 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder_with_extra_vars)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 11
 ## # Groups:   continent, year [1]
-##   country  year    pop continent lifeExp gdpPercap mean.continent.…
-##   &lt;fct&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;
-## 1 Algeria  2007 3.33e7 Africa       72.3     6223.            2194.
-## 2 Angola   2007 1.24e7 Africa       42.7     4797.            2194.
-## 3 Benin    2007 8.08e6 Africa       56.7     1441.            2194.
-## 4 Botswa…  2007 1.64e6 Africa       50.7    12570.            2194.
-## 5 Burkin…  2007 1.43e7 Africa       52.3     1217.            2194.
-## 6 Burundi  2007 8.39e6 Africa       49.6      430.            2194.
+##   country       year      pop continent lifeExp gdpPercap mean_continent_GDP
+##   &lt;fct&gt;        &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;              &lt;dbl&gt;
+## 1 Algeria       2007 33333216 Africa       72.3     6223.              2194.
+## 2 Angola        2007 12420476 Africa       42.7     4797.              2194.
+## 3 Benin         2007  8078314 Africa       56.7     1441.              2194.
+## 4 Botswana      2007  1639131 Africa       50.7    12570.              2194.
+## 5 Burkina Faso  2007 14326203 Africa       52.3     1217.              2194.
+## 6 Burundi       2007  8390505 Africa       49.6      430.              2194.
 ## # … with 4 more variables: mean_gdpPercap &lt;dbl&gt;, sd_gdpPercap &lt;dbl&gt;,
 ## #   mean_pop &lt;dbl&gt;, sd_pop &lt;dbl&gt;</code></pre>
 </section>
@@ -914,7 +914,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 
 <p>This data frame is somewhere in between the purely ‘long’ and ‘wide’ formats. We have 3 “ID variables” (<code>continent</code>, <code>country</code>, <code>year</code>) and 3 “Observation variables” (<code>pop</code>, <code>lifeExp</code>, <code>gdpPercap</code>).</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder)</span></code></pre></div>
-<pre><code>##       country year      pop continent lifeExp gdpPercap mean.continent.GDP
+<pre><code>##       country year      pop continent lifeExp gdpPercap mean_continent_GDP
 ## 1 Afghanistan 1952  8425333      Asia  28.801  779.4453            7902.15
 ## 2 Afghanistan 1957  9240934      Asia  30.332  820.8530            7902.15
 ## 3 Afghanistan 1962 10267083      Asia  31.997  853.1007            7902.15
