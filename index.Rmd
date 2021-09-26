@@ -453,7 +453,7 @@ head(gap_wide)
 
 ----
 
-## gather()
+## pivot_longer()
 
 ```{r}
 gap_long <- gap_wide %>% 
