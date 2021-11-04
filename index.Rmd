@@ -443,6 +443,8 @@ head(gapminder)
 ```{r}
 
 library(tidyr)
+# included in the tidyverse library as well. 
+library(tidyverse)
 ```
 
 ```{r}
