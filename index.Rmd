@@ -120,15 +120,6 @@ head(year_country_gdp)
 
 ## dplyr- select()
 
-```{r fig.height = 4, fig.width = 6, fig.align = "center"}
-year_country_gdp <- select(gapminder, year, country, gdpPercap)
-head(year_country_gdp)
-```
-
-----
-
-## dplyr- select()
-
 ![](img/dplyr-fig1.png)
 
 
