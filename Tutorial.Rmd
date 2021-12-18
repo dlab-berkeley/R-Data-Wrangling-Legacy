@@ -96,19 +96,8 @@ gapminder <- read.csv("data/gapminder-FiveYearData.csv", stringsAsFactors = TRUE
 head(gapminder)
 ```
 
-# Base R Functions
 
-So far, you’ve seen the basics of manipulating data frames, e.g. subsetting, merging, and basic calculations. For instance, we can use base R functions to calculate summary statistics across groups of observaitons:
-
-```{r}
-mean(gapminder[gapminder$continent == "Africa", "gdpPercap"])
-mean(gapminder[gapminder$continent == "Americas", "gdpPercap"])
-mean(gapminder[gapminder$continent == "Asia", "gdpPercap"])
-```
-
-But this isn't ideal because it involves a fair bit of repetition. Repeating yourself will cost you time, both now and later, and potentially introduce some nasty bugs.
-
-# dplyr and tidyverse
+# The Grammar of Data Wrangling
 
 Luckily, the [`dplyr`](https://cran.r-project.org/web/packages/dplyr/dplyr.pdf) package provides a number of very useful functions for manipulating dataframes. These functions will save you time by reducing repetition. As an added bonus, you might even find the `dplyr` grammar easier to read.
 
@@ -121,12 +110,6 @@ Here we're going to cover 6 of the most commonly used functions as well as using
 5. `mutate()`
 6. `arrange()`
 
-
-Now let's load the package:
-
-```{r,message=FALSE}
-library(dplyr)
-```
 
 # select()
 

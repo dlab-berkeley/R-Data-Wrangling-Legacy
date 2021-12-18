@@ -88,14 +88,17 @@ The tidyverse is a core set of packages that most R programmers use on a daily b
 library(tidyverse)
 ```
 
-Alternatively, we can load individual packages from the tidyverse by themselves. For example, we can load the `dplyr` package. 
+As you see, tidyverse loads a set of packages including `dplyr` and `tidyy`.  For data wrangling, the primary tidyverse packages of note are `dplyr` and `tidyr`. You can learn more about the tidyverse package [here](https://tidyverse.tidyverse.org/)
+
+
+Alternatively, we can load individual packages from the tidyverse separately. We do this if we only have need for one of the packages. For example, we can load the `dplyr` package. 
 
 ```{r}
 library(dplyr)
 
 ```
 
-For data wrangling, the primary tidyverse packages of note are `dplyr` and `tidyr`. You can learn more about the tidyverse package [here](https://tidyverse.tidyverse.org/)
+Frankly, unless you are sharing a finished code project or have extreme memory limitations to worry about there is never a problem just loading the tidyverse package.
 
 Importantly, all of these packages are designed around a common philosophy and with a common API design. This means that the packages work well with each other and share a common syntax. While this is an opiniated structure, tidyverse functions turn out to be very flexible. Packages have been developed for a whole host of different tasks to be done in a tidy way, which you can see if you take the next workshop in this sequence. 
 
@@ -103,28 +106,8 @@ Tidyverse functions and packages can also work on different data representations
 
 Note that we can do everything that we do in the tidyverse with Base R. So far, you’ve seen the basics of manipulating data frames, e.g. subsetting, merging, and basic calculations. However, the base R version is often cumbersome, and frequently slower computationally. For all of these reasons, the rest of this workshop and its follow on will stick within the tidyverse whenever possible. 
 
-# Gapminder dataset
 
-For this unit, we'll be working with the "Gapminder" dataset, which is excerpt of the data available at Gapminder.org. For each of 142 countries, the data provides values for life expectancy, GDP per capita, and population, every five years, from 1952 to 2007.
-
-```{r}
-gapminder <- read.csv("data/gapminder-FiveYearData.csv", stringsAsFactors = TRUE)
-head(gapminder)
-```
-
-# Base R Functions
-
-So far, you’ve seen the basics of manipulating data frames, e.g. subsetting, merging, and basic calculations. For instance, we can use base R functions to calculate summary statistics across groups of observaitons:
-
-```{r}
-mean(gapminder[gapminder$continent == "Africa", "gdpPercap"])
-mean(gapminder[gapminder$continent == "Americas", "gdpPercap"])
-mean(gapminder[gapminder$continent == "Asia", "gdpPercap"])
-```
-
-But this isn't ideal because it involves a fair bit of repetition. Repeating yourself will cost you time, both now and later, and potentially introduce some nasty bugs.
-
-# dplyr and tidyverse
+## The Grammar of Data Wrangling
 
 Luckily, the [`dplyr`](https://cran.r-project.org/web/packages/dplyr/dplyr.pdf) package provides a number of very useful functions for manipulating dataframes. These functions will save you time by reducing repetition. As an added bonus, you might even find the `dplyr` grammar easier to read.
 
@@ -136,13 +119,6 @@ Here we're going to cover 6 of the most commonly used functions as well as using
 4. `summarize()`
 5. `mutate()`
 6. `arrange()`
-
-
-Now let's load the package:
-
-```{r,message=FALSE}
-library(dplyr)
-```
 
 # select()
 
