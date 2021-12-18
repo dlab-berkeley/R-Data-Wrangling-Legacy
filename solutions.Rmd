@@ -1,3 +1,36 @@
+## Challenge 1 
+
+Here is a dataset inspired by an Economist/YouGov Poll about the importance of unemployment in the United States. 
+
+```{r}
+challenge_1 <- tibble(
+  issue_importance = c("Very Important", "Somewhat Important",
+                       "Not very Important", "Unimportant"),
+  `18-29` = c(.59, .28, .08, .05),
+  `30-44` = c(.66, .27, .06, .02),
+  `45-64` = c(.69, .28, .03, .01),
+  `65+` = c(.7, .27, .02, .01)
+)
+
+head(challenge_1)
+```
+
+Answer the following: 
+
+1. How many observations are in the data set?
+
+*16. While they are only 4 rows in this table, there are four categories of issue importance and four age groups. 4x4 = 16 total observations.*
+
+2. How many columns are in the data set?
+
+```{r}
+ncol(challenge_1)
+```
+
+3. Is every column a variable?
+
+*No! This data is messy. The first column is a variable that contains the universe of issue importance answers. However, the next five columns are all instances of the variable age.*
+
 ## Exercise 1
 
 #Create a new object called africa_asia that is filtered by “Africa” and “Asia”*. Select all variables except for gdpPercap. 
