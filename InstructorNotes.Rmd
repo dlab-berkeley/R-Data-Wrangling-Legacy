@@ -1,5 +1,5 @@
 ---
-title: "R Data Wrangling and Manipulation"
+title: "Instructor Notes for R Data Wrangling and Manipulation"
 theme: readable
 output:
   html_document:
@@ -19,18 +19,25 @@ library(tibble)
 
 ## What is data wrangling 
 
-> It is often said that 80% of data analysis is spent on the process of cleaning and preparing the data (Dasu and Johnson 2003). 
+> It is often said that 80% of data analysis is spent on the process of cleaning and preparing the data (Dasu and Johnson 2003).
 
 At its heart, data wrangling is the set of techniques to get data into a usable form for analysis and visualization. 
+
+The purpose this workshop is to introduce you to a common framework for thinking about data wrangling, show you how to accomplish these tasks within R, and build a base of knowledge for moving onto applied tasks. 
 
 Data wrangling is a catchall for data importing, data cleaning, and data transformation for the goal of creating some product with the finished data. 
 
 
 ## Tidy data 
 
-All messy data is unhappy in its own ways. To put some structure on data, we prefer that our data is *tidy*. In tidy data, every column is a variable, every row is an observation, and every cell is a single value (Wickham 2014). 
+All messy data is unhappy in its own ways. To put some structure on data, we prefer that our data is *tidy*. In tidy data, every column is a variable, every row is an observation, and every cell is a single value (Wickham 2014). For completeness, these principles are more generally known as [Codd's 3rd Normal Form](https://en.wikipedia.org/wiki/Third_normal_form)
+
+We teach tidy data principles both because they provide a *grammar* with which to think about data wrangling that covers the majority of use cases for analysis, and because a suite of R packages known as the *tidyverse* derives their utility from this framework. 
 
 Tidy datasets provide a standardized way to link the physical appearance of the dataset with its meaning (Wickham 2014). Datasets are made of **rows** and **columns** that contain a collection of **values** 
+
+Values are usually numbers or strings (character vectors in R nomenclature). Each value belongs to a variable and an observation. **Variables** contain a set of values that all measure the same underlying attribute, while observation contain all values measured for a unit. 
+
 
 ## Challenge 1 
 
@@ -60,7 +67,7 @@ Answer the following:
 
 ## Tidy data 
 
-Let's make the data tidy
+We saw in the previous challenge that our dataset actually had three variables: interest importance, age, and percent agreement. One aspect of data wrangling is turning messy data into tidy data. 
 
 ```{r, echo = F}
 challenge_1 %>% 
@@ -70,6 +77,8 @@ challenge_1 %>%
 ```
 
 The format here is now tidy. Each column represents a single variable. The separate age columns have been combined into a single column. Each row represents a single cross sectional observation. Finally, each cell represents a single value. 
+
+There's some code here that might be brand new to you. We will cover everything in this code block, but to get familiar with the structure note that we needed to make a dataset that was "wide" (many columns) into a dataset that was "long" (many rows). We did this by "pivoting" the non-variable columns into a two-column key-value pair. While sometimes we may have more than two columns, the general pattern is common and language agnostic. 
 
 ## The Tidyverse 
 
@@ -86,6 +95,13 @@ library(dplyr)
 
 ```
 
+For data wrangling, the primary tidyverse packages of note are `dplyr` and `tidyr`. You can learn more about the tidyverse package [here](https://tidyverse.tidyverse.org/)
+
+Importantly, all of these packages are designed around a common philosophy and with a common API design. This means that the packages work well with each other and share a common syntax. While this is an opiniated structure, tidyverse functions turn out to be very flexible. Packages have been developed for a whole host of different tasks to be done in a tidy way, which you can see if you take the next workshop in this sequence. 
+
+Tidyverse functions and packages can also work on different data representations like those from data.table. We like teaching the tidyverse because the grammar of data wrangling is often the same as the name of the function. That is useful for learning, but also for googling. If you know a problem is like a certain type of function in the tidyverse, that provides a good starting point for searching. 
+
+Note that we can do everything that we do in the tidyverse with Base R. So far, you’ve seen the basics of manipulating data frames, e.g. subsetting, merging, and basic calculations. However, the base R version is often cumbersome, and frequently slower computationally. For all of these reasons, the rest of this workshop and its follow on will stick within the tidyverse whenever possible. 
 
 # Gapminder dataset
 
