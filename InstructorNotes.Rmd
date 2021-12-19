@@ -13,9 +13,14 @@ output:
 ```{r chunksetup, include=FALSE} 
 # include any code here you don't want to show up in the document,
 # e.g. package and dataset loading
+library(here)
 library(tidyverse)
 library(tibble)
 ```
+
+## Welcome 
+
+Welcome to Data Wrangling and Manipulation in R. To start with, make sure that you have opened the code in an R project. R projects provide a straightforward way to get all of our code in its own working directory.  
 
 ## What is data wrangling 
 
@@ -109,16 +114,56 @@ Note that we can do everything that we do in the tidyverse with Base R. So far, 
 
 ## The Grammar of Data Wrangling
 
-Luckily, the [`dplyr`](https://cran.r-project.org/web/packages/dplyr/dplyr.pdf) package provides a number of very useful functions for manipulating dataframes. These functions will save you time by reducing repetition. As an added bonus, you might even find the `dplyr` grammar easier to read.
+Let's consider what we want to do to go from an initial dataset into a final analysis. We are almost certainly going to want to pick observations based on their values. We might want to display the observations in a way that requires reordering the rows. For some analyses, we will not need all of our variables so will want to pick a subset of them. It may be the case that we need to create a new variable entirely which is a function of variables we have. We may also want one or more summary functions, such as the mean or standard deviation, of each of our variables. Depending on your analysis, you may want to consider changing a variable, filtering a variable, mutating a variable, or summarizing a variable based on individual groups in a data. For example, if you have a data set made up of people who live in different countries, you might want to do all these steps *within* countries. 
 
-Here we're going to cover 6 of the most commonly used functions as well as using pipes (`%>%`) to combine them.
+The dplyr package provides a number of very useful functions for manipulating dataframes. These functions will save you time by reducing repetition. As an added bonus, you might even find the `dplyr` grammar easier to read.
 
-1. `select()`
-2. `filter()`
-3. `group_by()`
-4. `summarize()`
-5. `mutate()`
-6. `arrange()`
+In this workshop we are going to cover 6 of the most commonly used functions as well as using pipes (`%>%`) to combine them.
+
+1. `filter()`: pick out observation based on their values
+2. `arrange()`: reorder observation based on a variable
+3. `select()`: pick certain columns by name
+4. `mutate()`: create new variables with function of existing variables
+5. `summarize()`: summarize observation based on some function 
+6. `group_by()`:
+
+## An Example Workflow 
+
+Before diving in to each individual function, let's give an example of a data wrangling workflow that starts from reading in a dataset, and then makes a dataset suitable for a descriptive analysis. This example contains an example of every verb we will talk about in this workshop.  
+
+Suppose we have a dataset of individuals' occupations from different US States. In the data folder for this workshop repository, there is a dataset called "jobs" that matches this description. We can read it in with `read_csv` which is available from the tidyverse. `read_csv` works exactly like `read.csv`, but is much quicker. There are other ways to read in very large files (many GB) that can be even faster, but we will not cover them in this workshop. 
+
+*If there's a question. `fread()` from data.table is the best way to read in a big file. Every dplyr command we talk about today works with data.tables.*
+
+The `here` function is a way to create file paths relative to the top level directory. 
+
+For a descriptive analysis, we'd like to know what the average life expectancy is for individuals that are and are not in agriculture for states within each state on the West Coast. In order to accomplish this task, we will need to filter our list of states, group by each state, create a variable denoting whether the individual works in agriculture or not, and summarize the average age of individuals who do and do not work in agriculture. Finally, we'd like to arrange the states in reverse alphabetical order. 
+
+What follows is an example of the workflow just described
+```{r}
+## Data import 
+jobs <- read_csv(here("data/jobs.csv"))
+
+## Workflow 
+jobs %>% 
+  select(State, Occuptation, Age)%>%
+  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
+  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
+  group_by(State, in_ag)%>%
+  summarise(average_lifeExp = mean(Age))%>%
+  arrange(desc(State))
+
+## We can also save the output of our workflow to a new object
+wc_lifeExp <- jobs %>% 
+  select(State, Occuptation, Age)%>%
+  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
+  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
+  group_by(State, in_ag)%>%
+  summarise(average_lifeExp = mean(Age))%>%
+  arrange(desc(State))
+```
+
+The way to think of the pipe, the symbol at the end of each of these lines that is %>%, is that it takes what is on the left side and makes it the first argument of the right side. In English, 
 
 # select()
 
