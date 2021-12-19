@@ -99,17 +99,41 @@ head(gapminder)
 
 # The Grammar of Data Wrangling
 
-Luckily, the [`dplyr`](https://cran.r-project.org/web/packages/dplyr/dplyr.pdf) package provides a number of very useful functions for manipulating dataframes. These functions will save you time by reducing repetition. As an added bonus, you might even find the `dplyr` grammar easier to read.
+In this workshop we are going to cover 6 of the most commonly used functions as well as using pipes (`%>%`) to combine them.
 
-Here we're going to cover 6 of the most commonly used functions as well as using pipes (`%>%`) to combine them.
+1. `filter()`
+2. `arrange()`
+3. `select()`
+4. `mutate()`
+5. `summarize()`
+6. `group_by()`
 
-1. `select()`
-2. `filter()`
-3. `group_by()`
-4. `summarize()`
-5. `mutate()`
-6. `arrange()`
+# An Example Workflow 
 
+Here is an example workflow putting together every single one of these functions along with a step to read in a dataset. The descriptive question that this workflow answers is "What is the average life expectancy between farmers and non-farmers in West Coast states?"
+
+```{r}
+## Data import 
+jobs <- read_csv(here("data/jobs.csv"))
+
+## Workflow 
+jobs %>% 
+  select(State, Occuptation, Age)%>%
+  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
+  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
+  group_by(State, in_ag)%>%
+  summarise(average_lifeExp = mean(Age))%>%
+  arrange(desc(State))
+
+## We can also save the output of our workflow to a new object
+wc_lifeExp <- jobs %>% 
+  select(State, Occuptation, Age)%>%
+  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
+  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
+  group_by(State, in_ag)%>%
+  summarise(average_lifeExp = mean(Age))%>%
+  arrange(desc(State))
+```
 
 # select()
 

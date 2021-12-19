@@ -22,6 +22,14 @@ We will use RStudio to go through the workshop materials, which requires install
 
 4. Optional: If you are familiar with `git`, you can instead clone this repository by opening a terminal and entering 
 
+5. Make sure that the following packages are installed on your computer 
+
+```
+here
+tibble
+tidyverse
+```
+
 ## Run the Code 
 
 Now that you have all the required software and materials, you need to run the code: 
@@ -30,11 +38,13 @@ Now that you have all the required software and materials, you need to run the c
 
 2. Use the file navigator to find the `R-wrang` folder that you downloaded. 
 
-3. Open up the file corresponding to the part of the workshop currently in focus. 
+3. Open the `R-wrang.Rproj` by double clicking to open the code in an R project. 
 
-4. Place your cursor on a given line and press "Command + Enter" (Mac) or "Control + Enter" (PC) to run an individual line of code. 
+4. Open up the file corresponding to the part of the workshop currently in focus. 
 
-5. The `solutions` folder contains the solutions to the challenge problems. 
+5. Place your cursor on a given line and press "Command + Enter" (Mac) or "Control + Enter" (PC) to run an individual line of code. 
+
+6. The `solutions` folder contains the solutions to the challenge problems. 
 
 ## Is R not working on your laptop?
 
