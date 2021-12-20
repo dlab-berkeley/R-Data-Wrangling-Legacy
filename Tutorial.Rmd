@@ -161,6 +161,25 @@ wc_lifeExp <- jobs %>%
   arrange(desc(State))
 ```
 
+# Pipes 
+
+A pipe operator `%>%` or `|>` is a method of chaining together functions. A pipe takes what is on the left hand side of the pipe and makes it the first argument of the function on the right hand side by default. 
+
+```{r, eval = F}
+## Pseudo code 
+x %>% f(y) 
+
+## is equivalent to 
+f(x, y)
+
+## Example with the jobs data set 
+jobs %>% 
+  select(State, Occuptation, Age)
+
+## is equivalent to 
+select(jobs, State, Occupation, Age)
+```
+
 # select()
 
 Imagine that we just received the gapminder dataset, but are only interested in a few variables in it. We could use the `select()` function to keep only the variables we select.

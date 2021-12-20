@@ -195,6 +195,27 @@ The way to think of the pipe, the symbol at the end of each of these lines that 
 
 The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure (or API). When doing data tasks, that turns out to be very useful because it is easy to reason about what a function will do, and what it needs. 
 
+# Pipes 
+
+A pipe operator `%>%` or `|>` is a method of chaining together functions. A pipe takes what is on the left hand side of the pipe and makes it the first argument of the function on the right hand side by default. 
+
+```{r, eval = F}
+## Pseudo code 
+x %>% f(y) 
+
+## is equivalent to 
+f(x, y)
+
+## Example with the jobs data set 
+jobs %>% 
+  select(State, Occuptation, Age)
+
+## is equivalent to 
+select(jobs, State, Occupation, Age)
+```
+
+
+As mentioned, the advantage of the tidyverse is that every function presumes that the first argument is a tidy data object. It is possible to put the left hand side result as a different argument for the function on the right hand side by explicitly specifying it, however, a well written workflow tends to obviate the need to do so. 
 
 
 # select()
