@@ -57,6 +57,32 @@ Answer the following:
 
 3. Is every column a variable?
 
+# Wide vs. Long Formats
+
+Consider the data below. Both data sets display information on heart rate observed in individuals across 3 different time periods. But the data are organized differently in each table.
+
+```{r}
+wide <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory"),
+  time1 = c(67, 80, 64),
+  time2 = c(56, 90, 50),
+  time3 = c(70, 67, 101)
+)
+wide
+
+long <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory"),
+  time = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
+  heartrate = c(67, 80, 64, 56, 90, 50, 70, 67, 10)
+)
+long
+```
+
+**Question**: Which one of these do you think is the *tidy* format?
+
+We often refer to these two opposite structures as "long" vs. "wide" formats. In the "long" format, you usually have 1 column for the observed variable(s) and the other columns are ID variables. 
+
+For the "wide" format each row is often a site/subject/patient and you have multiple observation variables containing the same type of data.
 
 ## Tidy data 
 
@@ -379,54 +405,6 @@ Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the differe
 #YOUR CODE HERE
 ```
 
-
-# Tidying Data
-
-Even before we conduct analysis or calculations, we need to put our data into the correct format. The goal here is to rearrange a messy dataset into one that is **tidy**
-
-The two most important properties of tidy data are:
-
-1) Each column is a variable.
-2) Each row is an observation.
-
-Tidy data is easier to work with, because you have a consistent way of referring to variables (as column names) and observations (as row indices). It then becomes easy to manipulate, visualize, and model.
-
-For more on the concept of *tidy* data, read Hadley Wickham's paper [here](http://vita.had.co.nz/papers/tidy-data.html)
-
-# Wide vs. Long Formats
-
-> "Tidy datasets are all alike but every messy dataset is messy in its own way." – Hadley Wickham
-
-Tabular datasets can be arranged in many ways. For instance, consider the data below. Both data sets display information on heart rate observed in individuals across 3 different time periods. But the data are organized differently in each table.
-
-```{r}
-wide <- data.frame(
-  name = c("Wilbur", "Petunia", "Gregory"),
-  time1 = c(67, 80, 64),
-  time2 = c(56, 90, 50),
-  time3 = c(70, 67, 101)
-)
-wide
-
-long <- data.frame(
-  name = c("Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory"),
-  time = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
-  heartrate = c(67, 80, 64, 56, 90, 50, 70, 67, 10)
-)
-long
-```
-
-**Question**: Which one of these do you think is the *tidy* format?
-
-**Answer**: The first dataframe (the "wide" one) would not be considered *tidy* because values for a given variable (i.e. heartrate) are spread across multiple columns.
-
-We often refer to these two opposite structures as "long" vs. "wide" formats. In the "long" format, you usually have 1 column for the observed variable(s) and the other columns are ID variables. 
-
-For the "wide" format each row is often a site/subject/patient and you have multiple observation variables containing the same type of data. These can be either repeated observations over time, or observation of multiple variables (or a mix of both). In the above case, we had the same kind of data (heart rate) entered across 3 different columns, corresponding to three different time periods.
-
-![](img/tidyr-fig1.png)
-
-You may find that wide format makes data input simpler, or may be preferred by some other applications. However, many of R’s functions have been designed assuming you have "long" format data. 
 
 # Gapminder
 
