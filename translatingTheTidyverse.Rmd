@@ -1,0 +1,13 @@
+---
+title: "Translating the Tidyverse"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction 
+
+Data Wrangling and Manipulation is opiniated in teaching the tidyverse. We believe that it is the best method to perform data wrangling operations. However, the tidyverse is not the only way to perform data wrangling. In this document, we translate every example in the workshop into base R code and `data.table` code. 
+
