@@ -69,10 +69,38 @@ Answer the following:
 
 3. Is every column a variable?
 
+# Wide vs. Long Formats
+
+Tabular datasets can be arranged in many ways. For instance, consider the data below. Both data sets display information on heart rate observed in individuals across 3 different time periods. But the data are organized differently in each table.
+
+```{r}
+wide <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory"),
+  time1 = c(67, 80, 64),
+  time2 = c(56, 90, 50),
+  time3 = c(70, 67, 101)
+)
+wide
+
+long <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory"),
+  time = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
+  heartrate = c(67, 80, 64, 56, 90, 50, 70, 67, 10)
+)
+long
+```
+
+**Question**: Which one of these do you think is the *tidy* format?
+
+**Answer**: The first dataframe (the "wide" one) would not be considered *tidy* because values for a given variable (i.e. heartrate) are spread across multiple columns.
+
+We often refer to these two opposite structures as "long" vs. "wide" formats. In the "long" format, you usually have 1 column for the observed variable(s) and the other columns are ID variables. 
+
+For the "wide" format each row is often a site/subject/patient and you have multiple observation variables containing the same type of data. These can be either repeated observations over time, or observation of multiple variables (or a mix of both). In the above case, we had the same kind of data (heart rate) entered across 3 different columns, corresponding to three different time periods.
 
 ## Tidy data 
 
-We saw in the previous challenge that our dataset actually had three variables: interest importance, age, and percent agreement. One aspect of data wrangling is turning messy data into tidy data. 
+We saw in challenge 1 that our dataset actually had three variables: interest importance, age, and percent agreement. One aspect of data wrangling is turning messy data into tidy data. 
 
 ```{r, echo = F}
 challenge_1 %>% 
@@ -366,36 +394,6 @@ Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the differe
 #YOUR CODE HERE
 ```
 
-# Wide vs. Long Formats
-
-Tabular datasets can be arranged in many ways. For instance, consider the data below. Both data sets display information on heart rate observed in individuals across 3 different time periods. But the data are organized differently in each table.
-
-```{r}
-wide <- data.frame(
-  name = c("Wilbur", "Petunia", "Gregory"),
-  time1 = c(67, 80, 64),
-  time2 = c(56, 90, 50),
-  time3 = c(70, 67, 101)
-)
-wide
-
-long <- data.frame(
-  name = c("Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory"),
-  time = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
-  heartrate = c(67, 80, 64, 56, 90, 50, 70, 67, 10)
-)
-long
-```
-
-**Question**: Which one of these do you think is the *tidy* format?
-
-**Answer**: The first dataframe (the "wide" one) would not be considered *tidy* because values for a given variable (i.e. heartrate) are spread across multiple columns.
-
-We often refer to these two opposite structures as "long" vs. "wide" formats. In the "long" format, you usually have 1 column for the observed variable(s) and the other columns are ID variables. 
-
-For the "wide" format each row is often a site/subject/patient and you have multiple observation variables containing the same type of data. These can be either repeated observations over time, or observation of multiple variables (or a mix of both). In the above case, we had the same kind of data (heart rate) entered across 3 different columns, corresponding to three different time periods.
-
-![](img/tidyr-fig1.png)
 
 You may find that wide format makes data input simpler, or may be preferred by some other applications. However, many of R’s functions have been designed assuming you have "long" format data. 
 
