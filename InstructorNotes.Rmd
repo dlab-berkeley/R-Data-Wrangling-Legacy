@@ -163,7 +163,11 @@ wc_lifeExp <- jobs %>%
   arrange(desc(State))
 ```
 
-The way to think of the pipe, the symbol at the end of each of these lines that is %>%, is that it takes what is on the left side and makes it the first argument of the right side. In English, 
+The way to think of the pipe, the symbol at the end of each of these lines that is %>%, is that it takes what is on the left side and makes it the first argument of the right side. In English, "Take the jobs data frame, select the state, occupation, and age columns, filter down to just the observation where the states are Alaska, California, Oregon, and Washington, make a new variable for whether a person is or is not a farmer, within each unique state/agriculture pairing, get the mean age, and present the observation in reverse alphabetical order. Save the result to an object called wc_lifExp" 
+
+The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure (or API). When doing data tasks, that turns out to be very useful because it is easy to reason about what a function will do, and what it needs. 
+
+
 
 # select()
 
@@ -184,19 +188,6 @@ head(year_country_gdp)
 ```
 
 But, as we will see, `dplyr` makes for much more readible, efficient code because of its *pipe* operator.
-
-# pipes %>% 
-
-Above, we used what's called 'normal' grammar, but the strengths of `dplyr` lie in combining several functions using *pipes*. Since the pipes grammar is unlike anything we've seen in R before, let's repeat what we've done above using pipes.
-
-```{r}
-year_country_gdp <- gapminder %>%
-  select(year,country,gdpPercap)
-```
-
-Let's walk through it step by step. First we summon the gapminder dataframe and pass it on, using the pipe symbol `%>%`, to the next step, which is the `select()` function. In this case we don't specify which data object we use in the `select()` function, since it gets that from the previous pipe. 
-
-**Fun Fact**: There is a good chance you have encountered pipes before in the shell. In R, a pipe symbol is `%>%` while in the shell it is `|.` But the concept is the same!
 
 # filter()
 
@@ -244,39 +235,9 @@ Create a new dataframe object called `africa_asia_lifeExp` that is filtered by "
  
  
 
-# Calculations Across Groups
+# Split-Apply-Combine
 
 A common task you'll encounter when working with data is running calculations on different groups within the data. For instance, what if we wanted to calculated the mean GDP per capita for each continent?
-
-In base R, you would have to run the `mean()` function for each subset of data:
-
-```{r}
-mean(gapminder$gdpPercap[gapminder$continent == "Africa"])
-mean(gapminder$gdpPercap[gapminder$continent == "Americas"])
-mean(gapminder$gdpPercap[gapminder$continent == "Asia"])
-mean(gapminder$gdpPercap[gapminder$continent == "Europe"])
-mean(gapminder$gdpPercap[gapminder$continent == "Oceania"])
-```
-
-That's a lot of repetition! To make matters worse, what if we wanted to add these values to our original data frame as a new column? We would have to write something like this:
-
-```{r}
-gapminder$mean_continent_GDP <- NA
-
-gapminder$mean_continent_GDP[gapminder$continent == "Africa"] <- mean(gapminder$gdpPercap[gapminder$continent == "Africa"])
-
-gapminder$mean_continent_GDP[gapminder$continent == "Americas"] <- mean(gapminder$gdpPercap[gapminder$continent == "Americas"])
-
-gapminder$mean_continent_GDP[gapminder$continent == "Asia"] <- mean(gapminder$gdpPercap[gapminder$continent == "Asia"])
-
-gapminder$mean_continent_GDP[gapminder$continent == "Europe"] <- mean(gapminder$gdpPercap[gapminder$continent == "Europe"])
-
-gapminder$mean_continent_GDP[gapminder$continent == "Oceania"] <- mean(gapminder$gdpPercap[gapminder$continent == "Oceania"])
-```
-
-You can see how this can get pretty tedious, especially if we want to calculate more complicated or refined statistics. We could use loops or apply functions, but these can be difficult, slow, or error-prone. 
-
-# split-apply-combine
 
 The abstract problem we're encountering here is know as "split-apply-combine":
 
@@ -287,10 +248,6 @@ We want to *split* our data into groups (in this case continents), *apply* some 
 
 Luckily, `dplyr` offers a much cleaner, more straightforward solution to this problem. 
 
-```{r}
-# remove this column -- there's a better way!
-gapminder$mean_continent_GDP <- NULL
-```
 
 #group_by()
 
@@ -409,23 +366,7 @@ Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the differe
 #YOUR CODE HERE
 ```
 
-
-# Tidying Data
-
-Even before we conduct analysis or calculations, we need to put our data into the correct format. The goal here is to rearrange a messy dataset into one that is **tidy**
-
-The two most important properties of tidy data are:
-
-1) Each column is a variable.
-2) Each row is an observation.
-
-Tidy data is easier to work with, because you have a consistent way of referring to variables (as column names) and observations (as row indices). It then becomes easy to manipulate, visualize, and model.
-
-For more on the concept of *tidy* data, read Hadley Wickham's paper [here](http://vita.had.co.nz/papers/tidy-data.html)
-
 # Wide vs. Long Formats
-
-> "Tidy datasets are all alike but every messy dataset is messy in its own way." – Hadley Wickham
 
 Tabular datasets can be arranged in many ways. For instance, consider the data below. Both data sets display information on heart rate observed in individuals across 3 different time periods. But the data are organized differently in each table.
 
@@ -474,17 +415,6 @@ Instead, it's *tidy*, because each variable is its own column. This wide-long-in
 
 On the other hand, there are some instances in which a purely long or wide format is ideal (e.g. plotting). Likewise, sometimes you'll get data on your desk that is poorly organized, and you'll need to reshape it.
 
-# tidyr
-
-Thankfully, the `tidyr` package will help you efficiently transform your data regardless of original format.
-
-```{r}
-# Install the "tidyr" package (only necessary one time)
-# install.packages("tidyr") # Not Run
-
-# Load the "tidyr" package (necessary every new R session)
-library(tidyr)
-```
 
 # pivot_longer()
 
@@ -620,11 +550,6 @@ gap_medium <- gap_medium %>%
 head(gap_medium)
 head(gapminder)
 ```
-
-# Extra Resources
-
-`dplyr` and `tidyr` have many more functions to help you wrangle and manipulate your data. See the  [Data Wrangling Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for more.
-
 
 # Exercise 5
 
