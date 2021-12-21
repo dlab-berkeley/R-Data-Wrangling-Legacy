@@ -155,6 +155,8 @@ In this workshop we are going to cover 6 of the most commonly used functions as 
 5. `summarize()`: summarize observation based on some function 
 6. `group_by()`:
 
+Each of these verbs works in a similar way. The first argument is always a data frame object. The additional arguments describe what to do with the data frame using unquoted variable names. The end result is a new data frame. 
+
 ## An Example Workflow 
 
 Before diving in to each individual function, let's give an example of a data wrangling workflow that starts from reading in a dataset, and then makes a dataset suitable for a descriptive analysis. This example contains an example of every verb we will talk about in this workshop.  
@@ -182,6 +184,7 @@ jobs %>%
   arrange(desc(State))
 
 ## We can also save the output of our workflow to a new object
+## The reason we have to save it is that dplyr never modifies the object
 wc_lifeExp <- jobs %>% 
   select(State, Occuptation, Age)%>%
   filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
@@ -206,37 +209,27 @@ x %>% f(y)
 ## is equivalent to 
 f(x, y)
 
+## where f() is a function 
+
 ## Example with the jobs data set 
 jobs %>% 
-  select(State, Occuptation, Age)
+  filter(State == "California")
 
 ## is equivalent to 
-select(jobs, State, Occupation, Age)
+select(jobs, State == "California")
 ```
 
 
 As mentioned, the advantage of the tidyverse is that every function presumes that the first argument is a tidy data object. It is possible to put the left hand side result as a different argument for the function on the right hand side by explicitly specifying it, however, a well written workflow tends to obviate the need to do so. 
 
+# Gapminder dataset
 
-# select()
-
-Imagine that we just received the gapminder dataset, but are only interested in a few variables in it. We could use the `select()` function to keep only the variables we select.
-
-```{r}
-year_country_gdp <- select(gapminder, year, country, gdpPercap)
-head(year_country_gdp)
-```
-
-![](img/dplyr-fig1.png)
-
-If we open up `year_country_gdp`, we'll see that it only contains the year, country and gdpPercap. This is equivalent to the base R subsetting function:
+For the next set of examples, we'll be working with the "Gapminder" dataset, which is excerpt of the data available at Gapminder.org. For each of 142 countries, the data provides values for life expectancy, GDP per capita, and population, every five years, from 1952 to 2007.
 
 ```{r}
-year_country_gdp <- gapminder[,c("year", "country", "gdpPercap")]
-head(year_country_gdp)
+gapminder <- read_csv(here("data/gapminder-FiveYearData.csv"))
+head(gapminder)
 ```
-
-But, as we will see, `dplyr` makes for much more readible, efficient code because of its *pipe* operator.
 
 # filter()
 
@@ -281,9 +274,34 @@ Create a new dataframe object called `africa_asia_lifeExp` that is filtered by "
 #YOUR CODE HERE
 
 ```
- 
- 
 
+# select()
+
+Imagine that we just received the gapminder dataset, but are only interested in a few variables in it. We could use the `select()` function to keep only the variables we select.
+
+```{r}
+year_country_gdp <- select(gapminder, year, country, gdpPercap)
+head(year_country_gdp)
+```
+
+![](img/dplyr-fig1.png)
+
+If we open up `year_country_gdp`, we'll see that it only contains the year, country and gdpPercap. This is equivalent to the base R subsetting function:
+
+```{r}
+year_country_gdp <- gapminder[,c("year", "country", "gdpPercap")]
+head(year_country_gdp)
+```
+
+But, as we will see, `dplyr` makes for much more readable, efficient code because of its *pipe* operator.
+
+#group_by()
+
+We've already seen how `filter()` can help us select observations that meet certain criteria (in the above: `continent == "Europe"`). More helpful, however, is the `group_by()` function, which will essentially use every unique criteria that we could have used in `filter()`.
+
+A `grouped_df` can be thought of as a `list` where each item in the `list` is a `data.frame` which contains only the rows that correspond to the a particular value `continent` (at least in the example above).
+
+![](img/dplyr-fig2.png)
 # Split-Apply-Combine
 
 A common task you'll encounter when working with data is running calculations on different groups within the data. For instance, what if we wanted to calculated the mean GDP per capita for each continent?
@@ -294,17 +312,6 @@ The abstract problem we're encountering here is know as "split-apply-combine":
 
 
 We want to *split* our data into groups (in this case continents), *apply* some calculations on that group, then  *combine* the results together afterwards. 
-
-Luckily, `dplyr` offers a much cleaner, more straightforward solution to this problem. 
-
-
-#group_by()
-
-We've already seen how `filter()` can help us select observations that meet certain criteria (in the above: `continent == "Europe"`). More helpful, however, is the `group_by()` function, which will essentially use every unique criteria that we could have used in `filter()`.
-
-A `grouped_df` can be thought of as a `list` where each item in the `list` is a `data.frame` which contains only the rows that correspond to the a particular value `continent` (at least in the example above).
-
-![](img/dplyr-fig2.png)
 
 #summarize()
 
