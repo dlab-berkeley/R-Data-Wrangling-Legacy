@@ -73,6 +73,10 @@ Answer the following:
 
 Tabular datasets can be arranged in many ways. For instance, consider the data below. Both data sets display information on heart rate observed in individuals across 3 different time periods. But the data are organized differently in each table.
 
+## Challenge 2
+
+Which one of these do you think is the *tidy* format?
+
 ```{r}
 wide <- data.frame(
   name = c("Wilbur", "Petunia", "Gregory"),
@@ -89,8 +93,6 @@ long <- data.frame(
 )
 long
 ```
-
-**Question**: Which one of these do you think is the *tidy* format?
 
 **Answer**: The first dataframe (the "wide" one) would not be considered *tidy* because values for a given variable (i.e. heartrate) are spread across multiple columns.
 
@@ -128,7 +130,6 @@ Alternatively, we can load individual packages from the tidyverse separately. We
 
 ```{r}
 library(dplyr)
-
 ```
 
 Frankly, unless you are sharing a finished code project or have extreme memory limitations to worry about there is never a problem just loading the tidyverse package.
@@ -148,12 +149,12 @@ The dplyr package provides a number of very useful functions for manipulating da
 
 In this workshop we are going to cover 6 of the most commonly used functions as well as using pipes (`%>%`) to combine them.
 
-1. `filter()`: pick out observation based on their values
-2. `arrange()`: reorder observation based on a variable
-3. `select()`: pick certain columns by name
-4. `mutate()`: create new variables with function of existing variables
-5. `summarize()`: summarize observation based on some function 
-6. `group_by()`:
+1. `filter()`: pick out observations based on their values
+2. `select()`: pick certain columns by name
+3. `group_by()`: group observations based on a variable
+4. `arrange()`: reorder observations based on a variable
+5. `summarize()`: summarize observations based on some function 
+6. `mutate()`: create new variables with function of existing variables
 
 Each of these verbs works in a similar way. The first argument is always a data frame object. The additional arguments describe what to do with the data frame using unquoted variable names. The end result is a new data frame. 
 
@@ -183,8 +184,7 @@ jobs %>%
   summarise(average_lifeExp = mean(Age))%>%
   arrange(desc(State))
 
-## We can also save the output of our workflow to a new object
-## The reason we have to save it is that dplyr never modifies the object
+## We can also save the output of our workflow to a new data frame object
 wc_lifeExp <- jobs %>% 
   select(State, Occuptation, Age)%>%
   filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
@@ -198,7 +198,7 @@ The way to think of the pipe, the symbol at the end of each of these lines that 
 
 The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure (or API). When doing data tasks, that turns out to be very useful because it is easy to reason about what a function will do, and what it needs. 
 
-# Pipes 
+## Pipes 
 
 A pipe operator `%>%` or `|>` is a method of chaining together functions. A pipe takes what is on the left hand side of the pipe and makes it the first argument of the function on the right hand side by default. 
 
@@ -222,31 +222,49 @@ select(jobs, State == "California")
 
 As mentioned, the advantage of the tidyverse is that every function presumes that the first argument is a tidy data object. It is possible to put the left hand side result as a different argument for the function on the right hand side by explicitly specifying it, however, a well written workflow tends to obviate the need to do so. 
 
-# Gapminder dataset
+## London Animal Rescue Dataset 
 
-For the next set of examples, we'll be working with the "Gapminder" dataset, which is excerpt of the data available at Gapminder.org. For each of 142 countries, the data provides values for life expectancy, GDP per capita, and population, every five years, from 1952 to 2007.
-
-```{r}
-gapminder <- read_csv(here("data/gapminder-FiveYearData.csv"))
-head(gapminder)
-```
-
-# filter()
-
-Now let's say we're only interested in African countries. We can combine `select` and `filter` to select only the observations where `continent` is `Africa`.
+To show the benefits of the `dplyr` verbs, we will start by working with a dataset of animal rescue incidents by the London Fire Brigade from 2009-2021. The data provides information on all incidents along with information on the location, date and time, number of fire trucks, and cost of the rescue. 
 
 ```{r}
-year_country_gdp_africa <- gapminder %>%
-    filter(continent == "Africa") %>%
-    select(year,country,gdpPercap)
-head(year_country_gdp_africa)
+animals <- read_csv(here("data/animalRescue.csv"))
+glimpse(animals)
 ```
 
-As with last time, first we pass the gapminder dataframe to the `filter()` function, then we pass the filtered version of the gapminder dataframe to the `select()` function.
 
-To clarify, both the `select` and `filter` functions subset the data frame. The difference is that `select` extracts certain columns, while `filter` extracts certain rows.
+## filter()
 
- **Note:** The order of operations is very important in this case. If we used 'select' first, filter would not be able to find the variable `continent` since we would have removed it in the previous step.
+Suppose we are interested in looking at animal rescues from 2018-2020. `filter()` allows us to subset observations based on their value. 
+
+Since we are introducing a verb explicitly for the first time, we will show the verb with and without pipes. The API is the same for every verb. 
+
+```{r}
+## Get all observations from the Year 2015 
+filter(animals, Year == 2015)
+
+## Get all observations from 2018-2020 
+filter(animals, Year >= 2018 & Year <=2020)
+
+```
+
+The first argument is the name of the data frame we want to use, in this case "animals". The arguments after are the expressions that filter the data frame. 
+
+Here is the same code with a pipe and a neat shortcut 
+
+```{r}
+animals %>% 
+  filter(Year == 2015)
+
+animals %>% 
+  filter(Year >= 2018 & Year <= 2020)
+
+## which is the same as 
+animals %>% 
+  filter(between(Year, 2018, 2020))
+```
+
+As with the examples we have seen before, we take the animals data frame and then pass it via the pipe to the filter argument. Because the pipe puts the data frame as the first argument for every tidyverse function, we only have to specify the subsequent arguments. `between()` is a `dplyr` function that is a shortcut for x >= left & x <= right where x is our variable of interest. 
+
  
  You can extend filter() with logical conditions:
  
@@ -265,104 +283,207 @@ To clarify, both the `select` and `filter` functions subset the data frame. The 
  
 # Exercise 1
 
-Create a new dataframe object called `africa_asia_lifeExp` that is filtered by "Africa" and "Asia" and has a lifeExp less than 60. Select all variables except for `gdpPercap`. Use the pipe operator to chain the functions together. 
+Create a new data frame object called `cats_and_dogs` that is the result of filtering the `animals` data frame for all observations for which the animal type is a cat or a dog. Use the pipe operator the chain the functions together. 
 
 *<small>hint: use both the |, & boolean operator </small>
 
-
 ```{r, include=F}
 #YOUR CODE HERE
-
+cats_and_dogs <- animals %>% 
+  filter(Type == "Cat"|Type == "Dog")
 ```
 
-# select()
+## Multiple Filters at once 
 
-Imagine that we just received the gapminder dataset, but are only interested in a few variables in it. We could use the `select()` function to keep only the variables we select.
+Sometimes we want to filter multiple conditions at once. For example, we might be interested in all rescues of birds or horses after 2011. To accomplish this, we use the `,` in our filter expression. 
 
 ```{r}
-year_country_gdp <- select(gapminder, year, country, gdpPercap)
-head(year_country_gdp)
+birds_and_horses <- animals %>% 
+  filter(Type == "Bird"|Type == "Horse", Year > 2011)
+glimpse(birds_and_horses)
 ```
 
-![](img/dplyr-fig1.png)
-
-If we open up `year_country_gdp`, we'll see that it only contains the year, country and gdpPercap. This is equivalent to the base R subsetting function:
+We can put multiple `filter` functions in a row in a piped workflow, though it does not look as readable 
 
 ```{r}
-year_country_gdp <- gapminder[,c("year", "country", "gdpPercap")]
-head(year_country_gdp)
+birds_and_horses2 <- animals %>% 
+  filter(Type == "Bird"|Type == "Horse")%>%
+  filter(Year > 2011)
+
+## These two data frames are the same 
+all.equal(birds_and_horses, birds_and_horses2)
 ```
 
-But, as we will see, `dplyr` makes for much more readable, efficient code because of its *pipe* operator.
+## select()
 
-#group_by()
+Now we have a data frame of just rescues of cats and dogs. Suppose we are only interested in a few variables of the data frame. We can use the `select()` function to keep only the variables we select. 
 
-We've already seen how `filter()` can help us select observations that meet certain criteria (in the above: `continent == "Europe"`). More helpful, however, is the `group_by()` function, which will essentially use every unique criteria that we could have used in `filter()`.
+![](../images/dplyr-fig1.png)
 
-A `grouped_df` can be thought of as a `list` where each item in the `list` is a `data.frame` which contains only the rows that correspond to the a particular value `continent` (at least in the example above).
+To be concrete, suppose we just want to see the Year, Type, and PropertyCategory variables
 
-![](img/dplyr-fig2.png)
-# Split-Apply-Combine
+```{r}
+cats_and_dogs_short <- cats_and_dogs %>% 
+  select(Year, Type, PropertyCategory)
+```
 
-A common task you'll encounter when working with data is running calculations on different groups within the data. For instance, what if we wanted to calculated the mean GDP per capita for each continent?
+If we open up `cats_and_dogs_short`, we'll see that it only contains the Year, Type, and PropertyCategory columns. 
+
+
+To clarify, both the `select` and `filter` functions subset the data frame. The difference is that `select` extracts certain columns, while `filter` extracts certain rows. When using `select` and `filter` together, the order of operations are very important. If we used `select` first, the `filter` function can only filter on variables that we selected. 
+
+## Split-Apply-Combine
+
+A common task you'll encounter when working with data is running calculations on different groups within the data. For instance, what if we wanted to calculated the total number of cat rescues for each borough?
 
 The abstract problem we're encountering here is know as "split-apply-combine":
 
-![](img/splitapply.png)
+![](../images/splitapply.png)
 
 
-We want to *split* our data into groups (in this case continents), *apply* some calculations on that group, then  *combine* the results together afterwards. 
+We want to *split* our data into groups (in this case boroughs), *apply* some calculations on that group (in this case count), and then *combine* the results together afterwards. This pattern is both common in data wrangling and a cornerstone of the dplyr approach. 
 
-#summarize()
+## group_by()
 
-The above was a bit uneventful because `group_by()` is much more exciting in conjunction with the `summarize()` function. This will allow use to create new variable(s) by using functions that repeat for each of the continent-specific data frames. In other words, using the `group_by()` function, we split our original dataframe into multiple pieces, which we then use to run functions (e.g. `mean()` or `sd()`) within `summarize()`.
+A `grouped_df` can be thought of as a `list` where each item in the `list` is a `data.frame` which contains only the rows that correspond to the a particular value `continent` (at least in the example above).
 
-```{r}
-gdp_bycontinents <- gapminder %>%
-    group_by(continent) %>%
-    summarize(mean_gdpPercap = mean(gdpPercap))
-gdp_bycontinents
-```
-
-![](img/dplyr-fig3.png)
-
-That allowed us to calculate the mean gdpPercap for each continent. But it gets even better -- the function `group_by()` allows us to group by multiple variables. Let's group by `year` and `continent`.
+![](../images/dplyr-fig2.png)
+Let's demonstrate the benefits of `group_by` by answering the question, "What are total number of cat rescues for each borough?" To do this, we need to count the total number rows that contain the Type "Cat" for each Borough. 
 
 ```{r}
-gdp_bycontinents_byyear <- gapminder %>%
-    group_by(continent, year) %>%
-    summarize(mean_gdpPercap = mean(gdpPercap))
-head(gdp_bycontinents_byyear)
+borough_cat_rescues <- animals %>% 
+  ## group all observations by Boroughs
+  group_by(Borough)%>%
+  ## get just the observations of cat rescues 
+  filter(Type == "Cat")%>%
+  ## new function! count the unique values of one or more variables
+  count(Type)
+
+head(borough_cat_rescues)
 ```
 
-That is already quite powerful, but it gets even better! You're not limited to defining 1 new variable in `summarize()`.
+To ungroup our dataset, we pass `ungroup()` to our data. 
 
 ```{r}
-gdp_pop_bycontinents_byyear <- gapminder %>%
-    group_by(continent, year) %>%
-    summarize(mean_gdpPercap = mean(gdpPercap),
-              sd_gdpPercap = sd(gdpPercap),
-              mean_pop = mean(pop),
-              sd_pop = sd(pop))
-head(gdp_pop_bycontinents_byyear)
+animals %>% 
+  group_by(Borough)%>%
+  filter(Type == "Cat")%>%
+  count(Type)%>%
+  ungroup()
 ```
 
-# Exercise 2
+## arrange()
 
-1. Use dplyr to create a data frame containing the median `lifeExp` for each country
+We now have cat rescues by boroughs, but our quick glimpse has them in a strange order. In order to get the observations from smallest to largest, we can use `arrange()` and pass the variable name of interest. 
+
+```{r}
+borough_cat_rescues %>%
+  arrange(n)
+
+```
+
+If we want to reverse the order, we need to wrap the variable name in `desc()` like so 
+
+```{r}
+borough_cat_rescues %>%
+  arrange(desc(n))
+
+```
+
+## Exercise 2
+
+Let's put the verbs we've learned so far into action all at once. Answer the question "What are the total number of dog rescues for each borough?" by making a data frame called `borough_dog_rescues` and arrange the rows by borough in alphabetical order. 
+
+```{r}
+## Your Code here 
+borough_dog_rescues <- animals %>% 
+  group_by(Borough)%>%
+  filter(Type == "Dog")%>%
+  count(Type)%>%
+  arrange(Borough)
+
+```
+
+## summarize()
+
+summarise collapses a data frame to a single row. 
+
+```{r}
+animals %>% 
+  summarise(avg_rescue_cost = mean(RescueCost, na.rm = T))
+
+## Note that summarise can also be written with a z 
+animals %>% 
+  summarize(avg_rescue_cost = mean(RescueCost, na.rm = T))
+```
+
+
+`summarise()` becomes extremely useful when paired with group_by
+`group_by()`. We just saw that our last block gave the average cost across our data set. By using the `group_by()` function, we split our original data frame into multiple pieces, which we then use to run functions (e.g. `mean()` or `sd()`) within `summarize()`. 
+
+![](../images/dplyr-fig3.png)
+
+Suppose instead we are interested in the average cost of a resuce for each borough. 
+
+```{r}
+animals %>% 
+  group_by(Borough)%>%
+  summarise(avg_rescue_cost = mean(RescueCost, na.rm=T))%>%
+  arrange(desc(avg_rescue_cost))
+```
+
+We have now answered the question "What's the average cost by borough across the total dataset?" However, we are not limited to grouping by just one variable. We can group by multiple variables. Let's answer the question "What's the average cost by borough year?" 
+
+```{r}
+animals %>% 
+  group_by(Borough, Year)%>%
+  summarise(avg_rescue_cost = mean(RescueCost, na.rm=T))%>%
+  arrange(Borough)
+
+```
+
+That is already quite powerful, but it gets even better! We are not limited to defining 1 new variable in `summarize()`. Suppose we want to know the average deviation within each borough year. 
+
+```{r}
+animals %>% 
+  group_by(Borough, Year)%>%
+  summarise(avg_rescue_cost = mean(RescueCost, na.rm=T),
+            sd_rescue_cost = sd(RescueCost, na.rm = T))%>%
+  arrange(Borough)
+```
+
+You will receive a message that says "`summarise()` has grouped output by 'Borough'. You can override using the `.groups` argument." This is an experimental feature in `dplyr` and does not change the results of our computation at all. The computation that is identical but leads to R not sending that message is the following
+
+*Note, if someone asks you can set the option "dplyr.summarise.inform" to FALSE to remove this message globally*
+
+```{r}
+animals %>% 
+  group_by(Borough, Year)%>%
+  summarise(avg_rescue_cost = mean(RescueCost, na.rm=T),
+            sd_rescue_cost = sd(RescueCost, na.rm = T),
+            .groups = "drop_last")%>%
+  arrange(Borough)
+
+```
+
+## Exercise 3
+
+Create a data frame that considers the average rescue cost, median rescue cost, and standard deviation for bird rescues for each property category year. Save the result of your workflow into a data frame object called `bird_stats`
 
 
 ```{r, include=F}
 #YOUR CODE HERE
-
-
+bird_stats <- animals %>% 
+  group_by(PropertyCategory, Year)%>%
+  filter(Type == "Bird")%>%
+  summarise(median_cost = median(RescueCost, na.rm = T),
+            avg_cost = mean(RescueCost, na.rm = T), 
+            sd_cost = mean(RescueCost, na.rm = T),
+            .groups = "drop_last")
 
 ```
 
-
-
-
-#mutate()
+## mutate()
 
 What if we wanted to add these values to our original data frame instead of creating a new object? For this, we can use the `mutate()` function, which is similar to `summarize()` except it creates new variables to the same dataframe that you pass into it.
 
@@ -391,21 +512,6 @@ gdp_pop_bycontinents_byyear <- gapminder %>%
 head(gdp_pop_bycontinents_byyear)
 ```
 
-# arrange()
-
-As a last step, let's say we want to sort the rows in our data frame according to values in a certain column. We can use the `arrange()` function to do this. For instance, let's organize our rows by `year` (recent first), and then by `continent`. 
-
-```{r}
-gapminder_with_extra_vars <- gapminder %>%
-    group_by(continent, year) %>%
-    mutate(mean_gdpPercap = mean(gdpPercap),
-              sd_gdpPercap = sd(gdpPercap),
-              mean_pop = mean(pop),
-              sd_pop = sd(pop)) %>%
-    arrange(desc(year), continent)
-head(gapminder_with_extra_vars)
-```
-
 # Exercise 3
 
 Add a column to the gapminder dataset that contains the total population of the continent of each observation in a given year. For example, if the first observation is Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
@@ -425,24 +531,8 @@ Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the differe
 
 You may find that wide format makes data input simpler, or may be preferred by some other applications. However, many of R’s functions have been designed assuming you have "long" format data. 
 
-# Gapminder
 
-Lets look at the structure of our original gapminder dataframe:
-
-```{r}
-head(gapminder)
-```
-
-**Question**: Is this data frame **wide** or **long**?
-
-**Answer**: This data frame is somewhere in between the purely 'long' and 'wide' formats. We have 3 "ID variables" (`continent`, `country`, `year`) and 3 "Observation variables" (`pop`, `lifeExp`, `gdpPercap`).
-
-Instead, it's *tidy*, because each variable is its own column. This wide-long-intermediate, tidy format makes sense given that all 3 observation variables have different units. As we have seen, many of the functions in R are often vector based, and you usually do not want to do mathematical operations on values with different units.
-
-On the other hand, there are some instances in which a purely long or wide format is ideal (e.g. plotting). Likewise, sometimes you'll get data on your desk that is poorly organized, and you'll need to reshape it.
-
-
-# pivot_longer()
+## pivot_longer()
 
 Until now, we’ve been using the nicely formatted, original gapminder dataset. This dataset is not quite wide and not quite long -- it's something in the middle, but 'real' data (i.e. our own research data) will never be so well organized. Here let's start with the wide format version of the gapminder dataset.
 
@@ -488,7 +578,7 @@ For data frames with lots of columns, using indices like our first example reduc
 3. the name for the new amalgamated observation variable (`obs_value`) 
 
 
-#select()
+## select()
 
 We can also select observation variables using:
 

@@ -31,6 +31,30 @@ ncol(challenge_1)
 
 *No! This data is messy. The first column is a variable that contains the universe of issue importance answers. However, the next five columns are all instances of the variable age.*
 
+
+## Challenge 2 
+
+Which one of these do you think is the *tidy* format?
+
+```{r}
+wide <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory"),
+  time1 = c(67, 80, 64),
+  time2 = c(56, 90, 50),
+  time3 = c(70, 67, 101)
+)
+wide
+
+long <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory"),
+  time = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
+  heartrate = c(67, 80, 64, 56, 90, 50, 70, 67, 10)
+)
+long
+```
+
+*The first dataframe (the "wide" one) would not be considered tidy because values for a given variable (i.e. heartrate) are spread across multiple columns.*
+
 ## Exercise 1
 
 #Create a new object called africa_asia that is filtered by “Africa” and “Asia”*. Select all variables except for gdpPercap. 
@@ -41,15 +65,35 @@ africa_asia_lifeExp <- gapminder %>%
   select(-gdpPercap)
 ```
   
-  
 ## Exercise 2
 
-#Use dplyr to create a data frame containing the median lifeExp for each country
+Let's put the verbs we've learned so far into action all at once. Answer the question "What are the total number of dog rescues for each borough?" by making a data frame called `borough_dog_rescues` and arrange the rows by borough in alphabetical order. 
 
 ```{r}
-median_country_lifeExp <- gapminder %>% 
-  group_by(country) %>% 
-  summarize(median_lifeExp = median(lifeExp))
+## Your Code here 
+borough_dog_rescues <- animals %>% 
+  group_by(Borough)%>%
+  filter(Type == "Dog")%>%
+  count(Type)%>%
+  arrange(Borough)
+
+```
+
+## Exercise 3
+
+Create a data frame that considers the average rescue cost, median rescue cost, and standard deviation for bird rescues for each property category year. Save the result of your workflow into a data frame object called `bird_stats`
+
+
+```{r, include=F}
+#YOUR CODE HERE
+bird_stats <- animals %>% 
+  group_by(PropertyCategory, Year)%>%
+  filter(Type == "Bird")%>%
+  summarise(median_cost = median(RescueCost, na.rm = T),
+            avg_cost = mean(RescueCost, na.rm = T), 
+            sd_cost = mean(RescueCost, na.rm = T),
+            .groups = "drop_last")
+
 ```
 
 
