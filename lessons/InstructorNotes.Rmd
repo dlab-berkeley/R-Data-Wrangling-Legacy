@@ -170,7 +170,8 @@ The `here` function is a way to create file paths relative to the top level dire
 
 For a descriptive analysis, we'd like to know what the average life expectancy is for individuals that are and are not in agriculture for states within each state on the West Coast. In order to accomplish this task, we will need to filter our list of states, group by each state, create a variable denoting whether the individual works in agriculture or not, and summarize the average age of individuals who do and do not work in agriculture. Finally, we'd like to arrange the states in reverse alphabetical order. 
 
-What follows is an example of the workflow just described
+What follows is an example of the workflow just described in the spirit of [teaching the whole game](https://www.gse.harvard.edu/news/uk/09/01/education-bat-seven-principles-educators)
+
 ```{r}
 ## Data import 
 jobs <- read_csv(here("data/jobs.csv"))
@@ -329,8 +330,16 @@ cats_and_dogs_short <- cats_and_dogs %>%
 
 If we open up `cats_and_dogs_short`, we'll see that it only contains the Year, Type, and PropertyCategory columns. 
 
-
 To clarify, both the `select` and `filter` functions subset the data frame. The difference is that `select` extracts certain columns, while `filter` extracts certain rows. When using `select` and `filter` together, the order of operations are very important. If we used `select` first, the `filter` function can only filter on variables that we selected. 
+
+We can also select observation variables using:
+  - variable indices
+  - variable names (without quotes)
+  - `x:z` to select all variables between x and z
+  - `-y` to *exclude* y
+  - `starts_with(x, ignore.case = TRUE)`: all names that starts with `x`
+  - `ends_with(x, ignore.case = TRUE)`: all names that ends with `x`
+  - `contains(x, ignore.case = TRUE)`: all names that contain `x`
 
 ## Split-Apply-Combine
 
@@ -528,10 +537,6 @@ Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the differe
 #YOUR CODE HERE
 ```
 
-
-You may find that wide format makes data input simpler, or may be preferred by some other applications. However, many of R’s functions have been designed assuming you have "long" format data. 
-
-
 ## pivot_longer()
 
 Until now, we’ve been using the nicely formatted, original gapminder dataset. This dataset is not quite wide and not quite long -- it's something in the middle, but 'real' data (i.e. our own research data) will never be so well organized. Here let's start with the wide format version of the gapminder dataset.
@@ -577,20 +582,6 @@ For data frames with lots of columns, using indices like our first example reduc
 2. the name of the new column for the new ID variable (`obstype_year`), 
 3. the name for the new amalgamated observation variable (`obs_value`) 
 
-
-## select()
-
-We can also select observation variables using:
-
-* variable indices
-* variable names (without quotes)
-* `x:z` to select all variables between x and z
-* `-y` to *exclude* y
-* `starts_with(x, ignore.case = TRUE)`: all names that starts with `x`
-* `ends_with(x, ignore.case = TRUE)`: all names that ends with `x`
-* `contains(x, ignore.case = TRUE)`: all names that contain `x`
-
-See the `select()` function in `dplyr` for more options.
 
 For instance, here we do the same thing with (1) the `starts_with` function, and (2) the `-` operator:
 
