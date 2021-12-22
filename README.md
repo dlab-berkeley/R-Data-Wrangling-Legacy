@@ -4,6 +4,8 @@
 
 It is often said that 80% of data analysis is spent on the process of cleaning and preparing the data. This workshop will introduce tools (notably dplyr and tidyr) that makes data wrangling and manipulation much easier. Participants will learn how to use these packages to subset and reshape data sets, do calculations across groups of data, clean data, and other useful stuff.
 
+Students who complete this workshop will be well prepared for the D-Lab's advanced data wrangling offerings. 
+
 ## Installation Instructions 
 
 We will use RStudio to go through the workshop materials, which requires installation of both the R language and the RStudio software. 
@@ -79,3 +81,12 @@ Here are other R workshops offered by the D-Lab:
 - [Introduction to Deep Learning in R](https://github.com/dlab-berkeley/Deep-Learning-in-R)
 - [Fairness and Bias in Machine Learning](https://github.com/dlab-berkeley/fairML)
 - [R Package Development](https://github.com/dlab-berkeley/R-package-development) 
+
+## Contributors 
+
+[Alex Stephenson](https://github.com/asteves)
+[Rochelle Terman](https://github.com/rochelleterman)
+[Josh Quan](https://github.com/wrathofquan)
+[Lawrence Y. Trello](https://github.com/lytello)
+[Avery Richards](https://github.com/Averysaurus)
+[Drew Hart](https://github.com/drewhart)
