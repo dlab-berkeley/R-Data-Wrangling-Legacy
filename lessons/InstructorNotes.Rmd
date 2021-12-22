@@ -182,7 +182,7 @@ jobs <- read_csv(here("data/jobs.csv"))
 
 ## Workflow 
 jobs %>% 
-  select(State, Occuptation, Age)%>%
+  select(State, Occupation, Age)%>%
   filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
   mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
   group_by(State, in_ag)%>%
@@ -191,7 +191,7 @@ jobs %>%
 
 ## We can also save the output of our workflow to a new data frame object
 wc_lifeExp <- jobs %>% 
-  select(State, Occuptation, Age)%>%
+  select(State, Occupation, Age)%>%
   filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
   mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
   group_by(State, in_ag)%>%
@@ -649,7 +649,7 @@ gap_original <- gap_long_sep %>%
   pivot_wider(
     names_from = obs_type, 
     values_from = obs_values)
-head(gap_medium)
+head(gap_original)
 ```
 
 ## Exercise 6
