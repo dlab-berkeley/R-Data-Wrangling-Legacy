@@ -55,7 +55,7 @@ long
 
 *The first dataframe (the "wide" one) would not be considered tidy because values for a given variable (i.e. heartrate) are spread across multiple columns.*
 
-## Exercise 1
+## Challenge 3
 
 Create a new data frame object called `cats_and_dogs` that filters the `animals` data frame for all observations for which the animal type is a cat or a dog. Use the pipe operator to chain the functions together. 
 
@@ -64,7 +64,7 @@ cats_and_dogs <- animals %>%
   filter(Type == "Cat"|Type == "Dog")
 ```
   
-## Exercise 2
+## Challenge 4
 
 Let's put the verbs we've learned so far into action all at once. Answer the question "What are the total number of dog rescues for each borough?" by making a data frame called `borough_dog_rescues` and arranging the rows by borough in alphabetical order. 
 
@@ -78,7 +78,7 @@ borough_dog_rescues <- animals %>%
 
 ```
 
-## Exercise 3
+## Challenge 5
 
 Create a data frame that considers the average rescue cost, median rescue cost, and standard deviation for bird rescues for each property category year. Save the result of your workflow into a data frame object called `bird_stats`
 
@@ -96,7 +96,7 @@ bird_stats <- animals %>%
 ```
 
 
-## Exercise 4
+## Challenge 6
 
 Add a column to the gapminder dataset that contains the continent's total population of each observation in a given year. For example, if the first observation was Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
 
@@ -107,7 +107,7 @@ gapminder <- gapminder %>%
 ``` 
 
   
-## Exercise 5
+## Challenge 7 
 
 Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the data frame by the column you just created, in descending order (so that the relatively richest country/years are listed first)
 
@@ -120,9 +120,9 @@ gapminder_gdpPercap_diff <- gapminder %>%
 ```
   
   
-## Exercise 6
+## Challenge 8
 
-1. We have provided the code below to answer Exercise 5. Ungroup the results, then subset them to select only the `country`, `year`, and `gdpPercap_diff` columns. Put it in a wide format so that countries are rows and years are columns.
+1. We have provided the code below to answer Challenge 7. Ungroup the results, then subset them to select only the `country`, `year`, and `gdpPercap_diff` columns. Put it in a wide format so that countries are rows and years are columns.
 
 ```{r}
 ## Starter code 
