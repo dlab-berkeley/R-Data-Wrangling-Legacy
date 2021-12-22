@@ -5,7 +5,6 @@ output:
   html_document:
     toc: true
     toc_float: true
-    number_sections: true
     fig_width: 12
     fig_height: 7
 ---
@@ -13,6 +12,7 @@ output:
 ```{r chunksetup, include=FALSE} 
 # include any code here you don't want to show up in the document,
 # e.g. package and dataset loading
+library(here)
 library(tidyverse)
 library(tibble)
 ```
@@ -88,7 +88,9 @@ Let's make the data tidy.
 
 ```{r, echo = F}
 challenge_1 %>% 
-  pivot_longer(-issue_importance, names_to = "age", values_to = "percent_agreement")%>%
+  pivot_longer(-issue_importance, 
+               names_to = "age", 
+               values_to = "percent_agreement")%>%
   head()
 
 ```
@@ -286,6 +288,9 @@ Now we have a data frame of just rescues of cats and dogs. Suppose we are only i
 To be concrete, suppose we just want to see the Year, Type, and PropertyCategory variables.
 
 ```{r}
+cats_and_dogs <- animals %>% 
+  filter(Type == "Cat"|Type == "Dog")
+
 cats_and_dogs_short <- cats_and_dogs %>% 
   select(Year, Type, PropertyCategory)
 ```
