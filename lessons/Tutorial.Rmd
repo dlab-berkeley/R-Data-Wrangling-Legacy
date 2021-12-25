@@ -97,6 +97,8 @@ challenge_1 %>%
 
 The format here is now tidy. Each column represents a single variable. The separate age columns have been combined into a single column. Each row represents a single cross-sectional observation. Finally, each cell represents a single value. 
 
+There's some code here that might be brand new to you. We will cover everything in this code block, but to get familiar with the structure, note that we needed to make a dataset that was "wide" (many columns) into a dataset that was "long" (many rows). We did this by "pivoting" the non-variable columns into a two-column key-value pair. While sometimes we may have more than two columns, the general pattern is typical and language agnostic. `pivot_longer()` increases the number of rows and decreases the number of columns. 
+
 ## The Tidyverse 
 
 The tidyverse is a core set of packages that most R programmers use daily for everyday data science tasks. We can load this set of packages all at once with: 
@@ -142,14 +144,37 @@ What follows is an example of the workflow just described in the spirit of [teac
 ```{r}
 ## Data import 
 jobs <- read_csv(here("data/jobs.csv"))
+```
 
+Let's look at the first six rows of this dataset 
+
+```{r}
+head(jobs)
+```
+
+Within the tidyverse, there's also a nice function in the tidyverse called `glimpse()` which makes it possible to see every column in the data frame. 
+
+```{r}
+glimpse(jobs)
+```
+
+```{r}
 ## Workflow 
+
+  ## Start with the jobs data frame 
 jobs %>% 
+  ## Select and keep only three columns of interest 
   select(State, Occupation, Age)%>%
+  ## Subset down to just the observations that match 4 states
   filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
+  ## create a dummy variable about whether an occupation is in agriculture
   mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
+  ## group the observations by state and then the created dummy 
   group_by(State, in_ag)%>%
+  ## create a new data frame with a summary of the age variable 
+  ## for each grouping 
   summarise(average_lifeExp = mean(Age))%>%
+  ## Sort the rows in reverse order by state
   arrange(desc(State))
 
 ## We can also save the output of our workflow to a new data frame object
@@ -264,7 +289,7 @@ Sometimes we want to filter multiple conditions at once. For example, we might b
 
 ```{r}
 birds_and_horses <- animals %>% 
-  filter(Type == "Bird"|Type == "Horse", Year > 2011)
+  filter(Type == "Bird" | Type == "Horse", Year > 2011)
 glimpse(birds_and_horses)
 ```
 
