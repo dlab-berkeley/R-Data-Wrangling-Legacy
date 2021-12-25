@@ -40,7 +40,7 @@ Now that you have all the required software and materials, you need to run the c
 
 2. Use the file navigator to find the `R-wrang` folder that you downloaded. 
 
-3. Open the `R-wrang.Rproj` by double clicking to open the code in an R project. 
+3. Open the `R-Data-Wrangling.Rproj` by double clicking to open the code in an R project. 
 
 4. Open up the file corresponding to the part of the workshop currently in focus. 
 
