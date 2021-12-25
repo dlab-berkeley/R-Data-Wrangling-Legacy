@@ -78,11 +78,11 @@ long <- data.frame(
 long
 ```
 
-We often refer to these two opposite structures as "long" vs. "wide" formats. In the "long" format, you usually have 1 column for the observed variable(s), and the other columns are ID variables. 
+For the "wide" format, each row is often a site/subject/patient, and you have multiple observation variables containing the same type of data. These can be repeated observations over time or multiple variables (or a mix of both). In the above case, we had the same kind of data (heart rate) entered across three different columns, corresponding to three different time periods. The key here is that these underlying characteristics are shared by a discrete entity.
 
-For the "wide" format, each row is often a site/subject/patient, and you have multiple observation variables containing the same type of data.
+We often refer to these two opposite structures as "long" vs. "wide" formats. In the "long" format, you usually have 1 column for the observed variable(s), and the other columns are ID variables. We do this most often when the columns are not names of variables, but instead values of variables. Our next example provides the conceptual underpinnings of this approach. 
 
-## Tidy data 
+## A Representative Example of Tidy Data 
 
 Let's make the data tidy.
 
