@@ -84,9 +84,9 @@ Here are other R workshops offered by the D-Lab:
 
 ## Contributors 
 
-[Alex Stephenson](https://github.com/asteves)
-[Rochelle Terman](https://github.com/rochelleterman)
-[Josh Quan](https://github.com/wrathofquan)
-[Lawrence Y. Trello](https://github.com/lytello)
-[Avery Richards](https://github.com/Averysaurus)
-[Drew Hart](https://github.com/drewhart)
+- [Alex Stephenson](https://github.com/asteves)
+- [Rochelle Terman](https://github.com/rochelleterman)
+- [Josh Quan](https://github.com/wrathofquan)
+- [Lawrence Y. Trello](https://github.com/lytello)
+- [Avery Richards](https://github.com/Averysaurus)
+- [Drew Hart](https://github.com/drewhart)
