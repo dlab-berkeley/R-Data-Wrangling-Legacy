@@ -610,7 +610,7 @@ head(gap_long_sep)
 The opposite of `pivot_longer` is `pivot_wider`. It spreads our observation variables back out to make a wider table. We can use this function to spread our `gap_long()` to the original format.
 
 ```{r}
-gap_original <- gap_long_sep %>% 
+gap_original <- gap_long %>% 
   pivot_wider(
     names_from = obs_type, 
     values_from = obs_values)
