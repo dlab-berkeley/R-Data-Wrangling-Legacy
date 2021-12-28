@@ -10,9 +10,19 @@ output:
 ---
 
 ```{r chunksetup, include=FALSE} 
+library(janitor)
 library(here)
 library(tidyverse)
 library(tibble)
 ```
 
+## The big picture 
+
+Part 2 focuses on extending the base skills learned in Part 1. We are still interested in turning messy data into tidy data. In this workshop, we will dive into additional tools within the tidyverse to make data wrangling easier and more efficient. To that end, we will cover how to use our `dplyr` and `tidyr` functions within functions. In the process, we will gain insight into the tidy eval data-masking framework, how it works, and how to make it work for us. 
+
+We will also see how to apply functions over multiple files with functional programming via the `purrr` package. 
+
 ## Wrangling Functions 
+
+
+## Purrring 
