@@ -540,9 +540,12 @@ gap_wide <- read_csv(here("data/gapminder_wide.csv"))
 head(gap_wide)
 ```
 
-The first step towards getting our nice, *tidy*data format is to convert from the wide to the long format. 
+The first step towards getting our nice, *tidy* data format is to convert from the wide to the long format. 
 
 The function `pivot_longer()` will "gather" the observation variables into a single variable. 
+
+![](../images/pivot_l.png)
+This image comes from the [RStudio Cheatsheets](https://github.com/rstudio/cheatsheets).
 
 ```{r}
 gap_long <- gap_wide %>% 
@@ -608,6 +611,9 @@ head(gap_long_sep)
 ## pivot_wider()
 
 The opposite of `pivot_longer` is `pivot_wider`. It spreads our observation variables back out to make a wider table. We can use this function to spread our `gap_long()` to the original format.
+
+![](../images/pivot_w.png)
+This image comes from the [RStudio Cheatsheets](https://github.com/rstudio/cheatsheets).
 
 ```{r}
 gap_original <- gap_long %>% 
