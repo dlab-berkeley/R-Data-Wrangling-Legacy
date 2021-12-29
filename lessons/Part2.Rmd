@@ -22,7 +22,12 @@ Part 2 focuses on extending the base skills learned in Part 1. We are still inte
 
 We will also see how to apply functions over multiple files with functional programming via the `purrr` package. 
 
+Finally we'll cover two table verbs since it is rare that we will only have one data frame to do all of our analysis. 
+
+A key philosophical point for every example and challenge is that we are doing something on a "real" data set. 
+
 ## Wrangling Functions 
 
-
 ## Purrring 
+
+## Two Table Verbs
