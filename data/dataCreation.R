@@ -35,3 +35,35 @@ animals <- lfd_raw %>%
   filter(!is.na(Borough))
 
 #write.csv(animals, file = "data/animalRescue.csv", row.names = F)
+
+## Part 2 
+## Moving out of California 
+## Data from IGS Poll 2019-08 https://escholarship.org/uc/item/96j2704t
+cal_housing <- tibble(
+  leaving = c("Serious",
+               "Some", 
+               "Within Cal",
+               "None"),
+  `18-29` = c(23,29,20,28),
+  `30-39` = c(25, 34, 8, 23),
+  `40-49` = c(28,33,8,31),
+  `50-64` = c(26, 27, 8, 39),
+  `65+` = c(17,23, 8, 52)
+)
+
+#write.csv(cal_housing, file = "data/cal_housing.csv", row.names = F)
+
+cal_region <- tibble(
+  leaving = c("Serious",
+              "Some", 
+              "Within Cal",
+              "None"),
+  la = c(23,26,12,38),
+  sd_orange = c(23,27,7, 43),
+  other_sc = c(25,31,10, 34),
+  central_valley = c(27,29, 10, 34),
+  sf_bay = c(20,30, 10, 40),
+  other_nc = c(26,22,13,39)
+)
+
+# write.csv(cal_region, file = "data/cal_region.csv", row.names = F)

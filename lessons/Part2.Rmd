@@ -18,13 +18,77 @@ library(tibble)
 
 ## The big picture 
 
-Part 2 focuses on extending the base skills learned in Part 1. We are still interested in turning messy data into tidy data. In this workshop, we will dive into additional tools within the tidyverse to make data wrangling easier and more efficient. To that end, we will cover how to use our `dplyr` and `tidyr` functions within functions. In the process, we will gain insight into the tidy eval data-masking framework, how it works, and how to make it work for us. 
+Part 2 focuses on extending the base skills learned in Part 1. We are still interested in turning messy data into tidy data. In this section, we will cover several common problems with messy data sets [Wickham 2014](https://vita.had.co.nz/papers/tidy-data.html). These are 
+
+1. Column headers that are values, not variable names. 
+2. Overloading variables into a single column. 
+3. Storing variables in both rows and columns. 
+4. Storing multiple types of units in the same data frame. 
+5. Storing a single unit in multiple tables. 
+
+We will dive into additional tools within the tidyverse to make data wrangling easier and more efficient. To that end, we will cover how to use our `dplyr` and `tidyr` functions within functions. In the process, we will gain insight into the tidy eval data-masking framework, how it works, and how to make it work for us. 
 
 We will also see how to apply functions over multiple files with functional programming via the `purrr` package. 
 
 Finally we'll cover two table verbs since it is rare that we will only have one data frame to do all of our analysis. 
 
-A key philosophical point for every example and challenge is that we are doing something on a "real" data set. 
+## Column headers that are values, not variable names. 
+
+This messy type of data is common in survey data, especially if you're working off of someone else's crosstabs. 
+
+Imagine you're doing research the housing crisis in California. You come across a dataset from Berkeley's [Institute for Governmental Studies](https://igs.berkeley.edu/research/berkeley-igs-poll) that has information on preferences for moving broken down by age group. 
+
+Read in the dataset, which is called `cal_housing.csv` in the data folder. 
+
+```{r, message = F, warning = F}
+cal_housing <- read_csv(here("data/cal_housing.csv"))
+glimpse(cal_housing)
+```
+
+Our end goal is to make a visualization showing consideration of moving by age group. `ggplot2` presumes that we have tidy data to work. In order to make our graph, we need to *pivot* the non-variable columns into a two-column key-value pair. 
+
+Recall from part 1 that the appropriate tidyverse function for this operation is `pivot_longer()`. 
+
+```{r}
+cal_housing_long <- cal_housing %>% 
+  pivot_longer(-leaving, 
+               names_to = "age", 
+               values_to = "percent_agreement")
+head(cal_housing_long)
+```
+
+From here, we could make a bar graph showing response by age groups. 
+```{r}
+cal_housing_long %>% 
+  ggplot(aes(x = leaving, y = percent_agreement, fill=age))+
+  geom_col(position = 'dodge')+
+  xlab("Moving Consideration Level")+
+  ylab("Percent Agreement")+
+  scale_fill_discrete(type = "viridis")+
+  ggtitle("Californians Consideration to Leaving the State")
+
+```
+
+## Challenge 9 
+
+The IGS poll also contains a question broken down by region (`cal_region.csv`). Build a pipeline that reads and tidies the data. For extra practice, make a similar graph to display the results. 
+
+```{r}
+## Fill in your solution here 
+```
+
+## Overloading variables into a single column. 
+
+Sometimes we have a dataset where our key column is a combination of multiple variables. 
+## Storing variables in both rows and columns. 
+
+
+## Storing multiple types of units in the same data frame. 
+
+
+## Storing a single unit in multiple tables. 
+
+
 
 ## Wrangling Functions 
 

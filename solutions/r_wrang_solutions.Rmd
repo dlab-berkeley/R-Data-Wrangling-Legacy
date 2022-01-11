@@ -151,3 +151,23 @@ gapminder_long <- gapminder_wide %>%
   )
 ```
 
+## Challenge 9 
+
+The IGS poll also contains a question broken down by region (`cal_region.csv`). Build a pipeline that reads and tidies the data. For extra practice, make a similar graph to display the results. 
+
+```{r}
+## Full pipe here 
+read_csv(here("data/cal_region.csv"))%>% 
+  pivot_longer(-leaving, 
+               names_to = "age", 
+               values_to = "percent_agreement")%>% 
+  ggplot(aes(x = leaving, y = percent_agreement, fill=age))+
+  geom_col(position = 'dodge')+
+  xlab("Moving Consideration Level")+
+  ylab("Percent Agreement")+
+  scale_fill_discrete(type = "viridis")+
+  ggtitle("Californians Consideration to Leaving the State")
+
+```
+
+```
