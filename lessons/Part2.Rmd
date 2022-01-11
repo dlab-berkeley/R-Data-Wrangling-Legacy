@@ -31,3 +31,12 @@ A key philosophical point for every example and challenge is that we are doing s
 ## Purrring 
 
 ## Two Table Verbs
+
+### joins 
+
+### Bind_cols/Bind_rows 
+
+#### `bind_cols()` combines variables 
+
+
+#### `bind_rows()` combines cases 
