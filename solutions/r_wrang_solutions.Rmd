@@ -170,4 +170,20 @@ read_csv(here("data/cal_region.csv"))%>%
 
 ```
 
+## Challenge 10 
+
+Edit the workflow presented above to split on the fifth character. Use `mutate` to replace the incorrect values with corrected and capitalized names.  
+
+```{r}
+## Here's a solution that takes advantage of stringr capabilities
+## There are multiple ways to solve this problem
+birds %>% 
+  pivot_longer(!c(county,year), 
+               names_to = "sight",
+               values_to = "n",
+               values_drop_na = TRUE)%>%
+  separate(sight, c("type", "location"),sep = 5)%>%
+  mutate(type = str_replace_all(type, "warbl", "warbler")%>%str_to_title(),
+         location = if_else(str_detect(location, "Ne"), "Nest", "Air"))
+
 ```

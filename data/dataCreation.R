@@ -67,3 +67,14 @@ cal_region <- tibble(
 )
 
 # write.csv(cal_region, file = "data/cal_region.csv", row.names = F)
+
+birds <- tibble(
+  county = c("Alameda", "Contra Cost", "Marin", "SF"),
+  year = c(rep(2020,4)),
+  eagleNest = c(0,0,1,0),
+  eagleAir = c(2,5,3,4),
+  warblerNest = c(4,2,7,3),
+  warblerAir = c(30, 27, 45, 20)
+)
+
+# write.csv(birds, file = "data/birds.csv", row.names = F)

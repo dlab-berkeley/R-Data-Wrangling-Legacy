@@ -79,7 +79,81 @@ The IGS poll also contains a question broken down by region (`cal_region.csv`). 
 
 ## Overloading variables into a single column. 
 
-Sometimes we have a dataset where our key column is a combination of multiple variables. 
+Sometimes we have a dataset where our key column is a combination of multiple variables. To my knowledge, this is a rather common raw data format in research projects that collect data at multiple sub-level sites over time. 
+
+To illustrate the problem, consider the following dataset inspired by bird watchers. 
+
+```{r}
+birds <- read_csv(here("data/birds.csv"))
+glimpse(birds)
+```
+
+We see that we have columns that combine two different variables, the species of bird, and the location of a sighting. When encountering this situation, we use a two step process. 
+
+1. Pivot to gather the non-variable columns 
+2. Separate the overloaded column. 
+
+In a workflow, it looks like this 
+
+```{r}
+goodBirds <- birds %>% 
+  pivot_longer(!c(county,year), 
+               names_to = "sight",
+               values_to = "n",
+               values_drop_na = TRUE)%>%
+  separate(sight, c("type", "location"),sep = "(?=[A-Z])")
+glimpse(goodBirds)
+```
+
+The workflow above used a [regular expression](https://stringr.tidyverse.org/articles/regular-expressions.html) to split and keep the capital letter. Regular expressions are in general beyond the scope of this course. 
+
+
+
+Another way to separate is by position. That call looks like this 
+
+```{r, eval = F}
+separate(col = VAR, into = c("VAR1", "VAR2"), sep = NUMBER)
+## example that splits on the first character 
+separate(col = col, into = c("var1", "var2"), sep = 1)
+```
+
+On datasets that have a standard format, separating by position can be useful. Let's look at what happens when we separate by the 1st position 
+
+```{r}
+sepEx <- birds %>% 
+  pivot_longer(!c(county,year), 
+               names_to = "sight",
+               values_to = "n",
+               values_drop_na = TRUE)%>%
+  separate(sight, c("type", "location"),sep = 1)
+glimpse(sepEx)
+```
+
+We can fix our incorrect columns with `mutate()`
+
+```{r}
+sepExFixed <- sepEx %>% 
+  mutate(type = if_else(type == "e", "Eagle", "Warbler"),
+         location = case_when(
+           location == "agleNest"~"Nest",
+           location == "agleAir"~"Air",
+           location == "arblerNest"~"Nest",
+           location == "arblerAir"~"Air"
+         ))
+head(sepExFixed)
+```
+
+
+## Challenge 10 
+
+Edit the workflow presented above to split on the fifth character. Use `mutate` to replace the incorrect values with corrected and capitalized names. You can follow the brute force way shown above, or potentially investigate [str_replace_all()](https://stringr.tidyverse.org/reference/str_replace.html), [str_detect()](https://stringr.tidyverse.org/reference/str_detect.html), and [str_to_title()](https://stringr.tidyverse.org/reference/case.html) for options with string matching. 
+
+```{r}
+
+
+```
+
+
 ## Storing variables in both rows and columns. 
 
 
