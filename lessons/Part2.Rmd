@@ -129,7 +129,7 @@ sepEx <- birds %>%
 glimpse(sepEx)
 ```
 
-We can fix our incorrect columns with `mutate()`
+We can fix our incorrect columns with `mutate()`. The following is a brute force method to do this, but as you continue on in your data wrangling journey I strongly encourage you to seek out more efficient ways of solving this problem. 
 
 ```{r}
 sepExFixed <- sepEx %>% 
@@ -156,17 +156,25 @@ Edit the workflow presented above to split on the fifth character. Use `mutate` 
 
 ## Storing variables in both rows and columns. 
 
+Far less often, though far more frustratingly, variables can be stored in both rows and columns. A common situation for this is data on climate variables. To demonstrate, consider the data on weather in Berkeley. 
+
+TODO DATA HAS TO GO HERE. 
+
+
+## Challenge 11 
+
+Follow similar steps to build a tidy data set from the `weatherChallenge.csv` dataset. After cleaning the data, group by year and find the average tmax and tmin. 
+
+TODO, GET CHALLENGE DATA 
+
 
 ## Storing multiple types of units in the same data frame. 
+
+A key principle of tidy data, and data wrangling in general, is to keep like for like in the same table. Datasets often violate this guideline when they have values collected at multiple levels on different types of observations. 
 
 
 ## Storing a single unit in multiple tables. 
 
-
-
-## Wrangling Functions 
-
-## Purrring 
 
 ## Two Table Verbs
 
@@ -175,6 +183,5 @@ Edit the workflow presented above to split on the fifth character. Use `mutate` 
 ### Bind_cols/Bind_rows 
 
 #### `bind_cols()` combines variables 
-
 
 #### `bind_rows()` combines cases 
