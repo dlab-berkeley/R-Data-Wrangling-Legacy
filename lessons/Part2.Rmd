@@ -191,6 +191,39 @@ glimpse(step_2)
 
 Now we have one variable in each column, and each row represents a single day of testing. 
 
+A trick that we can sometimes use occurs if we have data that looks like the following: 
+
+```{r}
+underscore <- read_csv(here("data/underscore.csv"))
+glimpse(underscore)
+```
+
+This is wide data that we would like to transform to long data, but here if we do a usual `pivot_longer()` we will end up with the problem that we want to avoid in this section. 
+
+```{r}
+# Bad
+underscore %>% 
+  pivot_longer(cols = -id,
+               names_to = "observation",
+               values_to = "value")
+```
+
+Here the dates and the results are merged into one value. However, in situations where we have a common naming structure, we can use some of the built-in arguments of `pivot_longer()`.
+
+```{r}
+underscore %>% 
+  pivot_longer(cols = -id,
+               # special term indicates that column is split based
+               # on character in name
+               names_to = c("observation", ".value"),
+               names_sep = "_",
+               values_to = "value")
+
+```
+
+Once again we get a tidy data frame that we can work with for future analyses. 
+
+
 ## Storing multiple types of units in the same data frame. 
 
 A key principle of tidy data, and data wrangling in general, is to keep like for like in the same table. Datasets often violate this guideline when they have values collected at multiple levels on different types of observations. 

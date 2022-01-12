@@ -96,3 +96,15 @@ testing <- tibble(
 )
 
 #write.csv(testing, file = "data/testing.csv", row.names = F)
+
+
+## Underscore data 
+underscore <- tibble(
+  id = c("A", "B", "C"),
+  val1_year = c(2020,2020,2020),
+  val1_result = c(1,1,0),
+  val2_year = c(2021, 2021, 2021),
+  val2_result = c(1,1,1)
+)
+
+write.csv(underscore, file = "data/underscore.csv", row.names = F)
