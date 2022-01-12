@@ -78,3 +78,21 @@ birds <- tibble(
 )
 
 # write.csv(birds, file = "data/birds.csv", row.names = F)
+
+
+testing <- tibble(
+  patient_id = c(rep("X12",14)),
+  year = c(rep(2021, 14)),
+  week = c(1,1,2,2,3,3,4,4,5,5,6,6,7,7),
+  test = c("pcr", "rapid","pcr", "rapid","pcr", "rapid","pcr", "rapid",
+           "pcr", "rapid","pcr", "rapid","pcr", "rapid"),
+  d1 = c(rep(0,14)),
+  d2 = c(rep(0, 10), 1, 0,0,0),
+  d3 = c(rep(0,10),1, 0, 0, 0),
+  d4 = c(rep(0,10),1,0,0,0),
+  d5 = c(rep(0,14)),
+  d6 = c(rep(0,12), 1,1),
+  d7 = c(rep(0,12),1,1)
+)
+
+#write.csv(testing, file = "data/testing.csv", row.names = F)

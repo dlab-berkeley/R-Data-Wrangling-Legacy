@@ -32,7 +32,7 @@ Within our discussion of (4) and (5) we will cover two table verbs that exist in
 
 This messy type of data is common in survey data, especially if you're working off of someone else's crosstabs. 
 
-Imagine you're doing research the housing crisis in California. You come across a dataset from Berkeley's [Institute for Governmental Studies](https://igs.berkeley.edu/research/berkeley-igs-poll) that has information on preferences for moving broken down by age group. 
+Imagine you're doing research on the housing crisis in California. You come across a dataset from Berkeley's [Institute for Governmental Studies](https://igs.berkeley.edu/research/berkeley-igs-poll) that has information on preferences for moving broken down by age group. 
 
 Read in the dataset, which is called `cal_housing.csv` in the data folder. 
 
@@ -60,6 +60,7 @@ cal_housing_long %>%
   geom_col(position = 'dodge')+
   xlab("Moving Consideration Level")+
   ylab("Percent Agreement")+
+  # colorblind friendly palette
   scale_fill_discrete(type = "viridis")+
   ggtitle("Californians Consideration to Leaving the State")
 
@@ -102,8 +103,6 @@ glimpse(goodBirds)
 ```
 
 The workflow above used a [regular expression](https://stringr.tidyverse.org/articles/regular-expressions.html) to split and keep the capital letter. Regular expressions are in general beyond the scope of this course. 
-
-
 
 Another way to separate is by position. That call looks like this 
 
@@ -152,27 +151,51 @@ Edit the workflow presented above to split on the fifth character. Use `mutate` 
 
 ## Storing variables in both rows and columns. 
 
-Far less often, though far more frustratingly, variables can be stored in both rows and columns. A common situation for this is data on climate variables. To demonstrate, consider the data on weather in Berkeley. 
+Far less often, though far more frustratingly, variables can be stored in both rows and columns. Such datasets occur with surprising frequency in climate, geological, and health research. As a representative example of this problem, consider the hypothetical surveillance testing schedule for an athlete at Berkeley during the season. The data is called `testing.csv`
 
-TODO DATA HAS TO GO HERE. 
+```{r}
+testing <- read_csv(here("data/testing.csv"))
+head(testing)
+```
 
+Note that we have variables in individual columns, as well as a variable spread across multiple columns (the day variable), and variables spread across rows (the test variable is composed of two separate tests). 
 
-## Challenge 11 
+In such a situation, we make use of both `pivot_longer()` and `pivot_wider()`. Our design pattern is to first gather any variables spread across columns, followed by widening any columns that have multiple variables within. 
 
-Follow similar steps to build a tidy data set from the `weatherChallenge.csv` dataset. After cleaning the data, group by year and find the average tmax and tmin. 
+```{r}
+## Step 1 
+step_1 <- testing %>% 
+  pivot_longer(
+    # an alternative method for selecting columns
+    d1:d7, 
+    names_to = "day",
+    values_to = "result",
+    values_drop_na = TRUE
+  )%>%
+  # remove the d from day and trim any white space
+  # VERY USEFUL to avoid merge problems
+  mutate(day = as.numeric(str_replace_all(day,"d", ""))%>%trimws())
+head(step_1)
+```
 
-TODO, GET CHALLENGE DATA 
+We now have a dataset that is close to a tidy dataset, except we have a problem. There are two tests being performed each day, and we only have one variable. Time for step 2. 
 
+```{r}
+step_2 <- step_1 %>% 
+  pivot_wider(
+    names_from = test, 
+    values_from = result
+  )
+glimpse(step_2)
+```
+
+Now we have one variable in each column, and each row represents a single day of testing. 
 
 ## Storing multiple types of units in the same data frame. 
 
 A key principle of tidy data, and data wrangling in general, is to keep like for like in the same table. Datasets often violate this guideline when they have values collected at multiple levels on different types of observations. 
 
-
-## Storing a single unit in multiple tables. 
-
-
-## Two Table Verbs
+### Two Table Verbs
 
 ### joins 
 
@@ -181,3 +204,7 @@ A key principle of tidy data, and data wrangling in general, is to keep like for
 #### `bind_cols()` combines variables 
 
 #### `bind_rows()` combines cases 
+
+## Storing a single unit in multiple tables. 
+
+
