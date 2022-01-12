@@ -26,11 +26,7 @@ Part 2 focuses on extending the base skills learned in Part 1. We are still inte
 4. Storing multiple types of units in the same data frame. 
 5. Storing a single unit in multiple tables. 
 
-We will dive into additional tools within the tidyverse to make data wrangling easier and more efficient. To that end, we will cover how to use our `dplyr` and `tidyr` functions within functions. In the process, we will gain insight into the tidy eval data-masking framework, how it works, and how to make it work for us. 
-
-We will also see how to apply functions over multiple files with functional programming via the `purrr` package. 
-
-Finally we'll cover two table verbs since it is rare that we will only have one data frame to do all of our analysis. 
+Within our discussion of (4) and (5) we will cover two table verbs that exist in the tidyverse. In real data analyis projects, it is rare that we will only have one data frame to do all of our analysis. 
 
 ## Column headers that are values, not variable names. 
 
