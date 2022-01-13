@@ -185,5 +185,4 @@ birds %>%
   separate(sight, c("type", "location"),sep = 5)%>%
   mutate(type = str_replace_all(type, "warbl", "warbler")%>%str_to_title(),
          location = if_else(str_detect(location, "Ne"), "Nest", "Air"))
-
 ```

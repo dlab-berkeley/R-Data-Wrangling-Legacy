@@ -238,6 +238,11 @@ A key principle of tidy data, and data wrangling in general, is to keep like for
 
 #### `bind_rows()` combines cases 
 
+For the challenges, this should combine some of the skills that we did in Part1, probably a select to drop down the number of uses and then a join of some kind. The first challenge could also require the by column to show different column names can be joined appropriately. 
+
+The second challenge should be the creation of a country-year dataset. The first data frame can be a country year expand.grid() and then the second can be the useful information. 
+
 ## Storing a single unit in multiple tables. 
 
+This is unquestionably going to be the read in multiple files stuff. 
 
