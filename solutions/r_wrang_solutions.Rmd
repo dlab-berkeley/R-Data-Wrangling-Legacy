@@ -186,3 +186,63 @@ birds %>%
   mutate(type = str_replace_all(type, "warbl", "warbler")%>%str_to_title(),
          location = if_else(str_detect(location, "Ne"), "Nest", "Air"))
 ```
+
+
+## Challenge 11: Bulk Recoding Values 
+
+Suppose you have a survey 
+
+```{r}
+survey_raw_data <-tibble(
+  ID = LETTERS[1:15],
+  var1 = sample(1:15, replace = F),
+  var2 = sample(16:30, replace = F),
+  var3 = sample(31:45, replace = F)
+)
+glimpse(survey_raw_data)
+```
+
+Survey data is likely to contain errors. Perhaps the enumerators filled in a question incorrectly. Maybe you have a special value for missing data. As a subject matter expert, you realize that there are several fixes that need to be made globally. You put them into a data frame. 
+
+```{r}
+fixes <- tibble(
+  ID = c("A", "D", "F", "G"),
+  original_var = c("var1", "var2", "var2", "var3"),
+  original_response = as.integer(c(1, 28, 19, 34)),
+  correct_response = as.integer(c(1000, 2800, 1900, 3400))
+)
+glimpse(fixes)
+```
+
+Here we have a problem of updating several variables based on a set of potentially different conditions. Each variable needs to be updated based on the ID, but we do not need to update every variable/ID combination. 
+
+Build a workflow that converts the incorrect answers to correct answers. A solution to this problem makes use of `left_join()`, `mutate()`, `select()`, and both `pivot_longer()` and `pivot_wider()`
+
+```{r}
+corrected_data <- survey_raw_data %>% 
+  pivot_longer(cols = -ID,
+               names_to = "var_name",
+               values_to = "original_value")%>%
+  left_join(fixes, by = c("ID", "var_name" = "original_var"))%>%
+  mutate(corrected_value = if_else(is.na(original_response),
+                                   original_value,
+                                   correct_response))%>%
+  select(-original_value, -correct_response, -original_response)%>%
+  pivot_wider(names_from = "var_name",
+              values_from = "corrected_value")
+  
+
+```
+
+## Challenge 12: Combining files with readr 
+
+In the data folder, there is a sub-directory called penguins. This directory splits up the data from the `palmerpenguins` package into three data frames split by species. Turn these three files into one data frame. 
+
+```{r}
+## Get files
+files <- fs::dir_ls(path = "data/penguins", glob = "*species*csv")
+
+## Combine data frames 
+penguins_df <- files %>% 
+  read_csv(id = "path")
+```

@@ -108,3 +108,26 @@ underscore <- tibble(
 )
 
 write.csv(underscore, file = "data/underscore.csv", row.names = F)
+
+
+years <- tibble(
+  year = c(2010:2020)
+)
+
+# write.csv(years, file = "data/years.csv", row.names = F)
+
+obs <- tibble(
+  id = c(rep("A",11), rep("B", 11), rep("C", 11)),
+  year = c(2010:2020, 2010, rep(NA_integer_, 4), 2015, rep(NA_integer_, 4),2020, 2010,NA_integer_, 2012, NA_integer_,2014, NA_integer_,2016, NA_integer_,2018, NA_integer_,2020),
+  lifeExp = c(76,77,77,78,79,79,82,85,85,85,85, 72, rep(NA_integer_, 4), 74, rep(NA_integer_, 4), 75, 64,NA_integer_,66,NA_integer_,66,NA_integer_,72,NA_integer_,74,NA_integer_,72)
+)%>%
+  filter(!is.na(year))
+
+# write.csv(obs, file = "data/obs.csv", row.names = F)
+
+## Penguins data for readr example 
+library(palmerpenguins)
+purrr::iwalk(
+  split(penguins, penguins$species),
+  ~{.x$species[[1]]; vroom::vroom_write(.x, glue::glue("data/species_{.y}.csv"), delim = ",") }
+)
