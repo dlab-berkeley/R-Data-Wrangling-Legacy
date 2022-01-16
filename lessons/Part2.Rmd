@@ -97,8 +97,8 @@ goodBirds <- birds %>%
   pivot_longer(!c(county,year), 
                names_to = "sight",
                values_to = "n",
-               values_drop_na = TRUE)%>%
-  separate(sight, c("type", "location"),sep = "(?=[A-Z])")
+               values_drop_na = TRUE) %>%
+  separate(sight, c("type", "location"), sep = "(?=[A-Z])")
 glimpse(goodBirds)
 ```
 
