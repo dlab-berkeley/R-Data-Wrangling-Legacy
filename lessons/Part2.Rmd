@@ -76,7 +76,7 @@ The IGS poll also contains a question broken down by region (`cal_region.csv`). 
 
 ## Overloading variables into a single column 
 
-Sometimes we have a dataset where our key column is a combination of multiple variables. To my knowledge, this is a relatively standard raw data format in research projects that collect data at multiple sub-level sites over time. 
+Sometimes we have a dataset where our key column is a combination of multiple variables. This is a relatively standard raw data format in research projects that collect data at multiple sub-level sites over time. 
 
 To illustrate the problem, consider the following dataset inspired by bird watchers. 
 
