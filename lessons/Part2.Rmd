@@ -28,7 +28,7 @@ Part 2 focuses on extending the base skills learned in Part 1. We are still inte
 
 Within our discussion of (4) and (5), we will cover two table verbs in the tidyverse. In real data analysis projects, we will rarely have one data frame to do all of our analysis. 
 
-## Column headers that are values, not variable names. 
+## Column headers that are values, not variable names 
 
 This messy data type is common in survey data, especially if you're working off of someone else's crosstabs. 
 
@@ -74,7 +74,7 @@ The IGS poll also contains a question broken down by region (`cal_region.csv`). 
 ## Fill in your solution here 
 ```
 
-## Overloading variables into a single column. 
+## Overloading variables into a single column 
 
 Sometimes we have a dataset where our key column is a combination of multiple variables. To my knowledge, this is a relatively standard raw data format in research projects that collect data at multiple sub-level sites over time. 
 
@@ -149,7 +149,7 @@ Edit the workflow presented above to split on the fifth character. Use `mutate` 
 ```
 
 
-## Storing variables in both rows and columns. 
+## Storing variables in both rows and columns 
 
 Far less often, though far more frustratingly, variables can be stored in both rows and columns. Such datasets are surprisingly frequent in climate, geological, and health research. As a representative example of this problem, consider the hypothetical surveillance testing schedule for an athlete at Berkeley during the season. The data is called `testing.csv`
 
@@ -224,7 +224,7 @@ underscore %>%
 Once again, we get a tidy data frame that we can work with for future analyses. 
 
 
-## Storing multiple types of units in the same data frame. 
+## Storing multiple types of units in the same data frame 
 
 A fundamental principle of tidy data, and data wrangling in general, is to keep like for like in the same table. Datasets often violate this guideline when they have values collected at multiple levels on different types of observations. 
 
@@ -359,7 +359,7 @@ obs2 <- obs %>%
 bind_rows(list(obs1, obs2))
 ```
 
-## Storing a single type in multiple tables. 
+## Storing a single type in multiple tables
 
 It is common to find data values about a single observational unit spread out over multiple tables or files. Files are often split by another variable. For example, a set of medical records may be divided by patients. Voting records may be separated by counties or states. Economic data may be separated by economic sector. From a wrangling perspective, as long as there is a consistent format to these records, we can follow a three-step pattern: 
 
