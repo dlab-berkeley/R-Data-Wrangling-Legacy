@@ -41,7 +41,7 @@ cal_housing <- read_csv(here("data/cal_housing.csv"))
 glimpse(cal_housing)
 ```
 
-Our end goal is to make a visualization showing consideration of moving by age group. `ggplot2` presumes that we have tidy data to work. We need to *pivot* the non-variable columns into a two-column key-value pair to make our graph. 
+Our end goal is to make a visualization showing consideration of moving by age group. `ggplot2` presumes that we have tidy data to work. We need to *pivot* the non-variable columns into a two-column key-value pair to make our graph. This pivot operation will turn the age columns (e.g. `18-29`) into an age column where the age 18-29 is one of the possible values.
 
 Recall from Part 1 that the appropriate tidyverse function for this operation is `pivot_longer()`. 
 
