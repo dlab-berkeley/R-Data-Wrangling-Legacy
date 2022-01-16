@@ -218,13 +218,11 @@ underscore %>%
 Once again, we get a tidy data frame that we can work with for future analyses. 
 
 
-## Storing multiple types of units in the same data frame 
+## Joining information from multiple datasets 
 
 A fundamental principle of tidy data, and data wrangling in general, is to keep "like for like" in the same table. Each type of observation should be stored in its own table. For example, database of song rankings by week over time (see `dplyr::billboard`) needs to be broken into two pieces, a dataset that stores unique artist-song pairs, and a rankings dataset which gives the ranking of each song each week. This principle is closely related to database normalization, and is important to prevent inconsistencies that can arise through mixing observation types (Wickham 2014). 
 
 Datasets often violate this guideline when they have values collected at multiple levels on different types of observations. 
-
-### Two Table Verbs
 
 First, let's briefly review the two table verbs available in `dplyr`. The package breaks them up into three families. 
 
@@ -303,7 +301,7 @@ df1 %>%
   semi_join(df2)
 ```
 
-3. Set operations treat observations like sets and expect datasets to have the same variables. We are not covering these in this workshop. For more information, consult the `dplyr` manual. 
+3. Set operations treat observations like sets and expect datasets to have the same variables. We are not covering these in this workshop. For more information, consult the `dplyr` [manual page](https://dplyr.tidyverse.org/reference/setops.html). 
 
 ## Challenge 11: Bulk Recoding Values with a lookup table
 
