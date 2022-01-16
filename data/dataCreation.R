@@ -35,3 +35,99 @@ animals <- lfd_raw %>%
   filter(!is.na(Borough))
 
 #write.csv(animals, file = "data/animalRescue.csv", row.names = F)
+
+## Part 2 
+## Moving out of California 
+## Data from IGS Poll 2019-08 https://escholarship.org/uc/item/96j2704t
+cal_housing <- tibble(
+  leaving = c("Serious",
+               "Some", 
+               "Within Cal",
+               "None"),
+  `18-29` = c(23,29,20,28),
+  `30-39` = c(25, 34, 8, 23),
+  `40-49` = c(28,33,8,31),
+  `50-64` = c(26, 27, 8, 39),
+  `65+` = c(17,23, 8, 52)
+)
+
+#write.csv(cal_housing, file = "data/cal_housing.csv", row.names = F)
+
+cal_region <- tibble(
+  leaving = c("Serious",
+              "Some", 
+              "Within Cal",
+              "None"),
+  la = c(23,26,12,38),
+  sd_orange = c(23,27,7, 43),
+  other_sc = c(25,31,10, 34),
+  central_valley = c(27,29, 10, 34),
+  sf_bay = c(20,30, 10, 40),
+  other_nc = c(26,22,13,39)
+)
+
+# write.csv(cal_region, file = "data/cal_region.csv", row.names = F)
+
+birds <- tibble(
+  county = c("Alameda", "Contra Cost", "Marin", "SF"),
+  year = c(rep(2020,4)),
+  eagleNest = c(0,0,1,0),
+  eagleAir = c(2,5,3,4),
+  warblerNest = c(4,2,7,3),
+  warblerAir = c(30, 27, 45, 20)
+)
+
+# write.csv(birds, file = "data/birds.csv", row.names = F)
+
+
+testing <- tibble(
+  patient_id = c(rep("X12",14)),
+  year = c(rep(2021, 14)),
+  week = c(1,1,2,2,3,3,4,4,5,5,6,6,7,7),
+  test = c("pcr", "rapid","pcr", "rapid","pcr", "rapid","pcr", "rapid",
+           "pcr", "rapid","pcr", "rapid","pcr", "rapid"),
+  d1 = c(rep(0,14)),
+  d2 = c(rep(0, 10), 1, 0,0,0),
+  d3 = c(rep(0,10),1, 0, 0, 0),
+  d4 = c(rep(0,10),1,0,0,0),
+  d5 = c(rep(0,14)),
+  d6 = c(rep(0,12), 1,1),
+  d7 = c(rep(0,12),1,1)
+)
+
+#write.csv(testing, file = "data/testing.csv", row.names = F)
+
+
+## Underscore data 
+underscore <- tibble(
+  id = c("A", "B", "C"),
+  val1_year = c(2020,2020,2020),
+  val1_result = c(1,1,0),
+  val2_year = c(2021, 2021, 2021),
+  val2_result = c(1,1,1)
+)
+
+write.csv(underscore, file = "data/underscore.csv", row.names = F)
+
+
+years <- tibble(
+  year = c(2010:2020)
+)
+
+# write.csv(years, file = "data/years.csv", row.names = F)
+
+obs <- tibble(
+  id = c(rep("A",11), rep("B", 11), rep("C", 11)),
+  year = c(2010:2020, 2010, rep(NA_integer_, 4), 2015, rep(NA_integer_, 4),2020, 2010,NA_integer_, 2012, NA_integer_,2014, NA_integer_,2016, NA_integer_,2018, NA_integer_,2020),
+  lifeExp = c(76,77,77,78,79,79,82,85,85,85,85, 72, rep(NA_integer_, 4), 74, rep(NA_integer_, 4), 75, 64,NA_integer_,66,NA_integer_,66,NA_integer_,72,NA_integer_,74,NA_integer_,72)
+)%>%
+  filter(!is.na(year))
+
+# write.csv(obs, file = "data/obs.csv", row.names = F)
+
+## Penguins data for readr example 
+library(palmerpenguins)
+purrr::iwalk(
+  split(penguins, penguins$species),
+  ~{.x$species[[1]]; vroom::vroom_write(.x, glue::glue("data/species_{.y}.csv"), delim = ",") }
+)

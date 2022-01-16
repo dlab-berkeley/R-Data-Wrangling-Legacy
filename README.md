@@ -27,6 +27,7 @@ We will use RStudio to go through the workshop materials, which requires install
 5. Make sure that the following packages are installed on your computer 
 
 ```
+fs
 here
 tibble
 tidyverse
