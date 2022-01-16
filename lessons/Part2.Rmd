@@ -43,7 +43,7 @@ glimpse(cal_housing)
 
 Our end goal is to make a visualization showing consideration of moving by age group. `ggplot2` presumes that we have tidy data to work. We need to *pivot* the non-variable columns into a two-column key-value pair to make our graph. 
 
-Recall from part 1 that the appropriate tidyverse function for this operation is `pivot_longer()`. 
+Recall from Part 1 that the appropriate tidyverse function for this operation is `pivot_longer()`. 
 
 ```{r}
 cal_housing_long <- cal_housing %>% 
