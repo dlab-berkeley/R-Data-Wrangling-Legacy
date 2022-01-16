@@ -118,7 +118,7 @@ sepEx <- birds %>%
 glimpse(sepEx)
 ```
 
-We can fix our incorrect columns with `mutate()`. The following is a brute force method to do this, but as you continue in your data wrangling journey, I strongly encourage you to seek out more efficient ways of solving this problem. 
+We can fix our incorrect columns with `mutate()`. The following is a brute force method to do this, but as you continue in your data wrangling journey, We strongly encourage you to seek out more efficient ways of solving this problem. 
 
 ```{r}
 sepExFixed <- sepEx %>% 
@@ -220,7 +220,9 @@ Once again, we get a tidy data frame that we can work with for future analyses.
 
 ## Storing multiple types of units in the same data frame 
 
-A fundamental principle of tidy data, and data wrangling in general, is to keep like for like in the same table. Datasets often violate this guideline when they have values collected at multiple levels on different types of observations. 
+A fundamental principle of tidy data, and data wrangling in general, is to keep "like for like" in the same table. Each type of observation should be stored in its own table. For example, database of song rankings by week over time (see `dplyr::billboard`) needs to be broken into two pieces, a dataset that stores unique artist-song pairs, and a rankings dataset which gives the ranking of each song each week. This principle is closely related to database normalization, and is important to prevent inconsistencies that can arise through mixing observation types (Wickham 2014). 
+
+Datasets often violate this guideline when they have values collected at multiple levels on different types of observations. 
 
 ### Two Table Verbs
 
