@@ -102,7 +102,7 @@ goodBirds <- birds %>%
 glimpse(goodBirds)
 ```
 
-The workflow above used a [regular expression](https://stringr.tidyverse.org/articles/regular-expressions.html) to split and keep the capital letter. Regular expressions are, in general, beyond the scope of this course. 
+The workflow above used a [regular expression](https://stringr.tidyverse.org/articles/regular-expressions.html) to split and keep the capital letter. Regular expressions are, in general, beyond the scope of this course. A great resource to practice regular expressions is [regex101.com](https://regex101.com/) 
 
 Another way to separate is by position. That call looks like this. 
 
