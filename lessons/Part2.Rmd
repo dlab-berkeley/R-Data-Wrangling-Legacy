@@ -85,7 +85,7 @@ birds <- read_csv(here("data/birds.csv"))
 glimpse(birds)
 ```
 
-We see that we have columns that combine two different variables, the species of bird and the location of a sighting. When encountering this situation, we use a two-step process. 
+We see that we have columns that combine two different variables, the species of bird ("eagle" and "warbler") and the location of a sighting ("nest" and "air"). When encountering this situation, we use a two-step process. 
 
 1. Pivot to gather the non-variable columns 
 2. Separate the overloaded column. 
