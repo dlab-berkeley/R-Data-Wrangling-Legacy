@@ -75,9 +75,8 @@ Here are other R workshops offered by the D-Lab:
 - [Census Data in R](https://github.com/dlab-berkeley/Census-Data-in-R)
 
 ### Intermediate/Advanced Competency
-- [Introduction to Machine Learning in R](https://github.com/dlab-berkeley/Machine-Learning-in-R)
 - [Unsupervised Learning in R](https://github.com/dlab-berkeley/Unsupervised-Learning-in-R)
-- [R Machine Learning with tidymodels](https://github.com/dlab-berkeley/Machine-Learning-with-tidymodels)
+- [Machine Learning with tidymodels](https://github.com/dlab-berkeley/Machine-Learning-with-tidymodels)
 - [Introduction to Deep Learning in R](https://github.com/dlab-berkeley/Deep-Learning-in-R)
 - [Fairness and Bias in Machine Learning](https://github.com/dlab-berkeley/fairML)
 - [R Package Development](https://github.com/dlab-berkeley/R-package-development) 
