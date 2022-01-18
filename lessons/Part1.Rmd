@@ -135,7 +135,13 @@ Suppose we have a dataset of individuals' occupations from different US states. 
 
 The `here` function is a way to create file paths relative to the top-level directory. 
 
-For a descriptive analysis, we'd like to know the average life expectancy for individuals who are and are not in agriculture for states within each state on the West Coast. To accomplish this task, we will need to filter our list of states, group by each state, create a variable denoting whether the individual works in agriculture or not, and summarize the average age of individuals who do and do not work in agriculture. Finally, we'd like to arrange the states in reverse alphabetical order. 
+For a descriptive analysis, we'd like to know the average life expectancy for individuals who are and are not in agriculture for states within each state on the West Coast. To accomplish this task, we will need to:
+
+- filter our list of states
+- group by each state, create a variable denoting whether the individual works in agriculture or not, and 
+- summarize the average age of individuals who do and do not work in agriculture. 
+
+Finally, we'd like to arrange the states in reverse alphabetical order. 
 
 What follows is an example of the workflow just described in the spirit of [teaching the whole game](https://www.gse.harvard.edu/news/uk/09/01/education-bat-seven-principles-educators)
 
@@ -187,7 +193,7 @@ wc_lifeExp <- jobs %>%
 
 The way to think of the pipe, the symbol at the end of each of these lines that is %>%, is that it takes what is on the left side and makes it the first argument of the right side. 
 
-The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure (or API). When doing data tasks, having the same structure turns out to be very useful because it is easy to reason about what a function will do and what it needs. 
+The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure. When doing data tasks, having the same structure turns out to be very useful because it is easy to reason about what a function will do and what it needs. 
 
 ## Pipes 
 
@@ -415,8 +421,7 @@ animals %>%
 ```
 
 
-`summarise()` becomes extremely useful when paired with group_by
-`group_by()`. We just saw that our last block gave the average cost across our data set. By using the `group_by()` function, we split our original data frame into multiple pieces, which we then use to run functions (e.g. `mean()`) within `summarize()`. 
+`summarise()` becomes extremely useful when paired witht `group_by()`. We just saw that our last block gave the average cost across our data set. By using the `group_by()` function, we split our original data frame into multiple pieces, which we then use to run functions (e.g. `mean()`) within `summarize()`. 
 
 ![](../images/dplyr-fig3.png)
 
@@ -565,7 +570,7 @@ Notice that we put three arguments into the `pivot_longer` function:
 An alternative way to do indices is to type in the column names of interest explicitly. Here is an example where we exclude the first two columns. 
 
 ```{r}
-makeLong <- gap_wide %>% 
+make_Long <- gap_wide %>% 
   pivot_longer(
     cols = c(-continent, -country), 
     names_to = "obstype_year",
