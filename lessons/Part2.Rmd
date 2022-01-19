@@ -93,13 +93,13 @@ We see that we have columns that combine two different variables, the species of
 In a workflow, it looks like this. 
 
 ```{r}
-goodBirds <- birds %>% 
+good_birds <- birds %>% 
   pivot_longer(!c(county,year), 
                names_to = "sight",
                values_to = "n",
                values_drop_na = TRUE) %>%
   separate(sight, c("type", "location"), sep = "(?=[A-Z])")
-glimpse(goodBirds)
+glimpse(good_birds)
 ```
 
 Here we first pivoted the data frame to consolidate values into two variables: "sight" and "n" where the latter represents the number of sightings. Next, we separated the sight column into a type variable and a location. This makes the data tidy because each bird is a subset of type and "Nest" and "Air" are both types of locations.
@@ -109,19 +109,19 @@ The workflow above used a [regular expression](https://stringr.tidyverse.org/art
 Another way to separate is by position. Separating by position on datasets with a standard format can be helpful. Let's look at what happens when we separate by the 1st position. 
 
 ```{r}
-sepEx <- birds %>% 
+sep_ex <- birds %>% 
   pivot_longer(!c(county,year), 
                names_to = "sight",
                values_to = "n",
                values_drop_na = TRUE)%>%
   separate(sight, c("type", "location"),sep = 1)
-glimpse(sepEx)
+glimpse(sep_ex)
 ```
 
 We can fix our incorrect columns with `mutate()`. The following is a brute force method to do this, but as you continue in your data wrangling journey, We strongly encourage you to seek out more efficient ways of solving this problem. 
 
 ```{r}
-sepExFixed <- sepEx %>% 
+sep_ex_fixed <- sep_ex %>% 
   mutate(type = if_else(type == "e", "Eagle", "Warbler"),
          location = case_when(
            location == "agleNest"~"Nest",
@@ -129,7 +129,7 @@ sepExFixed <- sepEx %>%
            location == "arblerNest"~"Nest",
            location == "arblerAir"~"Air"
          ))
-head(sepExFixed)
+head(sep_ex_fixed)
 ```
 
 
