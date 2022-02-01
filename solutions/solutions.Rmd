@@ -90,7 +90,7 @@ bird_stats <- animals %>%
   filter(Type == "Bird")%>%
   summarise(median_cost = median(RescueCost, na.rm = T),
             avg_cost = mean(RescueCost, na.rm = T), 
-            sd_cost = mean(RescueCost, na.rm = T),
+            sd_cost = sd(RescueCost, na.rm = T),
             .groups = "drop_last")
 
 ```
