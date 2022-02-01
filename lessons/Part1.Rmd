@@ -576,7 +576,7 @@ make_Long <- gap_wide %>%
     names_to = "obstype_year",
     values_to = "obs_values"
   )
-head(makeLong)
+head(make_Long)
 ```
 
 2. the name of the new column for the new ID variable (`obstype_year`), 
@@ -621,7 +621,7 @@ The opposite of `pivot_longer` is `pivot_wider`. It spreads our observation vari
 This image comes from the [RStudio Cheatsheets](https://github.com/rstudio/cheatsheets).
 
 ```{r}
-gap_original <- gap_long %>% 
+gap_original <- gap_long_sep %>% 
   pivot_wider(
     names_from = obs_type, 
     values_from = obs_values)
