@@ -213,7 +213,7 @@ jobs %>%
   filter(State == "California")
 
 ## is equivalent to 
-select(jobs, State == "California")
+filter(jobs, State == "California")
 ```
 
 
@@ -260,7 +260,9 @@ animals %>%
   filter(between(Year, 2018, 2020))
 ```
 
-As with the examples we have seen before, we take the animals data frame and then pass it via the pipe to the filter argument. Because the pipe puts the data frame as the first argument for every tidyverse function, we only have to specify the subsequent arguments. `between()` is a `dplyr` function that is a shortcut for x >= left & x <= right where x is our variable of interest. 
+As with the examples we have seen before, we take the animals data frame and then pass it via the pipe to the filter argument. Because the pipe puts the data frame as the first argument for every tidyverse function, we only have to specify the subsequent arguments. `between()` is a `dplyr` function that is a shortcut for x >= left & x <= right where x is our variable of interest.
+
+Note that `between()` will not work if you want to exclude an endpoint.
 
  
  You can extend filter() with logical conditions:
@@ -306,6 +308,27 @@ birds_and_horses2 <- animals %>%
 
 ## These two data frames are the same 
 all.equal(birds_and_horses, birds_and_horses2)
+```
+
+For completeness, this also works
+
+```{r}
+birds_and_horses3 <- animals %>% 
+  filter((Type == "Bird"|Type == "Horse") & Year > 2011)
+
+all.equal(birds_and_horses, birds_and_horses3)
+
+```
+
+We see here the power of the `,` argument because it is making implicit how the parentheses should work without us accidentally making a mistake. For example 
+
+```{r}
+birds_and_horses4 <- animals %>% 
+  filter(Type == "Bird"|Type == "Horse" & Year > 2011) 
+
+## Will not be the same. 
+all.equal(birds_and_horses, birds_and_horses4)
+
 ```
 
 ## select()
@@ -421,7 +444,7 @@ animals %>%
 ```
 
 
-`summarise()` becomes extremely useful when paired witht `group_by()`. We just saw that our last block gave the average cost across our data set. By using the `group_by()` function, we split our original data frame into multiple pieces, which we then use to run functions (e.g. `mean()`) within `summarize()`. 
+`summarise()` becomes extremely useful when paired with `group_by()`. We just saw that our last block gave the average cost across our data set. By using the `group_by()` function, we split our original data frame into multiple pieces, which we then use to run functions (e.g. `mean()`) within `summarize()`. 
 
 ![](../images/dplyr-fig3.png)
 
