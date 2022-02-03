@@ -18,6 +18,76 @@ library(tibble)
 
 ## The big picture 
 
+## An Example Workflow 
+
+Before diving into each function, let's give an example of a data wrangling workflow that starts from reading in a dataset and then makes a dataset suitable for a descriptive analysis. This example contains an example of every verb we will talk about in this workshop.  
+
+Suppose we have a dataset of individuals' occupations from different US states. In the data folder for this workshop repository, a dataset called "jobs" matches this description. We can read it in with `read_csv(),` which is available from the tidyverse. `read_csv` works exactly like `read.csv` but is much quicker. 
+
+The `here` function is a way to create file paths relative to the top-level directory. 
+
+For a descriptive analysis, we'd like to know the average life expectancy for individuals who are and are not in agriculture for states within each state on the West Coast. To accomplish this task, we will need to:
+
+- filter our list of states
+- group by each state, create a variable denoting whether the individual works in agriculture or not, and 
+- summarize the average age of individuals who do and do not work in agriculture. 
+
+Finally, we'd like to arrange the states in reverse alphabetical order. 
+
+What follows is an example of the workflow just described in the spirit of [teaching the whole game](https://www.gse.harvard.edu/news/uk/09/01/education-bat-seven-principles-educators)
+
+```{r}
+## Data import 
+jobs <- read_csv(here("data/jobs.csv"))
+```
+
+Let's look at the first six rows of this dataset 
+
+```{r}
+head(jobs)
+```
+
+Within the tidyverse, there's also a nice function in the tidyverse called `glimpse()` which makes it possible to see every column in the data frame. 
+
+```{r}
+glimpse(jobs)
+```
+
+```{r}
+## Workflow 
+
+  ## Start with the jobs data frame 
+jobs %>% 
+  ## Select and keep only three columns of interest 
+  select(State, Occupation, Age)%>%
+  ## Subset down to just the observations that match 4 states
+  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
+  ## create a dummy variable about whether an occupation is in agriculture
+  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
+  ## group the observations by state and then the created dummy 
+  group_by(State, in_ag)%>%
+  ## create a new data frame with a summary of the age variable 
+  ## for each grouping 
+  summarise(average_lifeExp = mean(Age))%>%
+  ## Sort the rows in reverse order by state
+  arrange(desc(State))
+
+## We can also save the output of our workflow to a new data frame object
+wc_lifeExp <- jobs %>% 
+  select(State, Occupation, Age)%>%
+  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
+  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
+  group_by(State, in_ag)%>%
+  summarise(average_lifeExp = mean(Age))%>%
+  arrange(desc(State))
+```
+
+The way to think of the pipe, the symbol at the end of each of these lines that is %>%, is that it takes what is on the left side and makes it the first argument of the right side. 
+
+The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure. When doing data tasks, having the same structure turns out to be very useful because it is easy to reason about what a function will do and what it needs. 
+
+## What are we doing in Part 2?
+
 Part 2 focuses on extending the base skills learned in Part 1. We are still interested in turning messy data into tidy data. This section will cover several common problems with messy data sets [Wickham 2014](https://vita.had.co.nz/papers/tidy-data.html). These are 
 
 1. Column headers that are values, not variable names. 
@@ -38,7 +108,7 @@ Read in the dataset called `cal_housing.csv` in the data folder.
 
 ```{r, message = F, warning = F}
 cal_housing <- read_csv(here("data/cal_housing.csv"))
-glimpse(cal_housing)
+View(cal_housing)
 ```
 
 Our end goal is to make a visualization showing consideration of moving by age group. `ggplot2` presumes that we have tidy data to work. We need to *pivot* the non-variable columns into a two-column key-value pair to make our graph. This pivot operation will turn the age columns (e.g. `18-29`) into an age column where the age 18-29 is one of the possible values.
@@ -72,6 +142,9 @@ The IGS poll also contains a question broken down by region (`cal_region.csv`). 
 
 ```{r}
 ## Fill in your solution here 
+cr <- read_csv(here("data/cal_region.csv"))
+
+
 ```
 
 ## Overloading variables into a single column 
@@ -82,7 +155,7 @@ To illustrate the problem, consider the following dataset inspired by bird watch
 
 ```{r}
 birds <- read_csv(here("data/birds.csv"))
-glimpse(birds)
+View(birds)
 ```
 
 We see that we have columns that combine two different variables, the species of bird ("eagle" and "warbler") and the location of a sighting ("nest" and "air"). When encountering this situation, we use a two-step process. 
@@ -99,7 +172,7 @@ good_birds <- birds %>%
                values_to = "n",
                values_drop_na = TRUE) %>%
   separate(sight, c("type", "location"), sep = "(?=[A-Z])")
-glimpse(good_birds)
+head(good_birds)
 ```
 
 Here we first pivoted the data frame to consolidate values into two variables: "sight" and "n" where the latter represents the number of sightings. Next, we separated the sight column into a type variable and a location. This makes the data tidy because each bird is a subset of type and "Nest" and "Air" are both types of locations.
@@ -115,7 +188,7 @@ sep_ex <- birds %>%
                values_to = "n",
                values_drop_na = TRUE)%>%
   separate(sight, c("type", "location"),sep = 1)
-glimpse(sep_ex)
+head(sep_ex)
 ```
 
 We can fix our incorrect columns with `mutate()`. The following is a brute force method to do this, but as you continue in your data wrangling journey, We strongly encourage you to seek out more efficient ways of solving this problem. 
@@ -149,7 +222,7 @@ Far less often, though far more frustratingly, variables can be stored in both r
 
 ```{r}
 testing <- read_csv(here("data/testing.csv"))
-head(testing)
+View(testing)
 ```
 
 Note that we have variables in individual columns and a variable spread across multiple columns (the day variable), and variables spread across rows (the test variable is composed of two separate tests). 
@@ -180,7 +253,7 @@ step_2 <- step_1 %>%
     names_from = test, 
     values_from = result
   )
-glimpse(step_2)
+head(step_2)
 ```
 
 Now we have one variable in each column, and each row represents a single day of testing. 
@@ -189,7 +262,7 @@ A trick that we can sometimes use occurs if we have data that looks like the fol
 
 ```{r}
 underscore <- read_csv(here("data/underscore.csv"))
-glimpse(underscore)
+View(underscore)
 ```
 
 This is wide data that we would like to transform to long data, but if we do a usual `pivot_longer()`, we will end up with the problem we want to avoid in this section. 
@@ -220,7 +293,7 @@ Once again, we get a tidy data frame that we can work with for future analyses.
 
 ## Joining information from multiple datasets 
 
-A fundamental principle of tidy data, and data wrangling in general, is to keep "like for like" in the same table. Each type of observation should be stored in its own table. For example, database of song rankings by week over time (see `dplyr::billboard`) needs to be broken into two pieces, a dataset that stores unique artist-song pairs, and a rankings dataset which gives the ranking of each song each week. This principle is closely related to database normalization, and is important to prevent inconsistencies that can arise through mixing observation types (Wickham 2014). 
+A fundamental principle of tidy data, and data wrangling in general, is to keep "like for like" in the same table. Each type of observation should be stored in its own table. For example, database of song rankings by week over time (see `tidyr::billboard`) needs to be broken into two pieces, a dataset that stores unique artist-song pairs, and a rankings dataset which gives the ranking of each song each week. This principle is closely related to database normalization, and is important to prevent inconsistencies that can arise through mixing observation types (Wickham 2014). 
 
 Datasets often violate this guideline when they have values collected at multiple levels on different types of observations. 
 
@@ -272,6 +345,7 @@ The dataset for this exercise is `obs.csv`
 
 ```{r}
 obs <- read_csv(here("data/obs.csv"))
+View(obs)
 ```
 
 We now take advantage of a useful function from `tidyr` called `expand()` along with functions that we have seen before. `expand()` generates all combinations of variables found in a dataset. We can pair it with `nesting()`, which only finds combinations already present in the data, or `crossing()`, which de-duplicates and sorts inputs. 
@@ -298,7 +372,7 @@ df1 %>%
 
 ## anti_join()
 df1 %>% 
-  semi_join(df2)
+  anti_join(df2)
 ```
 
 3. Set operations treat observations like sets and expect datasets to have the same variables. We are not covering these in this workshop. For more information, consult the `dplyr` [manual page](https://dplyr.tidyverse.org/reference/setops.html). 

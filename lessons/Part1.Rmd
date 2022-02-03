@@ -127,74 +127,6 @@ In this workshop, we will cover 6 of the most commonly used functions and use pi
 
 Each of these verbs works similarly. The first argument is always a data frame object. The additional arguments describe what to do with the data frame using unquoted variable names. The result is a new data frame. 
 
-## An Example Workflow 
-
-Before diving into each function, let's give an example of a data wrangling workflow that starts from reading in a dataset and then makes a dataset suitable for a descriptive analysis. This example contains an example of every verb we will talk about in this workshop.  
-
-Suppose we have a dataset of individuals' occupations from different US states. In the data folder for this workshop repository, a dataset called "jobs" matches this description. We can read it in with `read_csv(),` which is available from the tidyverse. `read_csv` works exactly like `read.csv` but is much quicker. 
-
-The `here` function is a way to create file paths relative to the top-level directory. 
-
-For a descriptive analysis, we'd like to know the average life expectancy for individuals who are and are not in agriculture for states within each state on the West Coast. To accomplish this task, we will need to:
-
-- filter our list of states
-- group by each state, create a variable denoting whether the individual works in agriculture or not, and 
-- summarize the average age of individuals who do and do not work in agriculture. 
-
-Finally, we'd like to arrange the states in reverse alphabetical order. 
-
-What follows is an example of the workflow just described in the spirit of [teaching the whole game](https://www.gse.harvard.edu/news/uk/09/01/education-bat-seven-principles-educators)
-
-```{r}
-## Data import 
-jobs <- read_csv(here("data/jobs.csv"))
-```
-
-Let's look at the first six rows of this dataset 
-
-```{r}
-head(jobs)
-```
-
-Within the tidyverse, there's also a nice function in the tidyverse called `glimpse()` which makes it possible to see every column in the data frame. 
-
-```{r}
-glimpse(jobs)
-```
-
-```{r}
-## Workflow 
-
-  ## Start with the jobs data frame 
-jobs %>% 
-  ## Select and keep only three columns of interest 
-  select(State, Occupation, Age)%>%
-  ## Subset down to just the observations that match 4 states
-  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
-  ## create a dummy variable about whether an occupation is in agriculture
-  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
-  ## group the observations by state and then the created dummy 
-  group_by(State, in_ag)%>%
-  ## create a new data frame with a summary of the age variable 
-  ## for each grouping 
-  summarise(average_lifeExp = mean(Age))%>%
-  ## Sort the rows in reverse order by state
-  arrange(desc(State))
-
-## We can also save the output of our workflow to a new data frame object
-wc_lifeExp <- jobs %>% 
-  select(State, Occupation, Age)%>%
-  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
-  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
-  group_by(State, in_ag)%>%
-  summarise(average_lifeExp = mean(Age))%>%
-  arrange(desc(State))
-```
-
-The way to think of the pipe, the symbol at the end of each of these lines that is %>%, is that it takes what is on the left side and makes it the first argument of the right side. 
-
-The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure. When doing data tasks, having the same structure turns out to be very useful because it is easy to reason about what a function will do and what it needs. 
-
 ## Pipes 
 
 A pipe operator `%>%` or `|>` is a method of chaining together functions. A pipe takes what is on the left-hand side of the pipe and makes it the first argument of the function on the right-hand side by default. 
@@ -217,7 +149,9 @@ filter(jobs, State == "California")
 ```
 
 
-As mentioned, the advantage of the tidyverse is that every function presumes that the first argument is a tidy data object. It is possible to put the left-hand side result as a different argument for the function on the right-hand side by explicitly specifying it. However, a well-written workflow tends to obviate the need to do so. 
+The advantage of the tidyverse is that every function presumes that the first argument is a tidy data object. It is possible to put the left-hand side result as a different argument for the function on the right-hand side by explicitly specifying it. However, a well-written workflow tends to obviate the need to do so. 
+
+The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure. When doing data tasks, having the same structure turns out to be very useful because it is easy to reason about what a function will do and what it needs. 
 
 ## London Animal Rescue Dataset 
 
@@ -225,7 +159,7 @@ To show the benefits of the `dplyr` verbs, we will start by working with a datas
 
 ```{r}
 animals <- read_csv(here("data/animalRescue.csv"))
-glimpse(animals)
+View(animals)
 ```
 
 
@@ -296,7 +230,7 @@ Sometimes we want to filter multiple conditions at once. For example, we might b
 ```{r}
 birds_and_horses <- animals %>% 
   filter(Type == "Bird" | Type == "Horse", Year > 2011)
-glimpse(birds_and_horses)
+View(birds_and_horses)
 ```
 
 We can put multiple `filter` functions in a row in a piped workflow, though it does not look as readable. 
@@ -507,7 +441,7 @@ To demonstrate `mutate()`, load the `gapminder-FiveYearData.csv` into RStudio as
 
 ```{r}
 gapminder <- read_csv(here("data/gapminder-FiveYearData.csv"))
-glimpse(gapminder)
+View(gapminder)
 ```
 
 The gapminder dataset has six variables and is in tidy form. One of those variables is lifeExp. Imagine we are interested in comparing the difference between a country's life expectancy and the average continent-year-wide life expectancy by year. Such a query requires us to make two new variables. The first variable is the mean continent-year life expectancy. The second variable is the difference between life expectancy for a country and the continent's life expectancy for every year. 
@@ -519,6 +453,7 @@ gapminder_xtra_vars <- gapminder %>%
   group_by(year, continent)%>%
   mutate(continent_lifeExp = mean(lifeExp, na.rm = T),
          diff_lifeExp = lifeExp - continent_lifeExp)
+
 ```
 
 Note that `mutate()` does not require a `group_by()`. We can simply add a new column, either as a function of existing columns or through a new computation. Here's an example of doing both. 
@@ -549,6 +484,10 @@ Add a column to the gapminder dataset that contains the continent's total popula
 
 ```{r, include=F}
 #YOUR CODE HERE
+gapminder %>% 
+  group_by(continent, year) %>% 
+  mutate(continent_pop = sum(pop, na.rm = T))%>%
+  select(year, continent, continent_pop)
 ```
 
 ## Challenge 7
@@ -557,6 +496,11 @@ Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the differe
 
 ```{r, include=F}
 #YOUR CODE HERE
+c7 <- gapminder %>%  
+  group_by(continent, year) %>% 
+   mutate(mean_continent_gdp = mean(gdpPercap),
+          gdpPercap_diff = gdpPercap - mean_continent_gdp) %>% 
+  arrange(desc(gdpPercap_diff))
 ```
 
 ## pivot_longer()
@@ -565,7 +509,7 @@ Until now, we have been using the nicely formatted, original gapminder dataset. 
 
 ```{r}
 gap_wide <- read_csv(here("data/gapminder_wide.csv"))
-head(gap_wide)
+View(gap_wide)
 ```
 
 The first step towards getting our nice, *tidy* data format is to convert from the wide to the long format. 
@@ -649,6 +593,11 @@ gap_original <- gap_long_sep %>%
     names_from = obs_type, 
     values_from = obs_values)
 head(gap_original)
+
+## Take my original data 
+## I need to move it to longer 
+## I'll need to break apart the columns R dplyr into google.com
+## I'll need to make sure that every variable is tidy
 ```
 
 ## Challenge 8
