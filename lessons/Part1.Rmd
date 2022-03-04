@@ -141,6 +141,8 @@ f(x, y)
 ## where f() is a function 
 
 ## Example with the jobs data set 
+jobs <- read_csv(here("data/jobs.csv"), show_col_types = F)
+
 jobs %>% 
   filter(State == "California")
 
