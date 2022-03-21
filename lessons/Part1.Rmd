@@ -588,11 +588,6 @@ gap_original <- gap_long_sep %>%
     names_from = obs_type, 
     values_from = obs_values)
 head(gap_original)
-
-## Take my original data 
-## I need to move it to longer 
-## I'll need to break apart the columns R dplyr into google.com
-## I'll need to make sure that every variable is tidy
 ```
 
 ## Challenge 8
