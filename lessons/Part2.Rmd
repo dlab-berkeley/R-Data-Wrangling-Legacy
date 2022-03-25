@@ -38,7 +38,7 @@ What follows is an example of the workflow just described in the spirit of [teac
 
 ```{r}
 ## Data import 
-jobs <- read_csv(here("data/jobs.csv"))
+jobs <- read_csv(here("data/jobs.csv"), show_col_types = FALSE)
 ```
 
 Let's look at the first six rows of this dataset 
@@ -57,32 +57,32 @@ glimpse(jobs)
 ## Workflow 
 
   ## Start with the jobs data frame 
-jobs %>% 
+jobs |> 
   ## Select and keep only three columns of interest 
-  select(State, Occupation, Age)%>%
+  select(State, Occupation, Age) |>
   ## Subset down to just the observations that match 4 states
-  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
+  filter(State %in% c("Alaska","California", "Oregon", "Washington")) |>
   ## create a dummy variable about whether an occupation is in agriculture
-  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
+  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No")) |>
   ## group the observations by state and then the created dummy 
-  group_by(State, in_ag)%>%
+  group_by(State, in_ag) |>
   ## create a new data frame with a summary of the age variable 
   ## for each grouping 
-  summarise(average_lifeExp = mean(Age))%>%
+  summarise(average_lifeExp = mean(Age), .groups = "drop_last") |>
   ## Sort the rows in reverse order by state
   arrange(desc(State))
 
 ## We can also save the output of our workflow to a new data frame object
-wc_lifeExp <- jobs %>% 
-  select(State, Occupation, Age)%>%
-  filter(State %in% c("Alaska","California", "Oregon", "Washington"))%>%
-  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No"))%>%
-  group_by(State, in_ag)%>%
-  summarise(average_lifeExp = mean(Age))%>%
+wc_lifeExp <- jobs |> 
+  select(State, Occupation, Age) |>
+  filter(State %in% c("Alaska","California", "Oregon", "Washington")) |>
+  mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No")) |>
+  group_by(State, in_ag) |>
+  summarise(average_lifeExp = mean(Age), .groups = "drop_last") |>
   arrange(desc(State))
 ```
 
-The way to think of the pipe, the symbol at the end of each of these lines that is %>%, is that it takes what is on the left side and makes it the first argument of the right side. 
+The way to think of the pipe, the symbol at the end of each of these lines that is `|>`, is that it takes what is on the left side and makes it the first argument of the right side. 
 
 The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure. When doing data tasks, having the same structure turns out to be very useful because it is easy to reason about what a function will do and what it needs. 
 
@@ -107,7 +107,7 @@ Imagine you're researching the housing crisis in California. You come across a d
 Read in the dataset called `cal_housing.csv` in the data folder. 
 
 ```{r, message = F, warning = F}
-cal_housing <- read_csv(here("data/cal_housing.csv"))
+cal_housing <- read_csv(here("data/cal_housing.csv"), show_col_types = FALSE)
 View(cal_housing)
 ```
 
@@ -116,7 +116,7 @@ Our end goal is to make a visualization showing consideration of moving by age g
 Recall from Part 1 that the appropriate tidyverse function for this operation is `pivot_longer()`. 
 
 ```{r}
-cal_housing_long <- cal_housing %>% 
+cal_housing_long <- cal_housing |> 
   pivot_longer(-leaving, 
                names_to = "age", 
                values_to = "percent_agreement")
@@ -125,7 +125,7 @@ head(cal_housing_long)
 
 From here, we could make a bar graph showing response by age groups. 
 ```{r}
-cal_housing_long %>% 
+cal_housing_long |> 
   ggplot(aes(x = leaving, y = percent_agreement, fill=age))+
   geom_col(position = 'dodge')+
   xlab("Moving Consideration Level")+
@@ -142,7 +142,7 @@ The IGS poll also contains a question broken down by region (`cal_region.csv`). 
 
 ```{r}
 ## Fill in your solution here 
-cr <- read_csv(here("data/cal_region.csv"))
+cr <- read_csv(here("data/cal_region.csv"), show_col_types = FALSE)
 
 
 ```
@@ -154,7 +154,7 @@ Sometimes we have a dataset where our key column is a combination of multiple va
 To illustrate the problem, consider the following dataset inspired by bird watchers. 
 
 ```{r}
-birds <- read_csv(here("data/birds.csv"))
+birds <- read_csv(here("data/birds.csv"), show_col_types = FALSE)
 View(birds)
 ```
 
@@ -166,11 +166,11 @@ We see that we have columns that combine two different variables, the species of
 In a workflow, it looks like this. 
 
 ```{r}
-good_birds <- birds %>% 
+good_birds <- birds |> 
   pivot_longer(!c(county,year), 
                names_to = "sight",
                values_to = "n",
-               values_drop_na = TRUE) %>%
+               values_drop_na = TRUE) |>
   separate(sight, c("type", "location"), sep = "(?=[A-Z])")
 head(good_birds)
 ```
@@ -182,11 +182,11 @@ The workflow above used a [regular expression](https://stringr.tidyverse.org/art
 Another way to separate is by position. Separating by position on datasets with a standard format can be helpful. Let's look at what happens when we separate by the 1st position. 
 
 ```{r}
-sep_ex <- birds %>% 
+sep_ex <- birds |> 
   pivot_longer(!c(county,year), 
                names_to = "sight",
                values_to = "n",
-               values_drop_na = TRUE)%>%
+               values_drop_na = TRUE)|>
   separate(sight, c("type", "location"),sep = 1)
 head(sep_ex)
 ```
@@ -194,7 +194,7 @@ head(sep_ex)
 We can fix our incorrect columns with `mutate()`. The following is a brute force method to do this, but as you continue in your data wrangling journey, We strongly encourage you to seek out more efficient ways of solving this problem. 
 
 ```{r}
-sep_ex_fixed <- sep_ex %>% 
+sep_ex_fixed <- sep_ex |> 
   mutate(type = if_else(type == "e", "Eagle", "Warbler"),
          location = case_when(
            location == "agleNest"~"Nest",
@@ -221,7 +221,7 @@ Edit the workflow presented above to split on the fifth character. Use `mutate` 
 Far less often, though far more frustratingly, variables can be stored in both rows and columns. Such datasets are surprisingly frequent in climate, geological, and health research. As a representative example of this problem, consider the hypothetical surveillance testing schedule for an athlete at Berkeley during the season. The data is called `testing.csv`
 
 ```{r}
-testing <- read_csv(here("data/testing.csv"))
+testing <- read_csv(here("data/testing.csv"), show_col_types = FALSE)
 View(testing)
 ```
 
@@ -231,24 +231,24 @@ In such a situation, we make use of both `pivot_longer()` and `pivot_wider()`. O
 
 ```{r}
 ## Step 1 
-step_1 <- testing %>% 
+step_1 <- testing |> 
   pivot_longer(
     # an alternative method for selecting columns
     d1:d7, 
     names_to = "day",
     values_to = "result",
     values_drop_na = TRUE
-  )%>%
+  )|>
   # remove the d from day and trim any white space
   # VERY USEFUL to avoid merge problems
-  mutate(day = as.numeric(str_replace_all(day,"d", ""))%>%trimws())
+  mutate(day = as.numeric(str_replace_all(day,"d", ""))|>trimws())
 head(step_1)
 ```
 
 We now have a dataset close to a tidy dataset, except we have a problem. Two tests are being performed each day, and we only have one variable—time for step 2. 
 
 ```{r}
-step_2 <- step_1 %>% 
+step_2 <- step_1 |> 
   pivot_wider(
     names_from = test, 
     values_from = result
@@ -261,7 +261,7 @@ Now we have one variable in each column, and each row represents a single day of
 A trick that we can sometimes use occurs if we have data that looks like the following: 
 
 ```{r}
-underscore <- read_csv(here("data/underscore.csv"))
+underscore <- read_csv(here("data/underscore.csv"), show_col_types = FALSE)
 View(underscore)
 ```
 
@@ -269,7 +269,7 @@ This is wide data that we would like to transform to long data, but if we do a u
 
 ```{r}
 # Bad
-underscore %>% 
+underscore |> 
   pivot_longer(cols = -id,
                names_to = "observation",
                values_to = "value")
@@ -278,7 +278,7 @@ underscore %>%
 Here the dates and the results are merged into one value. However, in situations with a standard naming structure, we can use some of the built-in arguments of `pivot_longer()`.
 
 ```{r}
-underscore %>% 
+underscore |> 
   pivot_longer(cols = -id,
                # special term indicates that column is split based
                # on character in name
@@ -307,33 +307,38 @@ df2 <- tibble(a = c(3,2), x = 10, y = "b")
 df3 <- tibble(other = c(2,2), yet_other = c(4,6), 
               x = 10, y = "b")
 ## inner_join() includes only observations that match both df1 and df2
-df1 %>% 
+df1 |> 
   inner_join(df2)
 
 ## left_join() includes all observations in df1 regardless if they match or not. By far the most common join 
-df1 %>% 
+df1 |> 
   left_join(df2)
+```
 
-## We can also specify the column(s) we want to specify common variables to join. 
 
+We can also specify the column(s) we want to specify common variables to join. 
+
+```{r, eval = F}
 ## this will lead to an error 
-df1 %>% 
+df1 |> 
   left_join(df3)
+```
 
+```{r}
 ## These will return values 
-df1 %>% 
+df1 |> 
   left_join(df3, by = c("a"= "other"))
 
-df1 %>% 
+df1 |> 
   left_join(df3, by = c("a" = "other", 
                         "b"="yet_other"))
 
 ## right_join() includes all observations in df2. Equivalent to left_join() but with different ordered columns 
-df1 %>% 
+df1 |> 
   right_join(df2)
 
 ## full_join() includes all observations from both df1 and df2
-df1 %>% 
+df1 |> 
   full_join(df2)
 ```
 
@@ -344,21 +349,21 @@ A common type of dataset for analysis in many social science fields is [panel da
 The dataset for this exercise is `obs.csv`
 
 ```{r}
-obs <- read_csv(here("data/obs.csv"))
+obs <- read_csv(here("data/obs.csv"), show_col_types = FALSE)
 View(obs)
 ```
 
 We now take advantage of a useful function from `tidyr` called `expand()` along with functions that we have seen before. `expand()` generates all combinations of variables found in a dataset. We can pair it with `nesting()`, which only finds combinations already present in the data, or `crossing()`, which de-duplicates and sorts inputs. 
 
 ```{r}
-panel <- obs %>%
+panel <- obs |>
   # the nesting function finds only the combinations that 
   # occur in the data
-  expand(year,nesting(id))%>%
-  left_join(obs)%>%
+  expand(year,nesting(id)) |>
+  left_join(obs) |>
   # move the id column to the front of the data frame 
   # visually nice
-  relocate(id)%>%
+  relocate(id) |>
   arrange(id)
 glimpse(panel)
 ```
@@ -367,11 +372,11 @@ glimpse(panel)
 
 ```{r}
 ## semi_join()
-df1 %>% 
+df1 |> 
   semi_join(df2)
 
 ## anti_join()
-df1 %>% 
+df1 |> 
   anti_join(df2)
 ```
 
@@ -418,10 +423,10 @@ If you know that you have data frames that share columns or rows, you can effici
 
 ```{r}
 ## An Example 
-obs1 <- obs %>% 
+obs1 <- obs |> 
   filter(id == "A")
 
-obs2 <- obs %>% 
+obs2 <- obs |> 
   filter(id == "B")
 
 bind_rows(list(obs1, obs2))
@@ -445,11 +450,11 @@ files <- fs::dir_ls(path = "/PATH", glob = "*pattern*csv")
 
 ## for example, maybe we have voting records by county 
 files <- fs::dir_ls(path = "/PATH", glob = "*county*csv")
-df <- read_csv(files, id = "path")
+df <- read_csv(files, id = "path", show_col_types = FALSE)
 
 ## or in one pipeline
-df <- fs::dir_ls(path = "/PATH", glob = "*pattern*csv")%>%
-  read_csv(id = "path")
+df <- fs::dir_ls(path = "/PATH", glob = "*pattern*csv") |>
+  read_csv(id = "path", show_col_types = FALSE)
 ```
 
 ## Challenge 12: Combining files with `readr` 
