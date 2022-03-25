@@ -264,7 +264,7 @@ In the data folder, there is a sub-directory called penguins. This directory spl
 
 ```{r}
 ## Get files
-files <- fs::dir_ls(path = "data/penguins", glob = "*species*csv")
+files <- fs::dir_ls(path = here("data/penguins"), glob = "*species_*.csv")
 
 ## Combine data frames 
 penguins_df <- files %>% 
