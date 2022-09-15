@@ -241,11 +241,7 @@ step_1 <- testing |>
   )|>
   # remove the d from day and trim any white space
   # VERY USEFUL to avoid merge problems
-<<<<<<< HEAD
-  mutate(day = as.numeric(str_replace_all(day,"d", ""))|>trimws())
-=======
   mutate(day = as.numeric(str_replace_all(day,"d", "")%>%trimws()))
->>>>>>> 3c65e87 (Fixes #43)
 head(step_1)
 ```
 
