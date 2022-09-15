@@ -241,7 +241,11 @@ step_1 <- testing |>
   )|>
   # remove the d from day and trim any white space
   # VERY USEFUL to avoid merge problems
+<<<<<<< HEAD
   mutate(day = as.numeric(str_replace_all(day,"d", ""))|>trimws())
+=======
+  mutate(day = as.numeric(str_replace_all(day,"d", "")%>%trimws()))
+>>>>>>> 3c65e87 (Fixes #43)
 head(step_1)
 ```
 
@@ -387,6 +391,7 @@ df1 |>
 Suppose you have a survey that asked three questions (var1,var2, var3) to fifteen subjects.
 
 ```{r}
+set.seed(1234)
 survey_raw_data <-tibble(
   ID = LETTERS[1:15],
   var1 = sample(1:15, replace = F),
@@ -400,7 +405,7 @@ Survey data is likely to contain errors. Perhaps the enumerators filled in a que
 
 ```{r}
 fixes <- tibble(
-  ID = c("A", "D", "F", "G"),
+  ID = c("O", "G", "D", "D"),
   original_var = c("var1", "var2", "var2", "var3"),
   original_response = as.integer(c(1, 28, 19, 34)),
   correct_response = as.integer(c(1000, 2800, 1900, 3400))
