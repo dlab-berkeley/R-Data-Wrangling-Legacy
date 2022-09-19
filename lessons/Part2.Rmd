@@ -9,30 +9,53 @@ output:
     fig_height: 7
 ---
 
-```{r chunksetup, include=FALSE} 
+```{r chunksetup, include=FALSE}
 library(fs)
 library(here)
 library(tidyverse)
 library(tibble)
 ```
 
-## The big picture 
+## The big picture
 
-## An Example Workflow 
+Consider the data below. Both data sets display information on heart rate observed in individuals across three different time periods. But the data are organized differently in each table. Which one of these do you think is the *tidy* format?
 
-Before diving into each function, let's give an example of a data wrangling workflow that starts from reading in a dataset and then makes a dataset suitable for a descriptive analysis. This example contains an example of every verb we will talk about in this workshop.  
+```{r}
+wide <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory"),
+  time1 = c(67, 80, 64),
+  time2 = c(56, 90, 50),
+  time3 = c(70, 67, 101)
+)
+wide
 
-Suppose we have a dataset of individuals' occupations from different US states. In the data folder for this workshop repository, a dataset called "jobs" matches this description. We can read it in with `read_csv(),` which is available from the tidyverse. `read_csv` works exactly like `read.csv` but is much quicker. 
+long <- data.frame(
+  name = c("Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory"),
+  time = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
+  heartrate = c(67, 80, 64, 56, 90, 50, 70, 67, 10)
+)
+long
+```
 
-The `here` function is a way to create file paths relative to the top-level directory. 
+For the "wide" format, each row is often a site/subject/patient, and you have multiple observation variables containing the same type of data. These can be repeated observations over time or multiple variables (or a mix of both). In the above case, we had the same kind of data (heart rate) entered across three different columns, corresponding to three different time periods. The key here is that these underlying characteristics are shared by a discrete entity.
+
+We often refer to these two opposite structures as "long" vs. "wide" formats. In the "long" format, you usually have 1 column for the observed variable(s), and the other columns are ID variables. We do this most often when the columns are not names of variables, but instead values of variables. Our next example provides the conceptual underpinnings of this approach.
+
+## An Example Workflow
+
+Here's an example of a data wrangling workflow that starts from reading in a dataset and then makes a dataset suitable for a descriptive analysis. This example contains an example of every verb we will talk about in this workshop.
+
+Suppose we have a dataset of individuals' occupations from different US states. In the data folder for this workshop repository, a dataset called "jobs" matches this description. We can read it in with `read_csv(),` which is available from the tidyverse. `read_csv` works exactly like `read.csv` but is much quicker.
+
+The `here` function is a way to create file paths relative to the top-level directory.
 
 For a descriptive analysis, we'd like to know the average life expectancy for individuals who are and are not in agriculture for states within each state on the West Coast. To accomplish this task, we will need to:
 
-- filter our list of states
-- group by each state, create a variable denoting whether the individual works in agriculture or not, and 
-- summarize the average age of individuals who do and do not work in agriculture. 
+-   filter our list of states
+-   group by each state, create a variable denoting whether the individual works in agriculture or not, and
+-   summarize the average age of individuals who do and do not work in agriculture.
 
-Finally, we'd like to arrange the states in reverse alphabetical order. 
+Finally, we'd like to arrange the states in reverse alphabetical order.
 
 What follows is an example of the workflow just described in the spirit of [teaching the whole game](https://www.gse.harvard.edu/news/uk/09/01/education-bat-seven-principles-educators)
 
@@ -41,13 +64,13 @@ What follows is an example of the workflow just described in the spirit of [teac
 jobs <- read_csv(here("data/jobs.csv"), show_col_types = FALSE)
 ```
 
-Let's look at the first six rows of this dataset 
+Let's look at the first six rows of this dataset
 
 ```{r}
 head(jobs)
 ```
 
-Within the tidyverse, there's also a nice function in the tidyverse called `glimpse()` which makes it possible to see every column in the data frame. 
+Within the tidyverse, there's also a nice function in the tidyverse called `glimpse()` which makes it possible to see every column in the data frame.
 
 ```{r}
 glimpse(jobs)
@@ -82,29 +105,29 @@ wc_lifeExp <- jobs |>
   arrange(desc(State))
 ```
 
-The way to think of the pipe, the symbol at the end of each of these lines that is `|>`, is that it takes what is on the left side and makes it the first argument of the right side. 
+The way to think of the pipe, the symbol at the end of each of these lines that is `|>`, is that it takes what is on the left side and makes it the first argument of the right side.
 
-The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure. When doing data tasks, having the same structure turns out to be very useful because it is easy to reason about what a function will do and what it needs. 
+The tidyverse is built around pipes because the first argument of every function in the tidyverse is a data frame, which means that the tidyverse all follows the same structure. When doing data tasks, having the same structure turns out to be very useful because it is easy to reason about what a function will do and what it needs.
 
 ## What are we doing in Part 2?
 
-Part 2 focuses on extending the base skills learned in Part 1. We are still interested in turning messy data into tidy data. This section will cover several common problems with messy data sets [Wickham 2014](https://vita.had.co.nz/papers/tidy-data.html). These are 
+Part 2 focuses on extending the base skills learned in Part 1. We are still interested in turning messy data into tidy data. This section will cover several common problems with messy data sets [Wickham 2014](https://vita.had.co.nz/papers/tidy-data.html). These are
 
-1. Column headers that are values, not variable names. 
-2. Overloading variables into a single column. 
-3. Storing variables in both rows and columns. 
-4. Storing multiple types of units in the same data frame. 
-5. Storing a single type in multiple tables. 
+1.  Column headers that are values, not variable names.
+2.  Overloading variables into a single column.
+3.  Storing variables in both rows and columns.
+4.  Storing multiple types of units in the same data frame.
+5.  Storing a single type in multiple tables.
 
-Within our discussion of (4) and (5), we will cover two table verbs in the tidyverse. In real data analysis projects, we will rarely have one data frame to do all of our analysis. 
+Within our discussion of (4) and (5), we will cover two table verbs in the tidyverse. In real data analysis projects, we will rarely have one data frame to do all of our analysis.
 
-## Column headers that are values, not variable names 
+## Column headers that are values, not variable names
 
-This messy data type is common in survey data, especially if you're working off of someone else's crosstabs. 
+This messy data type is common in survey data, especially if you're working off of someone else's crosstabs.
 
-Imagine you're researching the housing crisis in California. You come across a dataset from Berkeley's [Institute for Governmental Studies](https://igs.berkeley.edu/research/berkeley-igs-poll) that has information on preferences for moving broken down by age group. 
+Imagine you're researching the housing crisis in California. You come across a dataset from Berkeley's [Institute for Governmental Studies](https://igs.berkeley.edu/research/berkeley-igs-poll) that has information on preferences for moving broken down by age group.
 
-Read in the dataset called `cal_housing.csv` in the data folder. 
+Read in the dataset called `cal_housing.csv` in the data folder.
 
 ```{r, message = F, warning = F}
 cal_housing <- read_csv(here("data/cal_housing.csv"), show_col_types = FALSE)
@@ -113,7 +136,7 @@ View(cal_housing)
 
 Our end goal is to make a visualization showing consideration of moving by age group. `ggplot2` presumes that we have tidy data to work. We need to *pivot* the non-variable columns into a two-column key-value pair to make our graph. This pivot operation will turn the age columns (e.g. `18-29`) into an age column where the age 18-29 is one of the possible values.
 
-Recall from Part 1 that the appropriate tidyverse function for this operation is `pivot_longer()`. 
+Recall from Part 1 that the appropriate tidyverse function for this operation is `pivot_longer()`.
 
 ```{r}
 cal_housing_long <- cal_housing |> 
@@ -123,7 +146,8 @@ cal_housing_long <- cal_housing |>
 head(cal_housing_long)
 ```
 
-From here, we could make a bar graph showing response by age groups. 
+From here, we could make a bar graph showing response by age groups.
+
 ```{r}
 cal_housing_long |> 
   ggplot(aes(x = leaving, y = percent_agreement, fill=age))+
@@ -136,9 +160,9 @@ cal_housing_long |>
 
 ```
 
-## Challenge 9 
+## Challenge 7
 
-The IGS poll also contains a question broken down by region (`cal_region.csv`). Build a pipeline that reads and tidies the data. For extra practice, make a similar graph to display the results. 
+The IGS poll also contains a question broken down by region (`cal_region.csv`). Build a pipeline that reads and tidies the data. For extra practice, make a similar graph to display the results.
 
 ```{r}
 ## Fill in your solution here 
@@ -147,23 +171,23 @@ cr <- read_csv(here("data/cal_region.csv"), show_col_types = FALSE)
 
 ```
 
-## Overloading variables into a single column 
+## Overloading variables into a single column
 
-Sometimes we have a dataset where our key column is a combination of multiple variables. This is a relatively standard raw data format in research projects that collect data at multiple sub-level sites over time. 
+Sometimes we have a dataset where our key column is a combination of multiple variables. This is a relatively standard raw data format in research projects that collect data at multiple sub-level sites over time.
 
-To illustrate the problem, consider the following dataset inspired by bird watchers. 
+To illustrate the problem, consider the following dataset inspired by bird watchers.
 
 ```{r}
 birds <- read_csv(here("data/birds.csv"), show_col_types = FALSE)
 View(birds)
 ```
 
-We see that we have columns that combine two different variables, the species of bird ("eagle" and "warbler") and the location of a sighting ("nest" and "air"). When encountering this situation, we use a two-step process. 
+We see that we have columns that combine two different variables, the species of bird ("eagle" and "warbler") and the location of a sighting ("nest" and "air"). When encountering this situation, we use a two-step process.
 
-1. Pivot to gather the non-variable columns 
-2. Separate the overloaded column. 
+1.  Pivot to gather the non-variable columns
+2.  Separate the overloaded column.
 
-In a workflow, it looks like this. 
+In a workflow, it looks like this.
 
 ```{r}
 good_birds <- birds |> 
@@ -177,9 +201,9 @@ head(good_birds)
 
 Here we first pivoted the data frame to consolidate values into two variables: "sight" and "n" where the latter represents the number of sightings. Next, we separated the sight column into a type variable and a location. This makes the data tidy because each bird is a subset of type and "Nest" and "Air" are both types of locations.
 
-The workflow above used a [regular expression](https://stringr.tidyverse.org/articles/regular-expressions.html) to split and keep the capital letter. Regular expressions are, in general, beyond the scope of this course. A great resource to practice regular expressions is [regex101.com](https://regex101.com/) 
+The workflow above used a [regular expression](https://stringr.tidyverse.org/articles/regular-expressions.html) to split and keep the capital letter. Regular expressions are, in general, beyond the scope of this course. A great resource to practice regular expressions is [regex101.com](https://regex101.com/)
 
-Another way to separate is by position. Separating by position on datasets with a standard format can be helpful. Let's look at what happens when we separate by the 1st position. 
+Another way to separate is by position. Separating by position on datasets with a standard format can be helpful. Let's look at what happens when we separate by the 1st position.
 
 ```{r}
 sep_ex <- birds |> 
@@ -191,7 +215,7 @@ sep_ex <- birds |>
 head(sep_ex)
 ```
 
-We can fix our incorrect columns with `mutate()`. The following is a brute force method to do this, but as you continue in your data wrangling journey, We strongly encourage you to seek out more efficient ways of solving this problem. 
+We can fix our incorrect columns with `mutate()`. The following is a brute force method to do this, but as you continue in your data wrangling journey, We strongly encourage you to seek out more efficient ways of solving this problem.
 
 ```{r}
 sep_ex_fixed <- sep_ex |> 
@@ -205,18 +229,16 @@ sep_ex_fixed <- sep_ex |>
 head(sep_ex_fixed)
 ```
 
+## Challenge 8
 
-## Challenge 10 
-
-Edit the workflow presented above to split on the fifth character. Use `mutate` to replace the incorrect values with corrected and capitalized names. You can follow the brute force way shown above, or potentially investigate [str_replace_all()](https://stringr.tidyverse.org/reference/str_replace.html), [str_detect()](https://stringr.tidyverse.org/reference/str_detect.html), and [str_to_title()](https://stringr.tidyverse.org/reference/case.html) for options with string matching. 
+Edit the workflow presented above to split on the fifth character. Use `mutate` to replace the incorrect values with corrected and capitalized names. You can follow the brute force way shown above, or potentially investigate [str_replace_all()](https://stringr.tidyverse.org/reference/str_replace.html), [str_detect()](https://stringr.tidyverse.org/reference/str_detect.html), and [str_to_title()](https://stringr.tidyverse.org/reference/case.html) for options with string matching.
 
 ```{r}
 
 
 ```
 
-
-## Storing variables in both rows and columns 
+## Storing variables in both rows and columns
 
 Far less often, though far more frustratingly, variables can be stored in both rows and columns. Such datasets are surprisingly frequent in climate, geological, and health research. As a representative example of this problem, consider the hypothetical surveillance testing schedule for an athlete at Berkeley during the season. The data is called `testing.csv`
 
@@ -225,9 +247,9 @@ testing <- read_csv(here("data/testing.csv"), show_col_types = FALSE)
 View(testing)
 ```
 
-Note that we have variables in individual columns and a variable spread across multiple columns (the day variable), and variables spread across rows (the test variable is composed of two separate tests). 
+Note that we have variables in individual columns and a variable spread across multiple columns (the day variable), and variables spread across rows (the test variable is composed of two separate tests).
 
-In such a situation, we make use of both `pivot_longer()` and `pivot_wider()`. Our design pattern is to gather any variables spread across columns and then widen any columns with multiple variables within. 
+In such a situation, we make use of both `pivot_longer()` and `pivot_wider()`. Our design pattern is to gather any variables spread across columns and then widen any columns with multiple variables within.
 
 ```{r}
 ## Step 1 
@@ -245,7 +267,7 @@ step_1 <- testing |>
 head(step_1)
 ```
 
-We now have a dataset close to a tidy dataset, except we have a problem. Two tests are being performed each day, and we only have one variable—time for step 2. 
+We now have a dataset close to a tidy dataset, except we have a problem. Two tests are being performed each day, and we only have one variable---time for step 2.
 
 ```{r}
 step_2 <- step_1 |> 
@@ -256,16 +278,16 @@ step_2 <- step_1 |>
 head(step_2)
 ```
 
-Now we have one variable in each column, and each row represents a single day of testing. 
+Now we have one variable in each column, and each row represents a single day of testing.
 
-A trick that we can sometimes use occurs if we have data that looks like the following: 
+A trick that we can sometimes use occurs if we have data that looks like the following:
 
 ```{r}
 underscore <- read_csv(here("data/underscore.csv"), show_col_types = FALSE)
 View(underscore)
 ```
 
-This is wide data that we would like to transform to long data, but if we do a usual `pivot_longer()`, we will end up with the problem we want to avoid in this section. 
+This is wide data that we would like to transform to long data, but if we do a usual `pivot_longer()`, we will end up with the problem we want to avoid in this section.
 
 ```{r}
 # Bad
@@ -288,18 +310,17 @@ underscore |>
 
 ```
 
-Once again, we get a tidy data frame that we can work with for future analyses. 
+Once again, we get a tidy data frame that we can work with for future analyses.
 
+## Joining information from multiple datasets
 
-## Joining information from multiple datasets 
+A fundamental principle of tidy data, and data wrangling in general, is to keep "like for like" in the same table. Each type of observation should be stored in its own table. For example, database of song rankings by week over time (see `tidyr::billboard`) needs to be broken into two pieces, a dataset that stores unique artist-song pairs, and a rankings dataset which gives the ranking of each song each week. This principle is closely related to database normalization, and is important to prevent inconsistencies that can arise through mixing observation types (Wickham 2014).
 
-A fundamental principle of tidy data, and data wrangling in general, is to keep "like for like" in the same table. Each type of observation should be stored in its own table. For example, database of song rankings by week over time (see `tidyr::billboard`) needs to be broken into two pieces, a dataset that stores unique artist-song pairs, and a rankings dataset which gives the ranking of each song each week. This principle is closely related to database normalization, and is important to prevent inconsistencies that can arise through mixing observation types (Wickham 2014). 
+Datasets often violate this guideline when they have values collected at multiple levels on different types of observations.
 
-Datasets often violate this guideline when they have values collected at multiple levels on different types of observations. 
+First, let's briefly review the two table verbs available in `dplyr`. The package breaks them up into three families.
 
-First, let's briefly review the two table verbs available in `dplyr`. The package breaks them up into three families. 
-
-1. Mutating joins add new variables to one table from matching rows in another. 
+1.  Mutating joins add new variables to one table from matching rows in another.
 
 ```{r}
 df1 <- tibble(a = c(2,4), b = c(4,6))
@@ -315,8 +336,7 @@ df1 |>
   left_join(df2)
 ```
 
-
-We can also specify the column(s) we want to specify common variables to join. 
+We can also specify the column(s) we want to specify common variables to join.
 
 ```{r, eval = F}
 ## this will lead to an error 
@@ -342,9 +362,9 @@ df1 |>
   full_join(df2)
 ```
 
-Application: Making a balanced panel dataset 
+Application: Making a balanced panel dataset
 
-A common type of dataset for analysis in many social science fields is [panel data](https://en.wikipedia.org/wiki/Panel_data). In a balanced panel, all units are observed each time unit. For example, if there were N units and T periods, the total number of rows would be NxT. 
+A common type of dataset for analysis in many social science fields is [panel data](https://en.wikipedia.org/wiki/Panel_data). In a balanced panel, all units are observed each time unit. For example, if there were N units and T periods, the total number of rows would be NxT.
 
 The dataset for this exercise is `obs.csv`
 
@@ -353,7 +373,7 @@ obs <- read_csv(here("data/obs.csv"), show_col_types = FALSE)
 View(obs)
 ```
 
-We now take advantage of a useful function from `tidyr` called `expand()` along with functions that we have seen before. `expand()` generates all combinations of variables found in a dataset. We can pair it with `nesting()`, which only finds combinations already present in the data, or `crossing()`, which de-duplicates and sorts inputs. 
+We now take advantage of a useful function from `tidyr` called `expand()` along with functions that we have seen before. `expand()` generates all combinations of variables found in a dataset. We can pair it with `nesting()`, which only finds combinations already present in the data, or `crossing()`, which de-duplicates and sorts inputs.
 
 ```{r}
 panel <- obs |>
@@ -368,7 +388,7 @@ panel <- obs |>
 glimpse(panel)
 ```
 
-2. Filtering joins match observations and are most useful for diagnosing mismatches in a join. 
+2.  Filtering joins match observations and are most useful for diagnosing mismatches in a join.
 
 ```{r}
 ## semi_join()
@@ -380,9 +400,9 @@ df1 |>
   anti_join(df2)
 ```
 
-3. Set operations treat observations like sets and expect datasets to have the same variables. We are not covering these in this workshop. For more information, consult the `dplyr` [manual page](https://dplyr.tidyverse.org/reference/setops.html). 
+3.  Set operations treat observations like sets and expect datasets to have the same variables. We are not covering these in this workshop. For more information, consult the `dplyr` [manual page](https://dplyr.tidyverse.org/reference/setops.html).
 
-## Challenge 11: Bulk Recoding Values with a lookup table
+## Challenge 9: Bulk Recoding Values with a lookup table
 
 Suppose you have a survey that asked three questions (var1,var2, var3) to fifteen subjects.
 
@@ -397,7 +417,7 @@ survey_raw_data <-tibble(
 glimpse(survey_raw_data)
 ```
 
-Survey data is likely to contain errors. Perhaps the enumerators filled in a question incorrectly. Maybe you have a particular value for missing data. As a subject matter expert, you realize that several fixes need to be made globally. You put them into a data frame. 
+Survey data is likely to contain errors. Perhaps the enumerators filled in a question incorrectly. Maybe you have a particular value for missing data. As a subject matter expert, you realize that several fixes need to be made globally. You put them into a data frame.
 
 ```{r}
 fixes <- tibble(
@@ -409,7 +429,7 @@ fixes <- tibble(
 glimpse(fixes)
 ```
 
-Here we have a problem of updating several variables based on a set of potentially different conditions. Each variable needs to be updated based on the ID, but we do not need to update every variable/ID combination. 
+Here we have a problem of updating several variables based on a set of potentially different conditions. Each variable needs to be updated based on the ID, but we do not need to update every variable/ID combination.
 
 Build a workflow that converts the incorrect answers to correct answers. A solution to this problem makes use of `left_join()`, `mutate()`, `select()`, and both `pivot_longer()` and `pivot_wider()`
 
@@ -418,9 +438,9 @@ Build a workflow that converts the incorrect answers to correct answers. A solut
 
 ```
 
-## Binding Together Data Frames 
+## Binding Together Data Frames
 
-If you know that you have data frames that share columns or rows, you can efficiently turn them into a single data frame with `bind_rows()` or `bind_cols()`. The function that you use depends on the structure of your problem. 
+If you know that you have data frames that share columns or rows, you can efficiently turn them into a single data frame with `bind_rows()` or `bind_cols()`. The function that you use depends on the structure of your problem.
 
 ```{r}
 ## An Example 
@@ -435,13 +455,13 @@ bind_rows(list(obs1, obs2))
 
 ## Storing a single type in multiple tables
 
-It is common to find data values about a single observational unit spread out over multiple tables or files. Files are often split by another variable. For example, a set of medical records may be divided by patients. Voting records may be separated by counties or states. Economic data may be separated by economic sector. From a wrangling perspective, as long as there is a consistent format to these records, we can follow a three-step pattern: 
+It is common to find data values about a single observational unit spread out over multiple tables or files. Files are often split by another variable. For example, a set of medical records may be divided by patients. Voting records may be separated by counties or states. Economic data may be separated by economic sector. From a wrangling perspective, as long as there is a consistent format to these records, we can follow a three-step pattern:
 
-1. Read the files into a list of data frames
-2. For each data frame, add a new column that records the original filename
-3. Combine all the data frames into a single data frame. 
+1.  Read the files into a list of data frames
+2.  For each data frame, add a new column that records the original filename
+3.  Combine all the data frames into a single data frame.
 
-This pattern is so common that it is now built into the `readr` package. 
+This pattern is so common that it is now built into the `readr` package.
 
 ```{r, eval = F}
 # Get appropriate files. 
@@ -458,9 +478,9 @@ df <- fs::dir_ls(path = "/PATH", glob = "*pattern*csv") |>
   read_csv(id = "path", show_col_types = FALSE)
 ```
 
-## Challenge 12: Combining files with `readr` 
+## Challenge 10: Combining files with `readr`
 
-In the data folder, there is a sub-directory called penguins. This directory splits up the data from the `palmerpenguins` package into three data frames split by species. Turn these three files into one data frame. 
+In the data folder, there is a sub-directory called penguins. This directory splits up the data from the `palmerpenguins` package into three data frames split by species. Turn these three files into one data frame.
 
 ```{r}
 
