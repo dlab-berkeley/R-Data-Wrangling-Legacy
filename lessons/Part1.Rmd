@@ -38,7 +38,7 @@ variable, every row is an observation, and every cell is a single value
 
 Tidy datasets provide a standardized way to link the physical appearance
 of the dataset with its meaning (Wickham 2014). Datasets are made of
-**rows** and **columns** that contain a collection of **values**
+**rows** and **columns** that contain a collection of **values.**
 
 ## Challenge 1
 
@@ -66,72 +66,6 @@ Answer the following:
 
 3.  Is every column a variable?
 
-## Challenge 2
-
-Consider the data below. Both data sets display information on heart
-rate observed in individuals across three different time periods. But
-the data are organized differently in each table. Which one of these do
-you think is the *tidy* format?
-
-```{r}
-wide <- data.frame(
-  name = c("Wilbur", "Petunia", "Gregory"),
-  time1 = c(67, 80, 64),
-  time2 = c(56, 90, 50),
-  time3 = c(70, 67, 101)
-)
-wide
-
-long <- data.frame(
-  name = c("Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory", "Wilbur", "Petunia", "Gregory"),
-  time = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
-  heartrate = c(67, 80, 64, 56, 90, 50, 70, 67, 10)
-)
-long
-```
-
-For the "wide" format, each row is often a site/subject/patient, and you
-have multiple observation variables containing the same type of data.
-These can be repeated observations over time or multiple variables (or a
-mix of both). In the above case, we had the same kind of data (heart
-rate) entered across three different columns, corresponding to three
-different time periods. The key here is that these underlying
-characteristics are shared by a discrete entity.
-
-We often refer to these two opposite structures as "long" vs. "wide"
-formats. In the "long" format, you usually have 1 column for the
-observed variable(s), and the other columns are ID variables. We do this
-most often when the columns are not names of variables, but instead
-values of variables. Our next example provides the conceptual
-underpinnings of this approach.
-
-## A Representative Example of Tidy Data
-
-Let's make the data tidy.
-
-```{r, echo = F}
-challenge_1 |> 
-  pivot_longer(-issue_importance, 
-               names_to = "age", 
-               values_to = "percent_agreement")|>
-  head()
-
-```
-
-The format here is now tidy. Each column represents a single variable.
-The separate age columns have been combined into a single column. Each
-row represents a single cross-sectional observation. Finally, each cell
-represents a single value.
-
-There's some code here that might be brand new to you. We will cover
-everything in this code block, but to get familiar with the structure,
-note that we needed to make a dataset that was "wide" (many columns)
-into a dataset that was "long" (many rows). We did this by "pivoting"
-the non-variable columns into a two-column key-value pair. While
-sometimes we may have more than two columns, the general pattern is
-typical and language agnostic. `pivot_longer()` increases the number of
-rows and decreases the number of columns.
-
 ## The Tidyverse
 
 The tidyverse is a core set of packages that most R programmers use
@@ -153,6 +87,7 @@ library(dplyr)
 
 The dplyr package provides many very useful functions for manipulating
 data frames. These functions will save you time by reducing repetition.
+
 As a bonus, you might even find the `dplyr` grammar easier to read.
 
 In this workshop, we will cover 6 of the most commonly used functions
@@ -241,7 +176,7 @@ The first argument is the name of the data frame we want to use, in this
 case, "animals." The arguments after are the expressions that filter the
 data frame.
 
-Here is the same code with a pipe and a neat shortcut
+Here is the same code with a pipe and a neat shortcut.
 
 ```{r}
 animals |> 
@@ -266,20 +201,20 @@ Note that `between()` will not work if you want to exclude an endpoint.
 
 You can extend filter() with logical conditions:
 
-| Symbol                  | Meaning                  |
-|-------------------------|--------------------------|
-| \<                      | less than                |
-| \>                      | greater than             |
-| ==                      | equal to                 |
-| \<=                     | less than or equal to    |
-| \>=                     | greater than or equal to |
-| !=                      | not equal to             |
-| %in%                    | group membership         |
-| is.na                   | is NA                    |
-| !is.na                  | is not NA                |
-| &, \|, !, xor, any, all | Boolean operators        |
+| Symbol | Meaning                  |
+|--------|--------------------------|
+| \<     | less than                |
+| \>     | greater than             |
+| ==     | equal to                 |
+| \<=    | less than or equal to    |
+| \>=    | greater than or equal to |
+| !=     | not equal to             |
+| %in%   | group membership         |
+| is.na  | is NA                    |
+| !is.na | is not NA                |
+| &,     | , !, xor, any, all       |
 
-## Challenge 3
+## Challenge 2
 
 Create a new data frame object called `cats_and_dogs` that filters the
 `animals` data frame for all observations for which the animal type is a
@@ -444,7 +379,7 @@ borough_cat_rescues |>
 
 ```
 
-## Challenge 4
+## Challenge 3
 
 Let's put the verbs we've learned so far into action all at once. Answer
 the question "What are the total number of dog rescues for each
@@ -527,7 +462,7 @@ animals |>
 
 ```
 
-## Challenge 5
+## Challenge 4
 
 Create a data frame that considers the average rescue cost, median
 rescue cost, and standard deviation for bird rescues for each property
@@ -544,8 +479,48 @@ called `bird_stats`
 `mutate()` creates new variables to the same data frame that you pass
 into it.
 
-To demonstrate `mutate()`, load the `gapminder-FiveYearData.csv` into
-RStudio as a data frame object called gapminder
+Here's an example:
+
+```{r}
+food_df <- tibble(Name = c("Avocado", 
+                           "Mango", 
+                           "Potato",
+                           "Celery"),
+                  Type = c("Fruit", 
+                           "Fruit", 
+                           "Veggie", 
+                           "Veggie"),
+                  Price = c(4,2,1,1.5),
+	               Quantity = c(1,2,3,10))
+```
+
+`mutate()` can add a constant value across every row in a new column
+
+```{r}
+food_df |>
+  mutate(my_new_column = "Constant value across my new column!")
+```
+
+`mutate()` can also add new columns based on values in existing columns
+
+```{r}
+food_df |>
+  mutate(Total = Price * Quantity)
+```
+
+If we first use a `group_by()`, then mutate can make calculations for
+each group, and propogate these values in a new column for each
+corresponding group
+
+```{r}
+food_df |>
+  group_by(Type) |>
+  mutate(average_type_cost = mean(Price))
+```
+
+To demonstrate the power of `mutate()` and `group_by()`, load the
+`gapminder-FiveYearData.csv` into RStudio as a data frame object called
+gapminder
 
 ```{r}
 gapminder <- read_csv(here("data/gapminder-FiveYearData.csv"), show_col_types = FALSE)
@@ -598,7 +573,7 @@ gap_count <- gapminder |>
 
 ```
 
-## Challenge 6
+## Challenge 5
 
 Add a column to the gapminder dataset that contains the continent's
 total population of each observation in a given year. For example, if
@@ -610,7 +585,7 @@ contain the population of Asia in 1952.
 
 ```
 
-## Challenge 7
+## Challenge 6
 
 Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the
 difference between the observation's `gdpPercap` and the mean
@@ -729,27 +704,4 @@ gap_original <- gap_long_sep |>
     names_from = obs_type, 
     values_from = obs_values)
 head(gap_original)
-```
-
-## Challenge 8
-
-1.  We have provided the code below to answer Challenge 7. Ungroup the
-    results, then subset them to select only the `country`, `year`, and
-    `gdpPercap_diff` columns. Put it in a wide format so that countries
-    are rows and years are columns.
-
-2.  Now, turn the data frame above back into the long format with three
-    columns: `country`, `year`, and `gdpPercap_diff`.
-
-```{r, include=F}
-## Starter code 
-gapminder_gdpPercap_diff <- gapminder |>  
-  group_by(continent, year) |> 
-   mutate(mean_continent_gdp = mean(gdpPercap),
-          gdpPercap_diff = gdpPercap - mean_continent_gdp)
-```
-
-```{r, include=F}
-#YOUR CODE HERE
-
 ```
