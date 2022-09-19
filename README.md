@@ -10,7 +10,7 @@ Prior experience with R is helpful. We recommend that students feel comfortable 
 
 We will use RStudio to go through the workshop materials, which requires installation of both the R language and the RStudio software. 
 
-1. [Download R](https://www.r-project.org/): Follow the links according to the operating system that you are running. Download the package, and install R onto your compute. You should install the most recent version (at least version 4.0).
+1. [Download R](https://www.r-project.org/): Follow the links according to the operating system that you are running. Download the package, and install R onto your compute. You should install the most recent version (at least version 4.1).
 
 2. [Download RStudio](https://www.rstudio.com/products/rstudio/download/): Install RStudio Desktop. This should be free. Do this after you have already installed R. The D-Lab strongly recommends an RStudio edition of 2022.02.0+443 "Prairie Trillium" or higher.
 
