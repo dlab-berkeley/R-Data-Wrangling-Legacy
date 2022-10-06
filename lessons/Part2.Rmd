@@ -49,7 +49,7 @@ Suppose we have a dataset of individuals' occupations from different US states. 
 
 The `here` function is a way to create file paths relative to the top-level directory.
 
-For a descriptive analysis, we'd like to know the average life expectancy for individuals who are and are not in agriculture for states within each state on the West Coast. To accomplish this task, we will need to:
+For a descriptive analysis, we'd like to know the average age for individuals who are and are not in agriculture for states within each state on the West Coast. To accomplish this task, we will need to:
 
 -   filter our list of states
 -   group by each state, create a variable denoting whether the individual works in agriculture or not, and
@@ -91,7 +91,7 @@ jobs |>
   group_by(State, in_ag) |>
   ## create a new data frame with a summary of the age variable 
   ## for each grouping 
-  summarise(average_lifeExp = mean(Age), .groups = "drop_last") |>
+  summarise(average_age = mean(Age), .groups = "drop_last") |>
   ## Sort the rows in reverse order by state
   arrange(desc(State))
 
@@ -101,7 +101,7 @@ wc_lifeExp <- jobs |>
   filter(State %in% c("Alaska","California", "Oregon", "Washington")) |>
   mutate(in_ag = if_else(Occupation == "Farmer", "Yes", "No")) |>
   group_by(State, in_ag) |>
-  summarise(average_lifeExp = mean(Age), .groups = "drop_last") |>
+  summarise(average_age = mean(Age), .groups = "drop_last") |>
   arrange(desc(State))
 ```
 
