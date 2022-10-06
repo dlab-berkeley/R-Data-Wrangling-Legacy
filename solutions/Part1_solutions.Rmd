@@ -1,0 +1,111 @@
+---
+title: "Part 1 Solutions"
+author: "D-Lab"
+output: html_document
+---
+
+```{r}
+library(fs)
+library(here)
+library(tidyverse)
+library(tibble)
+```
+
+
+## Challenge 1 
+
+Here is a dataset inspired by an Economist/YouGov Poll about the importance of unemployment in the United States. 
+
+```{r}
+challenge_1 <- tibble(
+  issue_importance = c("Very Important", "Somewhat Important",
+                       "Not very Important", "Unimportant"),
+  `18-29` = c(.59, .28, .08, .05),
+  `30-44` = c(.66, .27, .06, .02),
+  `45-64` = c(.69, .28, .03, .01),
+  `65+` = c(.7, .27, .02, .01)
+)
+
+head(challenge_1)
+```
+
+Answer the following: 
+
+1. How many observations are in the data set?
+
+*16. While they are only 4 rows in this table, there are four categories of issue importance and four age groups. 4x4 = 16 total observations.*
+
+2. How many columns are in the data set?
+
+```{r}
+ncol(challenge_1)
+```
+
+3. Is every column a variable?
+
+*No! This data is messy. The first column is a variable that contains the universe of issue importance answers. However, the next five columns are all instances of the variable age.*
+
+
+## Challenge 2
+
+Create a new data frame object called `cats_and_dogs` that filters the `animals` data frame for all observations for which the animal type is a cat or a dog. Use the pipe operator to chain the functions together. 
+
+```{r}
+cats_and_dogs <- animals |> 
+  filter(Type == "Cat"|Type == "Dog")
+```
+  
+## Challenge 3
+
+Let's put the verbs we've learned so far into action all at once. Answer the question "What are the total number of dog rescues for each borough?" by making a data frame called `borough_dog_rescues` and arranging the rows by borough in alphabetical order. 
+
+```{r}
+## Your Code here 
+borough_dog_rescues <- animals |> 
+  group_by(Borough) |>
+  filter(Type == "Dog") |>
+  count(Type) |>
+  arrange(Borough)
+
+```
+
+## Challenge 4
+
+Create a data frame that considers the average rescue cost, median rescue cost, and standard deviation for bird rescues for each property category year. Save the result of your workflow into a data frame object called `bird_stats`
+
+
+```{r, include=F}
+#YOUR CODE HERE
+bird_stats <- animals |> 
+  group_by(PropertyCategory, Year) |>
+  filter(Type == "Bird") |>
+  summarise(median_cost = median(RescueCost, na.rm = T),
+            avg_cost = mean(RescueCost, na.rm = T), 
+            sd_cost = sd(RescueCost, na.rm = T),
+            .groups = "drop_last")
+
+```
+
+
+## Challenge 5
+
+Add a column to the gapminder dataset that contains the continent's total population of each observation in a given year. For example, if the first observation was Afghanistan in 1952, the new column would contain the population of Asia in 1952. 
+
+```{r}
+gapminder_c6 <- gapminder |> 
+  group_by(continent, year) |> 
+  mutate(continent_pop = sum(pop))
+``` 
+
+  
+## Challenge 6 
+
+Use dplyr to: (a) add a column called `gdpPercap_diff` that contains the difference between the observation's `gdpPercap` and the mean `gdpPercap` of the continent in that year, (b) arrange the data frame by the column you just created, in descending order (so that the relatively richest country/years are listed first)
+
+```{r}
+gapminder_gdpPercap_diff <- gapminder_c6 |>  
+  group_by(continent, year) |> 
+   mutate(mean_continent_gdp = mean(gdpPercap),
+          gdpPercap_diff = gdpPercap - mean_continent_gdp) |> 
+  arrange(desc(gdpPercap_diff))
+```
