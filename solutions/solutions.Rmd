@@ -103,7 +103,7 @@ The IGS poll also contains a question broken down by region (`cal_region.csv`). 
 
 ```{r}
 ## Full pipe here 
-read_csv(here("data/cal_region.csv")) |> 
+read_csv(here("data/cal_region.csv"), show_col_types = F) |> 
   pivot_longer(-leaving, 
                names_to = "region", 
                values_to = "percent_agreement") |> 
@@ -111,7 +111,7 @@ read_csv(here("data/cal_region.csv")) |>
   geom_col(position = 'dodge')+
   xlab("Moving Consideration Level")+
   ylab("Percent Agreement")+
-  scale_fill_discrete(type = "viridis")+
+  scale_fill_viridis_d()+
   ggtitle("Californians Consideration to Leaving the State by Region")
 
 ```

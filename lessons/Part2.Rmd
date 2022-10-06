@@ -155,7 +155,7 @@ cal_housing_long |>
   xlab("Moving Consideration Level")+
   ylab("Percent Agreement")+
   # colorblind friendly palette
-  scale_fill_discrete(type = "viridis")+
+  scale_fill_viridis_d()+
   ggtitle("Californians Consideration to Leaving the State")
 
 ```
